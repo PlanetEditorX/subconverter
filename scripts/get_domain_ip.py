@@ -13,12 +13,12 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
-def resolve_with_specific_dns(domain, dns_server_ip):
+def resolve_with_specific_dns(domain, dns_server_ips):
     """
     使用指定的 DNS 服务器解析域名并返回所有 A 记录 (IPv4 地址)。
     """
     resolver = dns.resolver.Resolver()
-    resolver.nameservers = [dns_server_ip] # 指定 DNS 服务器 IP 地址
+    resolver.nameservers = dns_server_ips # 指定 DNS 服务器 IP 地址
     resolver.timeout = 5 # 设置查询超时时间 (秒)
     resolver.lifetime = 5 # 设置总查询生命周期 (秒)
 
@@ -71,7 +71,7 @@ def get_ips_from_domains(file_path):
 
     for domain in sorted(list(set(domains))): # 去重并排序
         try:
-            ips = resolve_with_specific_dns(domain, '8.8.8.8')
+            ips = resolve_with_specific_dns(domain, ["8.8.8.8", "1.1.1.1"])
             for ip in ips:
                 ip_addresses.add(ip)
                 print(f"解析 {domain} -> {ip}")
