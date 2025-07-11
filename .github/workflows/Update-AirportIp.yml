@@ -28,14 +28,6 @@ jobs:
           sleep 3
           ls -l
           
-      - name: 加密订阅链接转换
-        run: |
-          cd scripts
-          cat 6b-base64.yaml
-          cat 6b-base64.yaml | base64 -d > 6b.yaml
-          sleep 3
-          ls -l
-          
       - name: 执行脚本
         run: |
           cd scripts
