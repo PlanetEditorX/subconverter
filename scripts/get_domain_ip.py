@@ -85,21 +85,21 @@ def get_ips_from_domains(file_path):
     return sorted(list(ip_addresses), key=ip_to_tuple)
 
 ip_list = []
+title_nums = 0
 # 遍历当前目录下的所有 YAML 文件
 for file_name in glob.glob('*.yaml'):
     print(f"正在处理文件: {file_name}")
     file_path = file_name
     ips = get_ips_from_domains(file_path)
-
     if ips:
         print(f"\n--- 解析到的 {file_name} 所有 IP 地址 ---")
         ip_list.append(f"\n# {file_name} 解析结果\n")
         for ip in ips:
             print(ip)
             ip_list.append(f"IP-CIDR,{ip}/32,no-resolve\n")
+        title_nums += 1
     else:
         print(f"未找到任何 IP 地址。请检查文件 {file_name} 的内容和解析逻辑。")
-
 print("\n--- 所有解析到的 IP 地址 ---")
 for ip in ip_list:
     print(ip)
@@ -115,7 +115,7 @@ beijing_now = utc_now.astimezone(beijing_tz)
 with open('../custom/AirportIp.list', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
     f.write("# 内容：机场IP解析结果\n")
-    f.write("# 数量：{}\n".format(len(ip_list)))
+    f.write("# 数量：{}\n".format(len(ip_list)-title_nums))
     f.write("# 更新: {}\n".format(beijing_now.strftime("%Y-%m-%d %H:%M:%S")))
     f.write("######################################\n")
     f.writelines(ip_list)
