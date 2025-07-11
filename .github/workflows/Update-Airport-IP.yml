@@ -44,7 +44,7 @@ jobs:
           git config user.email "actions@github.com"
           # 检查是否有改动并提交
           git status
-          git add custom/AirportIp.list
-          git commit -m "Automated update AirportIp.list from Repo openwrt workflow" || echo "No changes to commit"
+          git add custom/AirportIP.list
+          git commit -m "Automated update AirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
           git push
           
