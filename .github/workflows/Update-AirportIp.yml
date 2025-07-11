@@ -24,7 +24,8 @@ jobs:
         run: |
           cd scripts
           curl -o mm.yaml ${{ secrets.MM_YAML }}
-          curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
+          # curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
+          curl -v ${{ secrets.SIXB_YAML }} | base64 -d > 6b.yaml
           sleep 3
           ls -l
           
