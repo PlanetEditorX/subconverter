@@ -111,8 +111,8 @@ utc_now = datetime.datetime.now(pytz.utc)
 beijing_tz = pytz.timezone('Asia/Shanghai')
 beijing_now = utc_now.astimezone(beijing_tz)
 
-# 将结果写入到 AirportIp.list 文件
-with open('../custom/AirportIp.list', 'w', encoding='utf-8') as f:
+# 将结果写入到 AirportIP.list 文件
+with open('../custom/AirportIP.list', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
     f.write("# 内容：机场IP解析结果\n")
     f.write("# 数量：{}\n".format(len(ip_list)-title_nums))
