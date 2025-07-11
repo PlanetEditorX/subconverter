@@ -6,7 +6,7 @@ on:
     - cron: '0 16 * * *'  # 每天0点执行一次
 
 jobs:
-  update-rules-list:
+  update-airport-ip-list:
     runs-on: ubuntu-latest
 
     steps:
