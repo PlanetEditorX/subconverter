@@ -1,11 +1,12 @@
 import os
 import re
-import socket
-import dns.resolver
-import dns.exception
 import glob
+import pytz
+import socket
 import datetime
 import ipaddress
+import dns.resolver
+import dns.exception
 
 def is_valid_ip(ip):
     try:
@@ -103,11 +104,18 @@ print("\n--- 所有解析到的 IP 地址 ---")
 for ip in ip_list:
     print(ip)
 print("\n--- 解析完成 ---")
+
+# 获取UTC时间
+utc_now = datetime.datetime.now(pytz.utc)
+# 转换为北京时间
+beijing_tz = pytz.timezone('Asia/Shanghai')
+beijing_now = utc_now.astimezone(beijing_tz)
+
 # 将结果写入到 AirportIp.list 文件
 with open('../custom/AirportIp.list', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
     f.write("# 内容：机场IP解析结果\n")
     f.write("# 数量：{}\n".format(len(ip_list)))
-    f.write("# 更新: {}\n".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    f.write("# 更新: {}\n".format(beijing_now.strftime("%Y-%m-%d %H:%M:%S")))
     f.write("######################################\n")
     f.writelines(ip_list)
