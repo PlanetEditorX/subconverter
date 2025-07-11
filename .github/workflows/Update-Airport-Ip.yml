@@ -1,7 +1,7 @@
 name: Update Airport Ip
 
 on:
-  push:
+  # push:
   workflow_dispatch:  # 手动触发工作流
   schedule:
     - cron: '0 16 * * *'  # 每天0点执行一次
@@ -31,7 +31,6 @@ jobs:
         run: |
           cd scripts
           ls -l
-          cat 6b.yaml
           python get_domain_ip.py
           
       - name: 删除订阅副本
