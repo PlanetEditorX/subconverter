@@ -25,12 +25,13 @@ jobs:
           cd scripts
           curl -o mm.yaml ${{ secrets.MM_YAML }}
           curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
-          sleep 10
+          sleep 3
           ls -l
           
       - name: 执行脚本
         run: |
-          python scripts/get_domain_ip.py
+          cd scripts
+          python get_domain_ip.py
           
       - name: 删除订阅副本
         run: |
