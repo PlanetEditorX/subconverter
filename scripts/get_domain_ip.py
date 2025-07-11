@@ -30,7 +30,7 @@ def resolve_with_specific_dns(domain, dns_server_ips):
         ips = [str(rdata) for rdata in answers]
         return ips
     except dns.resolver.NoAnswer:
-        print(f"域名 '{domain}' 在指定 DNS 服务器 '{dns_server_ip}' 上没有找到 A 记录。")
+        print(f"域名 '{domain}' 在指定 DNS 服务器 '{dns_server_ips}' 上没有找到 A 记录。")
         return []
     except dns.resolver.NXDOMAIN:
         print(f"域名 '{domain}' 不存在。")
@@ -39,7 +39,7 @@ def resolve_with_specific_dns(domain, dns_server_ips):
             return [domain]
         return []
     except dns.exception.Timeout:
-        print(f"查询 '{domain}' 到 DNS 服务器 '{dns_server_ip}' 超时。")
+        print(f"查询 '{domain}' 到 DNS 服务器 '{dns_server_ips}' 超时。")
         return []
     except Exception as e:
         print(f"解析 '{domain}' 时发生未知错误: {e}")
