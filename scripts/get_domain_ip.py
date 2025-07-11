@@ -84,7 +84,8 @@ def get_ips_from_domains(file_path):
 
 ip_list = []
 # 遍历当前目录下的所有 YAML 文件
-for file_name in glob.glob('*.yaml'):
+yaml_files = glob.glob(os.path.join(os.path.dirname(__file__), '*.yaml'))
+for file_name in yaml_files:
     print(f"正在处理文件: {file_name}")
     file_path = file_name
     ips = get_ips_from_domains(file_path)
