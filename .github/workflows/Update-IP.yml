@@ -1,0 +1,48 @@
+name: Update IP List
+
+on:
+  workflow_dispatch:  # 手动触发工作流
+  schedule:
+    - cron: '0 16 * * *'  # 每天0点执行一次
+
+jobs:
+  update-rules-list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 安装依赖
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl jq
+          python -m pip install --upgrade pip
+          pip install dnspython
+          
+      - name: 获取订阅链接
+        run: |
+          cd scripts
+          curl -o mm.yaml ${{ secrets.MM_YAML }}
+          curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
+          ls -l
+          
+      - name: 执行脚本
+        run: |
+          python scripts/get_domain_ip.py
+          
+      - name: 删除订阅副本
+        run: |
+          rm -rf scripts/*.yaml
+          
+      - name: 推送subconverter更新
+        run: |
+          # 配置 Git 用户信息
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          # 检查是否有改动并提交
+          git status
+          git add .
+          git commit -m "Automated update AirportIp.list from Repo openwrt workflow" || echo "No changes to commit"
+          git push
+          
