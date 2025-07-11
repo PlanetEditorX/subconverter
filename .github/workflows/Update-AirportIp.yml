@@ -1,4 +1,4 @@
-name: Update AirportIp
+name: Update Airport Ip
 
 on:
   workflow_dispatch:  # 手动触发工作流
@@ -6,7 +6,7 @@ on:
     - cron: '0 16 * * *'  # 每天0点执行一次
 
 jobs:
-  update-airport-ip-list:
+  update:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +25,12 @@ jobs:
           cd scripts
           curl -o mm.yaml ${{ secrets.MM_YAML }}
           curl -o 6b-base64.yaml ${{ secrets.SIXB_YAML }}
+          sleep 3
+          ls -l
+          
+      - name: 加密订阅链接转换
+        run: |
+          cd scripts
           cat 6b-base64.yaml
           cat 6b-base64.yaml | base64 -d > 6b.yaml
           sleep 3
