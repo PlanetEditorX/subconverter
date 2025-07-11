@@ -1,4 +1,4 @@
-name: Update IP List
+name: Update AirportIp
 
 on:
   workflow_dispatch:  # 手动触发工作流
