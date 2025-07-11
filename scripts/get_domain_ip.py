@@ -102,10 +102,9 @@ for file_name in glob.glob('*.yaml'):
 print("\n--- 所有解析到的 IP 地址 ---")
 for ip in ip_list:
     print(ip)
-print("\n--- 完成 ---")
+print("\n--- 解析完成 ---")
 # 将结果写入到 AirportIp.list 文件
-target_path = os.path.join(os.path.dirname(__file__), '../custom/AirportIp.list')
-with open(target_path, 'w', encoding='utf-8') as f:
+with open('../custom/AirportIp.list', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
     f.write("# 内容：机场IP解析结果\n")
     f.write("# 数量：{}\n".format(len(ip_list)))
