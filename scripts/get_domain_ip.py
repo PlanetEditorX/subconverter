@@ -4,6 +4,14 @@ import dns.resolver
 import dns.exception
 import glob
 import datetime
+import ipaddress
+
+def is_valid_ip(ip):
+    try:
+        ipaddress.ip_address(ip)
+        return True
+    except ValueError:
+        return False
 
 def resolve_with_specific_dns(domain, dns_server_ip):
     """
@@ -24,6 +32,9 @@ def resolve_with_specific_dns(domain, dns_server_ip):
         return []
     except dns.resolver.NXDOMAIN:
         print(f"域名 '{domain}' 不存在。")
+        if is_valid_ip(domain):
+            print(f"'{domain}' 是一个有效的 IP 地址，但不是域名。")
+            return [domain]
         return []
     except dns.exception.Timeout:
         print(f"查询 '{domain}' 到 DNS 服务器 '{dns_server_ip}' 超时。")
