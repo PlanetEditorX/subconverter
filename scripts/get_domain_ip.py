@@ -1,10 +1,12 @@
+import os
 import re
-import socket
-import dns.resolver
-import dns.exception
 import glob
+import pytz
+import socket
 import datetime
 import ipaddress
+import dns.resolver
+import dns.exception
 
 def is_valid_ip(ip):
     try:
@@ -28,7 +30,7 @@ def resolve_with_specific_dns(domain, dns_server_ips):
         ips = [str(rdata) for rdata in answers]
         return ips
     except dns.resolver.NoAnswer:
-        print(f"域名 '{domain}' 在指定 DNS 服务器 '{dns_server_ip}' 上没有找到 A 记录。")
+        print(f"域名 '{domain}' 在指定 DNS 服务器 '{dns_server_ips}' 上没有找到 A 记录。")
         return []
     except dns.resolver.NXDOMAIN:
         print(f"域名 '{domain}' 不存在。")
@@ -37,7 +39,7 @@ def resolve_with_specific_dns(domain, dns_server_ips):
             return [domain]
         return []
     except dns.exception.Timeout:
-        print(f"查询 '{domain}' 到 DNS 服务器 '{dns_server_ip}' 超时。")
+        print(f"查询 '{domain}' 到 DNS 服务器 '{dns_server_ips}' 超时。")
         return []
     except Exception as e:
         print(f"解析 '{domain}' 时发生未知错误: {e}")
@@ -83,30 +85,37 @@ def get_ips_from_domains(file_path):
     return sorted(list(ip_addresses), key=ip_to_tuple)
 
 ip_list = []
+title_nums = 0
 # 遍历当前目录下的所有 YAML 文件
 for file_name in glob.glob('*.yaml'):
     print(f"正在处理文件: {file_name}")
     file_path = file_name
     ips = get_ips_from_domains(file_path)
-
     if ips:
         print(f"\n--- 解析到的 {file_name} 所有 IP 地址 ---")
         ip_list.append(f"\n# {file_name} 解析结果\n")
         for ip in ips:
             print(ip)
             ip_list.append(f"IP-CIDR,{ip}/32,no-resolve\n")
+        title_nums += 1
     else:
         print(f"未找到任何 IP 地址。请检查文件 {file_name} 的内容和解析逻辑。")
-
 print("\n--- 所有解析到的 IP 地址 ---")
 for ip in ip_list:
     print(ip)
-print("\n--- 完成 ---")
-# 将结果写入到 AirportIp.list 文件
-with open('../custom/AirportIp.list', 'w', encoding='utf-8') as f:
+print("\n--- 解析完成 ---")
+
+# 获取UTC时间
+utc_now = datetime.datetime.now(pytz.utc)
+# 转换为北京时间
+beijing_tz = pytz.timezone('Asia/Shanghai')
+beijing_now = utc_now.astimezone(beijing_tz)
+
+# 将结果写入到 AirportIP.list 文件
+with open('../custom/AirportIP.list', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
     f.write("# 内容：机场IP解析结果\n")
-    f.write("# 数量：{}\n".format(len(ip_list)))
-    f.write("# 更新: {}\n".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    f.write("# 数量：{}\n".format(len(ip_list)-title_nums))
+    f.write("# 更新: {}\n".format(beijing_now.strftime("%Y-%m-%d %H:%M:%S")))
     f.write("######################################\n")
     f.writelines(ip_list)
