@@ -20,9 +20,17 @@ jobs:
 
       - name: 下载规则列表
         run: |
+          echo "下载AI域名规则列表"
           curl -L https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list -o ai-domains.list
           echo "去除+."
           sed -i 's/^+\.//g' ai-domains.list
+
+          echo "下载anti-AD规则列表"
+          curl -L https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml -o anti-ad.list
+          echo "去除自带注释"
+          awk '/^payload:/ {found=1; next} found' anti-ad.list > temp.list && mv temp.list anti-ad.list
+          echo "去除  - '+."
+          sed -i "s/^[[:space:]]*-[[:space:]]*'+\\.\\(.*\\)'/DOMAIN-SUFFIX,\\1/" anti-ad-domains.list
 
       - name: 添加AI域名规则匹配
         run: |
@@ -42,4 +50,25 @@ jobs:
           git config --global user.email "actions@github.com"
           git add custom/ChatGPT.list
           git commit -m "Update ChatGPT.list with AI domains"
+          git push
+
+      - name: 添加anti-AD规则匹配
+        run: |
+          # 为每一行加上 DOMAIN-SUFFIX, 前缀
+          echo "生成anti-AD规则文件"
+          echo '# 内容：anti-AD 去广告规则' > anti-AD.list
+          echo '# 仓库：https://github.com/privacy-protection-tools/anti-AD' > anti-AD.list
+          echo "# 数量：$(wc -l < anti-ad-domains.list)"条 >> anti-AD.list
+          echo -e "# 更新：$(date +'%Y-%m-%d %H:%M:%S' --date='+8 hours')\n" >> anti-AD.list
+          cat anti-ad-domains.list >> anti-AD.list
+          # 将修改后的文件移动到目标目录
+          mv anti-AD.list custom/anti-AD.list
+
+      - name: Commit Changes
+        run: |
+          # 提交更新
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add custom/anti-AD.list
+          git commit -m "Update anti-AD.list with anti-AD domains"
           git push
