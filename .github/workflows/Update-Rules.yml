@@ -18,6 +18,7 @@ jobs:
             download_file: ai-domains.list
             file_name: ChatGPT.list
             final_file: custom/ChatGPT.list
+            time: 10
           - arch: anti-ad
             name: "anti-AD"
             info: "Anti-AD Domains"
@@ -25,6 +26,7 @@ jobs:
             download_file: anti-ad-clash.list
             file_name: anti-AD.list
             final_file: custom/anti-AD.list
+            time: 20
 
     steps:
       - name: Checkout Repository
@@ -67,6 +69,9 @@ jobs:
           # 提交更新
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          sleep ${{ matrix.time }}  # 等待一段时间，避免同时提交
+          git pull origin main || true  # 确保拉取最新代码
+          echo "提交更新到 ${{ matrix.final_file }}"
           git add ${{ matrix.final_file }}
           git commit -m "Update ${{ matrix.file_name }} with ${{ matrix.info }} domains"
           git push
