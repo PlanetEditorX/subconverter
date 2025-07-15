@@ -8,6 +8,23 @@ on:
 jobs:
   update-rules-list:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: ai-domains
+            name: "AI"
+            info: "ChatGPT Domains"
+            url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list
+            download_file: ai-domains.list
+            file_name: ChatGPT.list
+            final_file: custom/ChatGPT.list
+          - arch: anti-ad
+            name: "anti-AD"
+            info: "Anti-AD Domains"
+            url: https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml
+            download_file: anti-ad-clash.list
+            file_name: anti-AD.list
+            final_file: custom/anti-AD.list
 
     steps:
       - name: Checkout Repository
@@ -20,55 +37,36 @@ jobs:
 
       - name: 下载规则列表
         run: |
-          echo "下载AI域名规则列表"
-          curl -L https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.list -o ai-domains.list
-          echo "去除+."
-          sed -i 's/^+\.//g' ai-domains.list
+          echo "下载${{ matrix.arch }}域名规则列表"
+          curl -L ${{ matrix.url }} -o ${{ matrix.download_file }}
+          echo "下载完成，保存到 ${{ matrix.download_file }}"
 
-          echo "下载anti-AD规则列表"
-          curl -L https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml -o anti-ad.list
-          echo "去除自带注释"
-          awk '/^payload:/ {found=1; next} found' anti-ad.list > temp.list && mv temp.list anti-ad.list
-          echo "去除  - '+."
-          sed -i "s/^[[:space:]]*-[[:space:]]*'+\\.\\(.*\\)'/DOMAIN-SUFFIX,\\1/" anti-ad-domains.list
-
-      - name: 添加AI域名规则匹配
+      - name: 处理${{ matrix.name }}域名规则列表
         run: |
+          echo "处理${{ matrix.name }}规则列表"
+          if [ ${{ matrix.arch }} == 'ai-domains' ]; then
+            echo "去除+."
+            sed -i 's/^+\.//g' ${{ matrix.download_file }}
+          elif [ ${{ matrix.arch }} == 'anti-ad' ]; then
+            echo "去除自带注释"
+            awk '/^payload:/ {found=1; next} found' ${{ matrix.download_file }} > temp.list && mv temp.list ${{ matrix.download_file }}
+            echo "去除  - '+."
+            sed -i "s/^[[:space:]]*-[[:space:]]*'+\\.\\(.*\\)'/\\1/" ${{ matrix.download_file }}
+          fi
+
           # 为每一行加上 DOMAIN-SUFFIX, 前缀
-          echo "生成AI规则文件"
-          echo '# 内容：ChatGPT Domains' > ChatGPT.list
-          echo "# 数量：$(wc -l < ai-domains.list)"条 >> ChatGPT.list
-          echo -e "# 更新：$(date +'%Y-%m-%d %H:%M:%S' --date='+8 hours')\n" >> ChatGPT.list
-          sed 's/^/DOMAIN-SUFFIX,/g' ai-domains.list >> ChatGPT.list
-          # 将修改后的文件移动到目标目录
-          mv ChatGPT.list custom/ChatGPT.list
+          echo "生成${{ matrix.name }}规则文件"
+          echo '# 内容：${{ matrix.info }}' > ${{ matrix.final_file }}
+          echo "# 数量：$(wc -l < ${{ matrix.download_file }})"条 >> ${{ matrix.final_file }}
+          echo -e "# 更新：$(date +'%Y-%m-%d %H:%M:%S' --date='+8 hours')\n" >> ${{ matrix.final_file }}
+          sed 's/^/DOMAIN-SUFFIX,/g' ${{ matrix.download_file }} >> ${{ matrix.final_file }}
+          echo "生成完成，保存到 ${{ matrix.final_file }}"
 
       - name: Commit Changes
         run: |
           # 提交更新
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add custom/ChatGPT.list
-          git commit -m "Update ChatGPT.list with AI domains"
-          git push
-
-      - name: 添加anti-AD规则匹配
-        run: |
-          # 为每一行加上 DOMAIN-SUFFIX, 前缀
-          echo "生成anti-AD规则文件"
-          echo '# 内容：anti-AD 去广告规则' > anti-AD.list
-          echo '# 仓库：https://github.com/privacy-protection-tools/anti-AD' > anti-AD.list
-          echo "# 数量：$(wc -l < anti-ad-domains.list)"条 >> anti-AD.list
-          echo -e "# 更新：$(date +'%Y-%m-%d %H:%M:%S' --date='+8 hours')\n" >> anti-AD.list
-          cat anti-ad-domains.list >> anti-AD.list
-          # 将修改后的文件移动到目标目录
-          mv anti-AD.list custom/anti-AD.list
-
-      - name: Commit Changes
-        run: |
-          # 提交更新
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add custom/anti-AD.list
-          git commit -m "Update anti-AD.list with anti-AD domains"
+          git add ${{ matrix.final_file }}
+          git commit -m "Update ${{ matrix.file_name }} with ${{ matrix.info }} domains"
           git push
