@@ -510,36 +510,43 @@ rule-providers:
     interval: 86400
     format: text
     type: http
+  AntiAD:
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/anti-AD.list
+    path: ./ruleset/AntiAD.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
   DirectDomain:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/master/custom/DirectDomain.list
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectDomain.list
     path: ./ruleset/DirectDomain.list
     behavior: classical
     interval: 86400
     format: text
     type: http
   DirectIP:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/master/custom/DirectIP.list
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectIP.list
     path: ./ruleset/DirectIP.list
     behavior: classical
     interval: 86400
     format: text
     type: http
-  AirportIp:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/master/custom/AirportIp.list
-    path: ./ruleset/AirportIp.list
+  AirportIP:
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/AirportIp.list
+    path: ./ruleset/AirportIP.list
     behavior: classical
     interval: 86400
     format: text
     type: http
   ProxyDomain:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/master/custom/ProxyDomain.list
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ProxyDomain.list
     path: ./ruleset/ProxyDomain.list
     behavior: classical
     interval: 86400
     format: text
     type: http
   CustomProhibit:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/master/custom/CustomProhibit.list
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/CustomProhibit.list
     path: ./ruleset/CustomProhibit.list
     behavior: classical
     interval: 86400
@@ -550,6 +557,7 @@ rules:
   - "RULE-SET,LocalAreaNetwork,🎯 全球直连"
   - "RULE-SET,UnBan,🎯 全球直连"
   - "RULE-SET,BanAD,🛑 广告拦截"
+  - "RULE-SET,AntiAD,🛑 广告拦截"
   - "RULE-SET,CustomProhibit,🛑 广告拦截"
   - "RULE-SET,BanProgramAD,🍃 应用净化"
   - "RULE-SET,GoogleFCM,📢 谷歌FCM"
@@ -581,7 +589,7 @@ rules:
   - "RULE-SET,Download,🎯 全球直连"
   - "RULE-SET,DirectDomain,🎯 全球直连"
   - "RULE-SET,DirectIP,🎯 全球直连"
-  - "RULE-SET,AirportIp,✈️ 机场连接"
+  - "RULE-SET,AirportIP,✈️ 机场连接"
   - "RULE-SET,ProxyDomain,🌐 代理域名"
   - "GEOIP,CN,🎯 全球直连"
   - "MATCH,🐟 漏网之鱼"
