@@ -1,5 +1,12 @@
-# 代理域名
+# 代理域名-IP
 DOMAIN-SUFFIX,ip138.com
+IP-CIDR,36.147.56.139/32,no-resolve
+IP-CIDR,106.60.71.245/32,no-resolve
+IP-CIDR,111.124.75.194/32,no-resolve
 DOMAIN-SUFFIX,tool.lu
+IP-CIDR,121.43.166.27/32,no-resolve
 DOMAIN-SUFFIX,nhentai.net
 DOMAIN-SUFFIX,hanime1.me
+IP-CIDR,108.160.170.33/32,no-resolve
+IP-CIDR,103.252.114.101/32,no-resolve
+
