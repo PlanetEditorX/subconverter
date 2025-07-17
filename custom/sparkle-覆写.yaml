@@ -527,7 +527,7 @@ rule-providers:
     format: text
     type: http
   AirportIP:
-    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/AirportIp.list
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/AirportIP.list
     path: ./ruleset/AirportIP.list
     behavior: classical
     interval: 86400
