@@ -1,4 +1,5 @@
-# 自定义走代理域名
+# 代理域名
 DOMAIN-SUFFIX,ip138.com
 DOMAIN-SUFFIX,tool.lu
 DOMAIN-SUFFIX,nhentai.net
+DOMAIN-SUFFIX,hanime1.me
