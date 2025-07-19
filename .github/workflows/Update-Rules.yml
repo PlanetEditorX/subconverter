@@ -64,7 +64,20 @@ jobs:
           sed 's/^/DOMAIN-SUFFIX,/g' ${{ matrix.download_file }} >> ${{ matrix.final_file }}
           echo "生成完成，保存到 ${{ matrix.final_file }}"
 
+      - name: Check for changes excluding timestamp
+        id: check_diff
+        run: |
+          # 比较规则文件的差异，忽略 # 更新 开头的行
+          if git diff --ignore-matching-lines='^# 更新' --quiet ${{ matrix.final_file }}; then
+            echo "No changes excluding timestamp."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected excluding timestamp."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+          
       - name: Commit Changes
+        if: steps.check_diff.outputs.has_changes == 'true'
         run: |
           # 提交更新
           git config --global user.name "GitHub Actions"
