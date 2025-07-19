@@ -36,14 +36,26 @@ jobs:
       - name: 删除订阅副本
         run: |
           rm -rf scripts/*.yaml
+
+      - name: 检查是否存在时间以外的更新
+        id: check_diff
+        run: |
+          # 比较规则文件的差异，忽略 # 更新 开头的行
+          if git diff --ignore-matching-lines='^# 更新' --quiet ${{ matrix.final_file }}; then
+            echo "No changes excluding timestamp."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected excluding timestamp."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
           
       - name: 推送subconverter更新
+        if: steps.check_diff.outputs.has_changes == 'true'
         run: |
           # 配置 Git 用户信息
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           # 检查是否有改动并提交
-          git status
           git add custom/AirportIP.list
           git commit -m "Automated update AirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
           git push
