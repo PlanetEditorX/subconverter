@@ -73,10 +73,14 @@ def get_ips_from_domains(file_path):
 
     for domain in sorted(list(set(domains))): # 去重并排序
         try:
-            ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
-            for ip in ips:
-                ip_addresses.add(ip)
-                print(f"解析 {domain} -> {ip}")
+            if is_valid_ip(domain):
+               print(f"解析 {domain} -> {domain}")
+               ip_addresses.add(domain)
+            else:
+                ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
+                for ip in ips:
+                    ip_addresses.add(ip)
+                    print(f"解析 {domain} -> {ip}")
         except socket.gaierror:
             print(f"无法解析域名: {domain}")
         except Exception as e:
