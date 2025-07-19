@@ -6,8 +6,7 @@ on:
     - cron: '0 16 * * *'  # 每天0点执行一次
 
 jobs:
-  Update:
-    runs-on: ubuntu-latest
+  rules_build:
     strategy:
       matrix:
         include:
@@ -27,7 +26,9 @@ jobs:
             file_name: anti-AD.list
             final_file: custom/anti-AD.list
             time: 20
-
+    runs-on: ubuntu-latest
+    name: ${{ matrix.name }} Rules Build
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
