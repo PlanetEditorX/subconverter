@@ -74,7 +74,7 @@ def get_ips_from_domains(file_path):
     for domain in sorted(list(set(domains))): # 去重并排序
         try:
             if is_valid_ip(domain):
-               print(f"解析 {domain} -> {domain}")
+               print(f"{domain} 为IP，无需解析。")
                ip_addresses.add(domain)
             else:
                 ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
