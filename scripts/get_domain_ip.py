@@ -73,7 +73,7 @@ def get_ips_from_domains(file_path):
 
     for domain in sorted(list(set(domains))): # 去重并排序
         try:
-            ips = resolve_with_specific_dns(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
+            ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
             for ip in ips:
                 ip_addresses.add(ip)
                 print(f"解析 {domain} -> {ip}")
