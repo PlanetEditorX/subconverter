@@ -37,7 +37,7 @@ jobs:
         run: |
           rm -rf scripts/*.yaml
 
-      - name: 检查是否存在时间以外的更新
+      - name: 检查是否存在`更新时间`以外的更新
         id: check_diff
         run: |
           # 比较规则文件的差异，忽略 # 更新 开头的行
