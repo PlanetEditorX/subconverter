@@ -64,7 +64,7 @@ jobs:
           sed 's/^/DOMAIN-SUFFIX,/g' ${{ matrix.download_file }} >> ${{ matrix.final_file }}
           echo "生成完成，保存到 ${{ matrix.final_file }}"
 
-      - name: Check for changes excluding timestamp
+      - name: 检查是否存在时间以外的更新
         id: check_diff
         run: |
           # 比较规则文件的差异，忽略 # 更新 开头的行
@@ -76,10 +76,9 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
           
-      - name: Commit Changes
+      - name: 提交更新
         if: steps.check_diff.outputs.has_changes == 'true'
         run: |
-          # 提交更新
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           sleep ${{ matrix.time }}  # 等待一段时间，避免同时提交
