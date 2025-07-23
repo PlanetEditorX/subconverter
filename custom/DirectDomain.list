@@ -5,6 +5,7 @@
 DOMAIN-SUFFIX,gongkaowo.com
 DOMAIN-SUFFIX,bdstatic.com
 DOMAIN-SUFFIX,chat.baidu.com
+DOMAIN-SUFFIX,tailscale.com
 
 # 域名后缀匹配
 # DOMAIN-SUFFIX,api.simpleallowcopy.com
