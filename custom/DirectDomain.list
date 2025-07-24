@@ -15,7 +15,3 @@ DOMAIN-SUFFIX,connectivity-check.ubuntu.com
 # 匹配关键字
 DOMAIN-KEYWORD,tailscale
 
-# 域名后缀匹配
-# DOMAIN-SUFFIX,api.simpleallowcopy.com
-# 屏蔽Microsoft Edge启动页广告
-# DOMAIN-SUFFIX,c.msn.com
