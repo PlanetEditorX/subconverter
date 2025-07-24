@@ -6,6 +6,12 @@ DOMAIN-SUFFIX,gongkaowo.com
 DOMAIN-SUFFIX,bdstatic.com
 DOMAIN-SUFFIX,chat.baidu.com
 
+# Ubuntu NTP 服务域名
+DOMAIN-SUFFIX,ntp.ubuntu.com
+DOMAIN-SUFFIX,ubuntu.pool.ntp.org
+# Ubuntu 连接性检查域名
+DOMAIN-SUFFIX,connectivity-check.ubuntu.com
+
 # 匹配关键字
 DOMAIN-KEYWORD,tailscale
 
