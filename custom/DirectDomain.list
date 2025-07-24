@@ -5,10 +5,11 @@
 DOMAIN-SUFFIX,gongkaowo.com
 DOMAIN-SUFFIX,bdstatic.com
 DOMAIN-SUFFIX,chat.baidu.com
-DOMAIN-SUFFIX,aminoeditor.com
 DOMAIN-SUFFIX,amino.dev
+DOMAIN-SUFFIX,aminoeditor.com
 DOMAIN-SUFFIX,ntp.ubuntu.com
 DOMAIN-SUFFIX,ubuntu.pool.ntp.org
+DOMAIN-SUFFIX,check.ubuntu.com
 DOMAIN-SUFFIX,connectivity-check.ubuntu.com
 
 # 匹配关键字
