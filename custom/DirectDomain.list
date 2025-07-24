@@ -1,15 +1,14 @@
 # 自定义直连域名
 # 完全域名匹配
-# DOMAIN,gongkaowo.com
+# DOMAIN,xxxxxx
 # 匹配所有子域名
 DOMAIN-SUFFIX,gongkaowo.com
 DOMAIN-SUFFIX,bdstatic.com
 DOMAIN-SUFFIX,chat.baidu.com
-
-# Ubuntu NTP 服务域名
+DOMAIN-SUFFIX,aminoeditor.com
+DOMAIN-SUFFIX,amino.dev
 DOMAIN-SUFFIX,ntp.ubuntu.com
 DOMAIN-SUFFIX,ubuntu.pool.ntp.org
-# Ubuntu 连接性检查域名
 DOMAIN-SUFFIX,connectivity-check.ubuntu.com
 
 # 匹配关键字
