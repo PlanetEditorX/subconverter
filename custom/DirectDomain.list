@@ -2,16 +2,16 @@
 # 完全域名匹配
 # DOMAIN,xxxxxx
 # 匹配所有子域名
-DOMAIN-SUFFIX,gongkaowo.com
-DOMAIN-SUFFIX,bdstatic.com
-DOMAIN-SUFFIX,chat.baidu.com
 DOMAIN-SUFFIX,amino.dev
 DOMAIN-SUFFIX,aminoeditor.com
-DOMAIN-SUFFIX,ntp.ubuntu.com
-DOMAIN-SUFFIX,ubuntu.pool.ntp.org
+DOMAIN-SUFFIX,bdstatic.com
+DOMAIN-SUFFIX,bing.com
+DOMAIN-SUFFIX,chat.baidu.com
 DOMAIN-SUFFIX,check.ubuntu.com
 DOMAIN-SUFFIX,connectivity-check.ubuntu.com
-
+DOMAIN-SUFFIX,gongkaowo.com
+DOMAIN-SUFFIX,ntp.ubuntu.com
+DOMAIN-SUFFIX,ubuntu.pool.ntp.org
 
 # 匹配关键字
 DOMAIN-KEYWORD,tailscale
