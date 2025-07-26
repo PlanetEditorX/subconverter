@@ -12,6 +12,7 @@ DOMAIN-SUFFIX,ubuntu.pool.ntp.org
 DOMAIN-SUFFIX,check.ubuntu.com
 DOMAIN-SUFFIX,connectivity-check.ubuntu.com
 
+
 # 匹配关键字
 DOMAIN-KEYWORD,tailscale
-
+DOMAIN-KEYWORD,miui
