@@ -110,11 +110,12 @@ proxy-groups:
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
       - 🚀 手动选择
-      - 🆓 免费节点
+      - 🎁 免费节点
       - DIRECT
   - name: 🚀 手动选择
     type: select
     include-all-proxies: true
+    exclude-filter: "(?i)FREE-.*"
   - name: ☯︎ 智能选择
     type: smart
     include-all-proxies: true
@@ -124,6 +125,7 @@ proxy-groups:
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
   - name: 🇭🇰 香港智能
     type: smart
     include-all-proxies: true
@@ -286,7 +288,7 @@ proxy-groups:
       - 🇯🇵 日本智能
       - 🚀 节点选择
       - 🎯 全球直连
-  - name: 🆓 免费节点
+  - name: 🎁 免费节点
     type: smart
     include-all-proxies: true
     filter: (FREE)
