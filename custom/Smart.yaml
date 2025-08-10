@@ -122,8 +122,8 @@ proxy-groups:
     url: https://www.gstatic.com/generate_204
     interval: 300
     policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;FREE-*:0;" # 排除免费节点
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 🇭🇰 香港智能
@@ -132,8 +132,8 @@ proxy-groups:
     filter: (港|HK|hk|Hong Kong|HongKong|hongkong|深港)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 🇸🇬 狮城智能
@@ -142,8 +142,8 @@ proxy-groups:
     filter: (新加坡|坡|狮城|SG|Singapore)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 🇺🇲 美国智能
@@ -152,8 +152,8 @@ proxy-groups:
     filter: (美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|ChatGPT|chatgpt)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 💬 Telegram
@@ -294,8 +294,8 @@ proxy-groups:
     filter: (FREE)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: false
+    uselightgbm: true
+    collectdata: false
     strategy: sticky-sessions
   - name: ✈️ 机场连接
     type: select
@@ -324,8 +324,8 @@ proxy-groups:
     filter: (日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
   - name: 🇨🇳 台湾智能
     type: smart
@@ -333,8 +333,8 @@ proxy-groups:
     filter: (台|新北|彰化|TW|Taiwan)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
   - name: 🌐 其他地区
     type: smart
@@ -342,8 +342,8 @@ proxy-groups:
     filter: ^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|深港|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|台|新北|彰化|TW|Taiwan|KR|Korea|KOR|首尔|韩|韓)).*
     url: https://www.gstatic.com/generate_204
     interval: 300
-    use-light-gbm: true
-    collect-data: true
+    uselightgbm: true
+    collectdata: true
     strategy: sticky-sessions
   - name: 🌐 社交媒体
     type: select
