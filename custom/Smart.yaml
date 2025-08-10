@@ -383,6 +383,7 @@ rules:
   - GEOSITE,category-public-tracker,🎯 全球直连
   - GEOSITE,category-communication,💬 Telegram
   - GEOSITE,category-social-media-!cn,🌐 社交媒体
+  - GEOSITE,bing,🤖 AI服务
   - GEOSITE,openai,🤖 AI服务
   - GEOSITE,category-ai-!cn,🤖 AI服务
   - GEOSITE,github,🚀 GitHub
