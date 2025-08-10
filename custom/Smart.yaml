@@ -115,16 +115,16 @@ proxy-groups:
     type: select
     include-all-proxies: true
   - name: ☯︎ 智能选择
-    type: url-test
+    type: smart
     include-all-proxies: true
     url: https://www.gstatic.com/generate_204
     interval: 300
-    policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;"
+    policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;FREE:0.1"
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
   - name: 🇭🇰 香港智能
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: (港|HK|hk|Hong Kong|HongKong|hongkong|深港)
     url: https://www.gstatic.com/generate_204
@@ -132,8 +132,9 @@ proxy-groups:
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
   - name: 🇸🇬 狮城智能
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: (新加坡|坡|狮城|SG|Singapore)
     url: https://www.gstatic.com/generate_204
@@ -141,8 +142,9 @@ proxy-groups:
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
   - name: 🇺🇲 美国智能
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: (美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|ChatGPT|chatgpt)
     url: https://www.gstatic.com/generate_204
@@ -150,16 +152,18 @@ proxy-groups:
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
-  - name: 💬 即时通讯
-    type: select
-    proxies:
-      - 🇭🇰 香港智能
-      - ☯︎ 智能选择
-      - 🇸🇬 狮城智能
-      - 🇨🇳 台湾智能
-      - 🇯🇵 日本智能
-      - 🚀 手动选择
-  - name: 🌐 社交媒体
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🇺🇲 美国智能
+    type: smart
+    include-all-proxies: true
+    filter: (美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|ChatGPT|chatgpt)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    use-light-gbm: true
+    collect-data: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 💬 Telegram
     type: select
     proxies:
       - 🇭🇰 香港智能
@@ -206,15 +210,12 @@ proxy-groups:
       - 🇯🇵 日本智能
       - 🌐 其他地区
       - 🚀 手动选择
-  - name: 🤖 Copilot
+  - name: 🇬 谷歌服务
     type: select
     proxies:
-      - ☯︎ 智能选择
       - 🇭🇰 香港智能
+      - ☯︎ 智能选择
       - 🇸🇬 狮城智能
-      - 🌐 其他地区
-      - 🚀 手动选择
-      - 🎯 全球直连
   - name: 🌎 国外媒体
     type: select
     proxies:
@@ -248,12 +249,6 @@ proxy-groups:
       - 🌐 其他地区
       - 🚀 手动选择
       - 🎯 全球直连
-  - name: 🇬 谷歌服务
-    type: select
-    proxies:
-      - 🇭🇰 香港智能
-      - ☯︎ 智能选择
-      - 🇸🇬 狮城智能
   - name: 🍎 苹果服务
     type: select
     proxies:
@@ -300,6 +295,15 @@ proxy-groups:
       - 🇯🇵 日本智能
       - 🚀 节点选择
       - 🎯 全球直连
+    - name: 🛩️ 免费节点
+      type: smart
+      include-all-proxies: true
+      filter: (FREE)
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+      use-light-gbm: true
+      collect-data: true
+      strategy: sticky-sessions
   - name: ✈️ 机场连接
     type: select
     proxies:
@@ -309,24 +313,20 @@ proxy-groups:
     type: select
     proxies:
       - REJECT
-      - DIRECT
   - name: 🍃 应用净化
     type: select
     proxies:
       - REJECT
-      - DIRECT
   - name: 🆎 AdBlock
     type: select
     proxies:
       - REJECT
-      - DIRECT
   - name: 🛡️ 隐私防护
     type: select
     proxies:
       - REJECT
-      - DIRECT
   - name: 🇯🇵 日本智能
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: (日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵)
     url: https://www.gstatic.com/generate_204
@@ -335,7 +335,7 @@ proxy-groups:
     collect-data: true
     strategy: sticky-sessions
   - name: 🇨🇳 台湾智能
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: (台|新北|彰化|TW|Taiwan)
     url: https://www.gstatic.com/generate_204
@@ -344,7 +344,7 @@ proxy-groups:
     collect-data: true
     strategy: sticky-sessions
   - name: 🌐 其他地区
-    type: url-test
+    type: smart
     include-all-proxies: true
     filter: ^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|深港|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|台|新北|彰化|TW|Taiwan|KR|Korea|KOR|首尔|韩|韓)).*
     url: https://www.gstatic.com/generate_204
@@ -352,6 +352,15 @@ proxy-groups:
     use-light-gbm: true
     collect-data: true
     strategy: sticky-sessions
+  - name: 🌐 社交媒体
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🚀 手动选择
   - name: 🎯 全球直连
     type: select
     proxies:
@@ -379,9 +388,8 @@ rules:
   - RULE-SET,🎯 全球直连_SteamCDN,🎯 全球直连
   - GEOSITE,category-game-platforms-download,🎯 全球直连
   - GEOSITE,category-public-tracker,🎯 全球直连
-  - GEOSITE,category-communication,💬 即时通讯
+  - GEOSITE,category-communication,💬 Telegram
   - GEOSITE,category-social-media-!cn,🌐 社交媒体
-  - GEOSITE,bing,🤖 Copilot
   - GEOSITE,openai,🤖 AI服务
   - GEOSITE,category-ai-!cn,🤖 AI服务
   - GEOSITE,github,🚀 GitHub
@@ -395,7 +403,7 @@ rules:
   - GEOSITE,category-games,🎮 游戏平台
   - GEOSITE,category-entertainment,🌎 国外媒体
   - GEOSITE,category-ecommerce,🛒 国外电商
-  - GEOIP,telegram,💬 即时通讯
+  - GEOIP,telegram,💬 Telegram
   - GEOIP,twitter,🌐 社交媒体
   - GEOIP,facebook,🌐 社交媒体
   - GEOIP,google,🇬 谷歌服务
