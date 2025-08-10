@@ -295,7 +295,7 @@ proxy-groups:
     url: https://www.gstatic.com/generate_204
     interval: 300
     use-light-gbm: true
-    collect-data: true
+    collect-data: false
     strategy: sticky-sessions
   - name: ✈️ 机场连接
     type: select
