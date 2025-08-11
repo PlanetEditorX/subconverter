@@ -34,6 +34,8 @@ def resolve_with_all_dns_servers(domain, dns_server_ips):
             for rdata in answers:
                 all_found_ips.add(str(rdata))
             print(f"从 {dns_server_ip} 找到了 IP: {[str(rdata) for rdata in answers]}")
+            if not all_dns_queries:
+                break
 
         except dns.resolver.NoAnswer:
             print(f"域名 '{domain}' 在 DNS 服务器 '{dns_server_ip}' 上没有找到 A 记录。")
@@ -91,6 +93,27 @@ def get_ips_from_domains(file_path):
 
 ip_list = []
 title_nums = 0
+
+FileName = 'AirportIP.list'
+# 检查是否有外部参数传入
+if len(sys.argv) > 1:
+    FileName = sys.argv[1]
+else:
+    print("没有接收到外部参数。默认写入AirportIP.list")
+
+match FileName:
+    case 'AirportIP.list':
+        content_describe = "订阅机场IP解析结果"
+        # 仅订阅机场解析所有 DNS 查询
+        all_dns_queries = True
+    case 'FreeAirportIP.list':
+        content_describe = "免费机场IP解析结果"
+        # 免费机场只解析一次 DNS 查询
+        all_dns_queries = False
+    case _:
+        content_describe = "IP解析结果"
+        all_dns_queries = False
+
 # 遍历当前目录下的所有 YAML 文件
 for file_name in glob.glob('*.yaml'):
     print(f"正在处理文件: {file_name}")
@@ -115,21 +138,6 @@ utc_now = datetime.datetime.now(pytz.utc)
 # 转换为北京时间
 beijing_tz = pytz.timezone('Asia/Shanghai')
 beijing_now = utc_now.astimezone(beijing_tz)
-
-# 检查是否有外部参数传入
-if len(sys.argv) > 1:
-    FileName = sys.argv[1]
-else:
-    print("没有接收到外部参数。默认写入AirportIP.list")
-    FileName = 'AirportIP.list'
-
-match FileName:
-    case 'AirportIP.list':
-        content_describe = "订阅机场IP解析结果"
-    case 'FreeAirportIP.list':
-        content_describe = "免费机场IP解析结果"
-    case _:
-        content_describe = "机场IP解析结果"
 
 # 将结果写入到 AirportIP.list 文件
 with open(f'../custom/{FileName}', 'w', encoding='utf-8') as f:
