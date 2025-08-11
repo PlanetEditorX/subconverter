@@ -1,7 +1,7 @@
 name: Update Free Airport IP
 
 on:
-  # push:
+  push:
   workflow_dispatch:  # 手动触发工作流
   schedule:
     - cron: '0 20 * * *'
@@ -26,7 +26,8 @@ jobs:
           cd scripts
           curl -sL https://raw.githubusercontent.com/PlanetEditorX/subs-check/refs/heads/main/config/config.example.yaml -o config.yaml
           ls -l config.yaml
-          yq '.free-sub-urls[]' config.yaml
+          yq '.free-sub-urls[]' config.yaml | xargs -n 1 wget -P ./downloads
+          ls -l ./downloads
           # curl -o mm.yaml ${{ secrets.MM_YAML }}
           # curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
           
