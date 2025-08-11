@@ -28,7 +28,6 @@ jobs:
           ls -l config.yaml
           yq '.free-sub-urls[]' config.yaml | xargs -n 1 wget
           ls -l
-          
       
       - name: 执行脚本
         run: |
@@ -44,12 +43,21 @@ jobs:
         id: check_diff
         run: |
           # 比较规则文件的差异，忽略 # 更新 开头的行
-          if git diff --ignore-matching-lines='^# 更新' --quiet ${{ matrix.final_file }}; then
-            echo "No changes excluding timestamp."
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+          # Check for untracked files or changes in tracked files
+          if [ -n "$(git status --porcelain -- custom/FreeAirportIP.list)" ]; then
+            # Stage the file to include it in git diff (if it's new or modified)
+            git add custom/FreeAirportIP.list
+            # Check for differences, ignoring lines starting with '# 更新'
+            if git diff --staged --ignore-matching-lines='^# 更新' --quiet custom/FreeAirportIP.list; then
+              echo "No changes excluding timestamp."
+              echo "has_changes=false" >> $GITHUB_OUTPUT
+            else
+              echo "Changes detected excluding timestamp."
+              echo "has_changes=true" >> $GITHUB_OUTPUT
+            fi
           else
-            echo "Changes detected excluding timestamp."
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "No changes (no new or modified files)."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
           
       - name: 推送subconverter更新
@@ -60,6 +68,6 @@ jobs:
           git config user.email "actions@github.com"
           # 检查是否有改动并提交
           git add custom/FreeAirportIP.list
-          git commit -m "Automated update AirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
+          git commit -m "Automated update FreeAirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
           git push
           
