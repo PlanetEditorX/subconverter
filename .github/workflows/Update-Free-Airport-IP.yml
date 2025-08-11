@@ -26,41 +26,40 @@ jobs:
           cd scripts
           curl -sL https://raw.githubusercontent.com/PlanetEditorX/subs-check/refs/heads/main/config/config.example.yaml -o config.yaml
           ls -l config.yaml
-          yq '.free-sub-urls[]' config.yaml | xargs -n 1 wget -P ./downloads
-          ls -l ./downloads
-          # curl -o mm.yaml ${{ secrets.MM_YAML }}
-          # curl -o 6b.yaml ${{ secrets.SIXB_YAML }}
+          yq '.free-sub-urls[]' config.yaml | xargs -n 1 wget
+          ls -l
           
       
-      # - name: 执行脚本
-      #   run: |
-      #     cd scripts
-      #     ls -l
-      #     python get_domain_ip.py
-      # - name: 删除订阅副本
-      #   run: |
-      #     rm -rf scripts/*.yaml
-
-      # - name: 检查是否存在`更新时间`以外的更新
-      #   id: check_diff
-      #   run: |
-      #     # 比较规则文件的差异，忽略 # 更新 开头的行
-      #     if git diff --ignore-matching-lines='^# 更新' --quiet ${{ matrix.final_file }}; then
-      #       echo "No changes excluding timestamp."
-      #       echo "has_changes=false" >> $GITHUB_OUTPUT
-      #     else
-      #       echo "Changes detected excluding timestamp."
-      #       echo "has_changes=true" >> $GITHUB_OUTPUT
-      #     fi
+      - name: 执行脚本
+        run: |
+          cd scripts
+          ls -l
+          python get_domain_ip.py FreeAirportIP.list
           
-      # - name: 推送subconverter更新
-      #   if: steps.check_diff.outputs.has_changes == 'true'
-      #   run: |
-      #     # 配置 Git 用户信息
-      #     git config user.name "GitHub Actions"
-      #     git config user.email "actions@github.com"
-      #     # 检查是否有改动并提交
-      #     git add custom/AirportIP.list
-      #     git commit -m "Automated update AirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
-      #     git push
+      - name: 删除订阅副本
+        run: |
+          rm -rf scripts/*.yaml
+
+      - name: 检查是否存在`更新时间`以外的更新
+        id: check_diff
+        run: |
+          # 比较规则文件的差异，忽略 # 更新 开头的行
+          if git diff --ignore-matching-lines='^# 更新' --quiet ${{ matrix.final_file }}; then
+            echo "No changes excluding timestamp."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected excluding timestamp."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 推送subconverter更新
+        if: steps.check_diff.outputs.has_changes == 'true'
+        run: |
+          # 配置 Git 用户信息
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          # 检查是否有改动并提交
+          git add custom/FreeAirportIP.list
+          git commit -m "Automated update AirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
+          git push
           
