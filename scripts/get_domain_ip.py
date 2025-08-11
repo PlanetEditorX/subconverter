@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import glob
 import pytz
 import socket
@@ -74,8 +75,8 @@ def get_ips_from_domains(file_path):
     for domain in sorted(list(set(domains))): # 去重并排序
         try:
             if is_valid_ip(domain):
-               print(f"{domain} 为IP，无需解析。")
-               ip_addresses.add(domain)
+                print(f"{domain} 为IP，无需解析。")
+                ip_addresses.add(domain)
             else:
                 ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
                 for ip in ips:
@@ -115,10 +116,25 @@ utc_now = datetime.datetime.now(pytz.utc)
 beijing_tz = pytz.timezone('Asia/Shanghai')
 beijing_now = utc_now.astimezone(beijing_tz)
 
+# 检查是否有外部参数传入
+if len(sys.argv) > 1:
+    FileName = sys.argv[1]
+else:
+    print("没有接收到外部参数。默认写入AirportIP.list")
+    FileName = 'AirportIP.list'
+
+match FileName:
+    case 'AirportIP.list':
+        content_describe = "订阅机场IP解析结果"
+    case 'FreeAirportIP.list':
+        content_describe = "免费机场IP解析结果"
+    case _:
+        content_describe = "机场IP解析结果"
+
 # 将结果写入到 AirportIP.list 文件
-with open('../custom/AirportIP.list', 'w', encoding='utf-8') as f:
+with open(f'../custom/{FileName}', 'w', encoding='utf-8') as f:
     f.write("######################################\n")
-    f.write("# 内容：机场IP解析结果\n")
+    f.write(f"# 内容：{content_describe}\n")
     f.write("# 数量：{}\n".format(len(ip_list)-title_nums))
     f.write("# 更新: {}\n".format(beijing_now.strftime("%Y-%m-%d %H:%M:%S")))
     f.write("######################################\n")
