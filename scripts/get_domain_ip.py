@@ -73,19 +73,28 @@ def get_ips_from_domains(file_path):
         return
 
     print(f"在文件中找到 {len(domains)} 个潜在域名。开始解析...")
-
-    for domain in sorted(list(set(domains))): # 去重并排序
+    # 去重并排序
+    for domain in sorted(list(set(domains))):
         try:
             if is_valid_ip(domain):
-                print(f"{domain} 为IP，无需解析。")
-                ip_addresses.add(domain)
+                ip_obj = ipaddress.ip_address(domain)
+                if isinstance(ip_obj, ipaddress.IPv4Address):
+                    print(f"{domain} 为IPv4，无需解析。")
+                    ip_addresses.add(domain)
+                else:
+                    print(f"{domain} 是IPv6地址，已跳过。")
             else:
                 ips = resolve_with_all_dns_servers(domain, ["8.8.8.8", "1.1.1.1", "223.5.5.5", "94.140.14.14"])
                 for ip in ips:
-                    ip_addresses.add(ip)
-                    print(f"解析 {domain} -> {ip}")
-        except socket.gaierror:
-            print(f"无法解析域名: {domain}")
+                    try:
+                        ip_obj = ipaddress.ip_address(ip)
+                        if isinstance(ip_obj, ipaddress.IPv4Address):
+                            ip_addresses.add(ip)
+                            print(f"解析 {domain} -> {ip}")
+                        else:
+                            print(f"解析 {domain} 得到 IPv6 地址 {ip}，已跳过。")
+                    except ValueError:
+                        print(f"解析 {domain} 得到无效 IP: {ip}")
         except Exception as e:
             print(f"解析 {domain} 时发生错误: {e}")
 
