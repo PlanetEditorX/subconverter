@@ -77,11 +77,18 @@ rule-providers:
     path: ./ruleset/DirectIP.list
     interval: 86400
     format: text
-  ✈️ 机场连接:
+  ✈️ 机场连接_Sub:
     type: http
     behavior: classical
     url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/AirportIP.list
     path: ./ruleset/AirportIP.list
+    interval: 86400
+    format: text
+  ✈️ 机场连接_Free:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/FreeAirportIP.list
+    path: ./ruleset/FreeAirportIP.list
     interval: 86400
     format: text
   🎯 全球直连_CustomDirect:
@@ -374,7 +381,8 @@ rules:
   - RULE-SET,🤖 AI服务_PlanetEditorX,🤖 AI服务
   - RULE-SET,🎯 全球直连_DirectDomain,🎯 全球直连
   - RULE-SET,🎯 全球直连_DirectIP,🎯 全球直连
-  - RULE-SET,✈️ 机场连接,✈️ 机场连接
+  - RULE-SET,✈️ 机场连接_Sub,✈️ 机场连接
+  - RULE-SET,✈️ 机场连接_Free,✈️ 机场连接
   - GEOSITE,private,🎯 全球直连
   - GEOIP,private,🎯 全球直连
   - RULE-SET,🎯 全球直连_CustomDirect,🎯 全球直连
