@@ -231,6 +231,15 @@ proxy-groups:
       - 🎁 免费节点
       - 🚀 手动选择
       - 🎯 全球直连
+  - name: 🎁 免费节点
+    type: smart
+    include-all-proxies: true
+    filter: (FREE)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: false
+    strategy: sticky-sessions
   - name: 🛒 国外电商
     type: select
     proxies:
@@ -301,15 +310,6 @@ proxy-groups:
       - 🚀 手动选择
       - 🎁 免费节点
       - 🎯 全球直连
-  - name: 🎁 免费节点
-    type: smart
-    include-all-proxies: true
-    filter: (FREE)
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    uselightgbm: true
-    collectdata: false
-    strategy: sticky-sessions
   - name: ✈️ 机场连接
     type: select
     proxies:
