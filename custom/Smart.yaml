@@ -163,7 +163,7 @@ proxy-groups:
     collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
-  - name: 🇺🇲 美国VPS
+  - name: 🇺🇲 VPS节点
     type: smart
     include-all-proxies: true
     filter: (VPS)
