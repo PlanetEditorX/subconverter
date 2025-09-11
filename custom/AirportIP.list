@@ -1,17 +1,14 @@
 ######################################
 # 内容：订阅机场IP解析结果
-# 数量：25
-# 更新: 2025-09-11 00:20:44
+# 数量：21
+# 更新: 2025-09-12 00:18:26
 ######################################
 
 # 6b.yaml 解析结果
 IP-CIDR,1.168.175.68/32,no-resolve
 IP-CIDR,38.180.107.67/32,no-resolve
-IP-CIDR,120.237.215.26/32,no-resolve
-IP-CIDR,120.237.215.27/32,no-resolve
-IP-CIDR,120.237.215.30/32,no-resolve
-IP-CIDR,120.238.109.210/32,no-resolve
-IP-CIDR,139.226.187.82/32,no-resolve
+IP-CIDR,139.226.187.164/32,no-resolve
+IP-CIDR,139.226.187.251/32,no-resolve
 IP-CIDR,147.45.49.251/32,no-resolve
 IP-CIDR,151.243.22.19/32,no-resolve
 IP-CIDR,151.243.22.20/32,no-resolve
@@ -29,6 +26,5 @@ IP-CIDR,116.148.227.118/32,no-resolve
 IP-CIDR,116.196.154.111/32,no-resolve
 IP-CIDR,120.233.87.164/32,no-resolve
 IP-CIDR,150.138.255.123/32,no-resolve
-IP-CIDR,183.233.97.10/32,no-resolve
 IP-CIDR,183.233.97.11/32,no-resolve
 IP-CIDR,183.233.97.22/32,no-resolve
