@@ -41,7 +41,7 @@
 let inArg;
 try {
 	// Sub-Store 环境：$arguments 存在，直接使用（支持 #name=MM 等）
-	if (typeof $arguments !== 'undefined') {
+	if ($arguments) {
 		inArg = $arguments;
 		if (debug) console.log('Parsed $arguments:', inArg);  // Sub-Store 调试输出
 	} else {
