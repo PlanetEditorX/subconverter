@@ -52,55 +52,32 @@ try {
 	}
 } catch (e) {
 	// 模拟 $arguments 的解析函数（Node.js 调试用）
-	console.log('Debug');
-	function parseArguments() {
-		const args = process.argv.slice(2);
-		const override = {};
-		args.forEach(arg => {
-			if (arg.startsWith('--')) {
-				const [key, value] = arg.slice(2).split('=');
-				override[key] = value === 'true' ? true : (value === 'false' ? false : decodeURIComponent(value));
-			}
-		});
-		const envArgs = process.env.ARGUMENTS;
-		let envOverride = {};
-		if (envArgs) {
-			try {
-				envOverride = JSON.parse(envArgs);
-			} catch (e) {
-				console.warn('Invalid JSON in ARGUMENTS env:', e);
-			}
-		}
-		return { ...envOverride, ...override };
-	}
-
-	// 默认参数
-	const defaultArg = {
-		blkey: 'iplc+GPT>ChatGPT+NF+IPLC+MM',
-		flag: true,
-		in: 'zh',
-		out: 'cn',
-		nf: true,
-		nx: false,
-		bl: true,
-		blgd: true,
-		blpx: true,
-		blnx: false,
-		one: false,
-		debug: true,
-		clear: false,
-		nm: false,
-		fgf: ' ',
-		sn: '-',
-		name: '',  // 默认空（Sub-Store 通过 #name=MM 覆盖）
-		blockquic: 'on'
-	};
-
-	// 合并：模拟参数覆盖默认
-	const argumentsSim = parseArguments();
-	inArg = { ...defaultArg, ...argumentsSim };
-	if (inArg.debug) console.log('Merged inArg (Node.js):', inArg);
+	console.log('$arguments not defined');
 }
+// 默认参数
+const defaultArg = {
+	blkey: 'iplc+GPT>ChatGPT+NF+IPLC+MM',
+	flag: true,
+	in: 'zh',
+	out: 'cn',
+	nf: true,
+	nx: false,
+	bl: true,
+	blgd: true,
+	blpx: true,
+	blnx: false,
+	one: false,
+	debug: true,
+	clear: false,
+	nm: false,
+	fgf: ' ',
+	sn: '-',
+	name: '',  // 默认空（Sub-Store 通过 #name=MM 覆盖）
+	blockquic: 'on'
+};
+
+inArg = { ...defaultArg, ...inArg };
+if (inArg.debug) console.log('Merged inArg (Node.js):', inArg);
 
 // 参数解构
 const nx = inArg.nx || false,
@@ -361,7 +338,7 @@ function jxh(e) {
 			const parts = node.name.split(FGF);
 			const restPart = parts.slice(2).join(FGF).trim();  // trim 去除多余空格
 			const newName = `${parts[0] || ''}${FGF}${node._region}${XHFGF}${t.count.toString().padStart(2, "0")}${FGF}${restPart}`;
-			t.items.push({ ...node, name: newName });
+			t.items.push({ ...node, name: newName.trim() });
 		} else {
 			const parts = node.name.split(FGF);
 			const restPart = parts.slice(2).join(FGF).trim();  // trim 去除多余空格
