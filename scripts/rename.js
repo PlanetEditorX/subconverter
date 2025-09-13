@@ -38,54 +38,66 @@
  * [blockquic] blockquic=on 阻止; blockquic=off 不阻止
  */
 
-// 模拟 $arguments 的解析函数（从命令行或环境变量）
-function parseArguments() {
-	const args = process.argv.slice(2);
-	const override = {};
-	args.forEach(arg => {
-		if (arg.startsWith('--')) {
-			const [key, value] = arg.slice(2).split('=');
-			override[key] = value === 'true' ? true : (value === 'false' ? false : decodeURIComponent(value));
-		}
-	});
-	const envArgs = process.env.ARGUMENTS;
-	let envOverride = {};
-	if (envArgs) {
-		try {
-			envOverride = JSON.parse(envArgs);
-		} catch (e) {
-			console.warn('Invalid JSON in ARGUMENTS env:', e);
-		}
+let inArg;
+try {
+	// Sub-Store 环境：$arguments 存在，直接使用（支持 #name=MM 等）
+	if (typeof $arguments !== 'undefined') {
+		inArg = $arguments;
+		if (debug) console.log('Parsed $arguments:', inArg);  // Sub-Store 调试输出
+	} else {
+		// Node.js 环境：fallback 到模拟解析
+		throw new Error('$arguments not defined');
 	}
-	return { ...envOverride, ...override };
+} catch (e) {
+	// 模拟 $arguments 的解析函数（Node.js 调试用）
+	function parseArguments() {
+		const args = process.argv.slice(2);
+		const override = {};
+		args.forEach(arg => {
+			if (arg.startsWith('--')) {
+				const [key, value] = arg.slice(2).split('=');
+				override[key] = value === 'true' ? true : (value === 'false' ? false : decodeURIComponent(value));
+			}
+		});
+		const envArgs = process.env.ARGUMENTS;
+		let envOverride = {};
+		if (envArgs) {
+			try {
+				envOverride = JSON.parse(envArgs);
+			} catch (e) {
+				console.warn('Invalid JSON in ARGUMENTS env:', e);
+			}
+		}
+		return { ...envOverride, ...override };
+	}
+
+	// 默认参数
+	const defaultArg = {
+		blkey: 'iplc+GPT>ChatGPT+NF+IPLC+MM',
+		flag: true,
+		in: 'zh',
+		out: 'cn',
+		nf: true,
+		nx: false,
+		bl: true,
+		blgd: true,
+		blpx: true,
+		blnx: false,
+		one: false,
+		debug: true,
+		clear: false,
+		nm: false,
+		fgf: ' ',
+		sn: '-',
+		name: '',  // 默认空（Sub-Store 通过 #name=MM 覆盖）
+		blockquic: 'on'
+	};
+
+	// 合并：模拟参数覆盖默认
+	const argumentsSim = parseArguments();
+	inArg = { ...defaultArg, ...argumentsSim };
+	if (inArg.debug) console.log('Merged inArg (Node.js):', inArg);
 }
-
-// 默认参数
-const defaultArg = {
-	blkey: 'iplc+GPT>ChatGPT+NF+IPLC+MM',
-	flag: true,
-	in: 'zh',
-	out: 'cn',
-	nf: true,
-	nx: false,
-	bl: true,
-	blgd: true,
-	blpx: true,
-	blnx: false,
-	one: false,
-	debug: true,
-	clear: false,
-	nm: false,
-	fgf: ' ',
-	sn: '-',
-	name: '',
-	blockquic: 'on'
-};
-
-// 合并：$arguments 存在时替换默认
-const argumentsSim = parseArguments();
-const inArg = { ...defaultArg, ...argumentsSim };
-if (inArg.debug) console.log('Merged inArg:', inArg);
 
 // 参数解构
 const nx = inArg.nx || false,
