@@ -1,7 +1,7 @@
 name: Update Free Airport IP
 
 on:
-  push:
+  # push:
   workflow_dispatch:  # 手动触发工作流
   schedule:
     - cron: '0 20 * * *'
@@ -20,7 +20,7 @@ jobs:
           sudo apt-get install -y curl jq
           python -m pip install --upgrade pip
           pip install dnspython
-          
+
       - name: 获取订阅链接
         run: |
           cd scripts
@@ -28,13 +28,13 @@ jobs:
           ls -l config.yaml
           yq '.free-sub-urls[]' config.yaml | xargs -n 1 wget
           ls -l
-      
+
       - name: 执行脚本
         run: |
           cd scripts
           ls -l
           python get_domain_ip.py FreeAirportIP.list
-          
+
       - name: 删除订阅副本
         run: |
           rm -rf scripts/*.yaml
@@ -59,7 +59,7 @@ jobs:
             echo "No changes (no new or modified files)."
             echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
-          
+
       - name: 推送subconverter更新
         if: steps.check_diff.outputs.has_changes == 'true'
         run: |
@@ -70,4 +70,4 @@ jobs:
           git add custom/FreeAirportIP.list
           git commit -m "Automated update FreeAirportIP.list from Repo openwrt workflow" || echo "No changes to commit"
           git push
-          
+
