@@ -77,7 +77,10 @@ const defaultArg = {
 };
 
 inArg = { ...defaultArg, ...inArg };
-if (inArg.debug) console.log('Merged inArg (Node.js):', inArg);
+
+console.log("Default Arg:", defaultArg)
+
+console.log('Merged inArg (Node.js):', inArg);
 
 // 参数解构
 const nx = inArg.nx || false,
@@ -386,13 +389,14 @@ function fampx(pro) {
 	return wnout.concat(wis);
 }
 
-// 测试数据（用于 VSCode 调试）
-const samplePro = [
-	{ name: '新加坡 1' },
-	{ name: '新加坡 2' },
-	{ name: '香港 IPLC 2x GPT' },
-	{ name: '美国 1x' },
-	{ name: '乱名 测试' }
-];
-const result = operator(samplePro);
-console.log('Renamed nodes:', result.map(p => p.name));
+// // 测试数据（用于 VSCode 调试）
+// const samplePro = [
+// 	{ name: '新加坡 1' },
+// 	{ name: '新加坡 2' },
+// 	{ name: '香港 IPLC 2x GPT' },
+// 	{ name: '美国 1x' },
+// 	{ name: '乱名 测试' }
+// ];
+// const result = operator(samplePro);
+// console.log('Renamed nodes:', result.map(p => p.name));
+console.log('========== rename.js end ========== ');
