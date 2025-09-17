@@ -175,7 +175,7 @@ proxy-groups:
     collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
-  - name: 💯 优选节点
+  - name: 🥇 优选节点
     type: smart
     proxies:
       - 🇭🇰 香港智能
@@ -189,7 +189,7 @@ proxy-groups:
     max-failed-times: 5
     lazy: true
     proxies:
-      - 💯 优选节点
+      - 🥇 优选节点
       - 🔥 VPS节点
   - name: 👒 霉霉机场
     type: smart
