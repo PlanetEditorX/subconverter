@@ -63,6 +63,13 @@ rule-providers:
     path: ./ruleset/ChatGPT.list
     interval: 86400
     format: text
+  📱 Tiktok:
+    type: http
+    behavior: classical
+    url: https://github.com/blackmatrix7/ios_rule_script/blob/master/rule/Clash/TikTok/TikTok.list
+    path: ./ruleset/TikTok.list
+    interval: 86400
+    format: text
   🎯 全球直连_DirectDomain:
     type: http
     behavior: classical
@@ -118,6 +125,8 @@ proxy-groups:
       - 🇯🇵 日本智能
       - 🔥 VPS节点
       - 🎖️ 链式代理
+      - 👒 霉霉机场
+      - 🐮 牛逼机场
       - 🚀 手动选择
       - 🎁 免费节点
       - DIRECT
@@ -183,7 +192,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇯🇵 日本智能
   - name: 🎖️ 链式代理
-    type: 'relay'
+    type: relay
     interval: 300
     timeout: 5000
     max-failed-times: 5
@@ -302,6 +311,32 @@ proxy-groups:
     uselightgbm: true
     collectdata: false
     strategy: sticky-sessions
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔥 VPS节点
+      - 🎖️ 链式代理
+      - 🚀 节点选择
+      - 🚀 手动选择
+      - 🎁 免费节点
+      - 🎯 全球直连
+  - name: 📱 Tiktok
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔥 VPS节点
+      - 🎖️ 链式代理
+      - 🚀 手动选择
+      - 🎁 免费节点
   - name: 🛒 国外电商
     type: select
     proxies:
@@ -351,6 +386,15 @@ proxy-groups:
       - 🎖️ 链式代理
       - 🚀 手动选择
       - REJECT
+  - name: 🌐 社交媒体
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🚀 手动选择
   - name: 🎮 游戏平台
     type: select
     proxies:
@@ -366,20 +410,6 @@ proxy-groups:
     proxies:
       - 🎯 全球直连
       - 🚀 手动选择
-  - name: 🐟 漏网之鱼
-    type: select
-    proxies:
-      - ☯︎ 智能选择
-      - 🇭🇰 香港智能
-      - 🇸🇬 狮城智能
-      - 🇨🇳 台湾智能
-      - 🇯🇵 日本智能
-      - 🔥 VPS节点
-      - 🎖️ 链式代理
-      - 🚀 节点选择
-      - 🚀 手动选择
-      - 🎁 免费节点
-      - 🎯 全球直连
   - name: ✈️ 机场连接
     type: select
     proxies:
@@ -428,19 +458,11 @@ proxy-groups:
     uselightgbm: true
     collectdata: true
     strategy: sticky-sessions
-  - name: 🌐 社交媒体
-    type: select
-    proxies:
-      - 🇭🇰 香港智能
-      - ☯︎ 智能选择
-      - 🇸🇬 狮城智能
-      - 🇨🇳 台湾智能
-      - 🇯🇵 日本智能
-      - 🚀 手动选择
   - name: 🎯 全球直连
     type: select
     proxies:
       - DIRECT
+      - 🚀 手动选择
 
 # 规则部分
 rules:
