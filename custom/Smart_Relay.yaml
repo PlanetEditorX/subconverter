@@ -184,66 +184,12 @@ proxy-groups:
     collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
-  - name: 🏆 优选节点
-    type: smart
-    proxies:
-      - 🇭🇰 香港智能
-      - 🇨🇳 台湾智能
-      - 🇸🇬 狮城智能
-      - 🇯🇵 日本智能
   - name: 🔗 链式代理
     type: select
     proxies:
       - 🥇 优选链式
       - 🥈 霉霉链式
       - 🥉 牛逼链式
-  - name: 🥇 优选链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
-    proxies:
-      - 🏆 优选节点
-      - 🔥 VPS节点
-  - name: 🥈 霉霉链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
-    proxies:
-      - 👒 霉霉机场
-      - 🔥 VPS节点
-  - name: 🥉 牛逼链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
-    proxies:
-      - 🐮 牛逼机场
-      - 🔥 VPS节点
-  - name: 👒 霉霉机场
-    type: smart
-    include-all-proxies: true
-    filter: (MM)
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
-    exclude-filter: "(?i)FREE-.*"
-  - name: 🐮 牛逼机场
-    type: smart
-    include-all-proxies: true
-    filter: (6B)
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
-    exclude-filter: "(?i)FREE-.*"
   - name: 💬 Telegram
     type: select
     proxies:
@@ -349,6 +295,60 @@ proxy-groups:
       - 🚀 手动选择
       - 🎁 免费节点
       - 🎯 全球直连
+  - name: 🥇 优选链式
+    type: relay
+    interval: 300
+    timeout: 5000
+    max-failed-times: 5
+    lazy: true
+    proxies:
+      - 🏆 优选节点
+      - 🔥 VPS节点
+  - name: 🥈 霉霉链式
+    type: relay
+    interval: 300
+    timeout: 5000
+    max-failed-times: 5
+    lazy: true
+    proxies:
+      - 👒 霉霉机场
+      - 🔥 VPS节点
+  - name: 🥉 牛逼链式
+    type: relay
+    interval: 300
+    timeout: 5000
+    max-failed-times: 5
+    lazy: true
+    proxies:
+      - 🐮 牛逼机场
+      - 🔥 VPS节点
+  - name: 🏆 优选节点
+    type: smart
+    proxies:
+      - 🇭🇰 香港智能
+      - 🇨🇳 台湾智能
+      - 🇸🇬 狮城智能
+      - 🇯🇵 日本智能
+  - name: 👒 霉霉机场
+    type: smart
+    include-all-proxies: true
+    filter: (MM)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🐮 牛逼机场
+    type: smart
+    include-all-proxies: true
+    filter: (6B)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
   - name: 📱 Tiktok
     type: select
     proxies:
