@@ -185,11 +185,12 @@ proxy-groups:
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 🔗 链式代理
-    type: select
+    type: fallback
     proxies:
       - 🥇 优选链式
       - 🥈 霉霉链式
       - 🥉 牛逼链式
+      - 🇭🇰 香港智能
   - name: 💬 Telegram
     type: select
     proxies:
