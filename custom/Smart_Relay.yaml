@@ -123,7 +123,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 👒 霉霉机场
       - 🐮 牛逼机场
@@ -184,21 +184,45 @@ proxy-groups:
     collectdata: true
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
-  - name: 🥇 优选节点
+  - name: 🏆 优选节点
     type: smart
     proxies:
       - 🇭🇰 香港智能
       - 🇨🇳 台湾智能
       - 🇸🇬 狮城智能
       - 🇯🇵 日本智能
-  - name: 🎖️ 链式代理
+  - name: 🔗 链式代理
+    type: select
+    proxies:
+      - 🥇 优选链式
+      - 🥈 霉霉链式
+      - 🥉 牛逼链式
+  - name: 🥇 优选链式
     type: relay
     interval: 300
     timeout: 5000
     max-failed-times: 5
     lazy: true
     proxies:
-      - 🥇 优选节点
+      - 🏆 优选节点
+      - 🔥 VPS节点
+  - name: 🥈 霉霉链式
+    type: relay
+    interval: 300
+    timeout: 5000
+    max-failed-times: 5
+    lazy: true
+    proxies:
+      - 👒 霉霉机场
+      - 🔥 VPS节点
+  - name: 🥉 牛逼链式
+    type: relay
+    interval: 300
+    timeout: 5000
+    max-failed-times: 5
+    lazy: true
+    proxies:
+      - 🐮 牛逼机场
       - 🔥 VPS节点
   - name: 👒 霉霉机场
     type: smart
@@ -228,7 +252,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 手动选择
   - name: 🚀 GitHub
@@ -239,7 +263,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 手动选择
       - 🎁 免费节点
@@ -249,7 +273,7 @@ proxy-groups:
     proxies:
       - 🇺🇲 美国智能
       - ☯︎ 智能选择
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🌐 其他地区
       - 🎁 免费节点
@@ -262,7 +286,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🎁 免费节点
       - 🚀 节点选择
@@ -275,7 +299,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🌐 其他地区
       - 🎁 免费节点
@@ -286,7 +310,7 @@ proxy-groups:
       - 🇭🇰 香港智能
       - ☯︎ 智能选择
       - 🇸🇬 狮城智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
   - name: 🌎 国外媒体
     type: select
@@ -296,7 +320,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🌐 其他地区
       - 🎁 免费节点
@@ -319,7 +343,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 节点选择
       - 🚀 手动选择
@@ -334,7 +358,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 手动选择
       - 🎁 免费节点
@@ -346,7 +370,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🌐 其他地区
       - 🚀 手动选择
@@ -359,7 +383,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🌐 其他地区
       - 🚀 手动选择
@@ -383,7 +407,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 手动选择
       - REJECT
@@ -395,7 +419,7 @@ proxy-groups:
       - 🇸🇬 狮城智能
       - 🇨🇳 台湾智能
       - 🇯🇵 日本智能
-      - 🎖️ 链式代理
+      - 🔗 链式代理
       - 🔥 VPS节点
       - 🚀 手动选择
   - name: 🎮 游戏平台
