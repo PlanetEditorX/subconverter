@@ -328,6 +328,7 @@ proxy-groups:
   - name: 📱 Tiktok
     type: select
     proxies:
+      - 🎯 全球直连
       - ☯︎ 智能选择
       - 🇭🇰 香港智能
       - 🇸🇬 狮城智能
