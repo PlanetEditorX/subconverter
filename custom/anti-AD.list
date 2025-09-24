@@ -1,6 +1,6 @@
 # 内容：Anti-AD Domains
-# 数量：94996条
-# 更新：2025-09-24 00:27:31
+# 数量：94997条
+# 更新：2025-09-25 00:27:59
 
 DOMAIN-SUFFIX,000dn.com
 DOMAIN-SUFFIX,0013.cc
@@ -61518,6 +61518,7 @@ DOMAIN-SUFFIX,httpdns.ocloud.oppomobile.com
 DOMAIN-SUFFIX,u.oppomobile.com
 DOMAIN-SUFFIX,adsfs-in.oppomobile.com
 DOMAIN-SUFFIX,httpdns.push.oppomobile.com
+DOMAIN-SUFFIX,api.open.oppomobile.com
 DOMAIN-SUFFIX,opportunitysearch.net
 DOMAIN-SUFFIX,opposecurves.life
 DOMAIN-SUFFIX,oppositionduchess.com
