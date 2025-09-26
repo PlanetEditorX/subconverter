@@ -509,6 +509,7 @@ rules:
   - RULE-SET,🎯 全球直连_DirectIP,🎯 全球直连
   - RULE-SET,✈️ 机场连接_Sub,✈️ 机场连接
   - RULE-SET,✈️ 机场连接_Free,✈️ 机场连接
+  - RULE-SET,📱 Tiktok,📱 Tiktok
   - GEOSITE,private,🎯 全球直连
   - GEOIP,private,🎯 全球直连
   - RULE-SET,🎯 全球直连_CustomDirect,🎯 全球直连
