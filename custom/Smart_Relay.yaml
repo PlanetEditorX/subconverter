@@ -356,6 +356,7 @@ proxy-groups:
     type: select
     proxies:
       - 🎯 全球直连
+      - 🇺🇲 美国智能
       - ☯︎ 智能选择
       - 🇭🇰 香港智能
       - 🇸🇬 狮城智能
