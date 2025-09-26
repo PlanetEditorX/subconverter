@@ -496,6 +496,10 @@ proxy-groups:
 
 # 规则部分
 rules:
+  # ----------------------------------------------------
+  # 🥇 优先级 1: 基础排除和代理域名（广告、净化、高优先级代理）
+  # 这些规则通常位于最前，用于清理流量或确保核心代理服务
+  # ----------------------------------------------------
   - RULE-SET,🌐 代理域名_PlanetEditorX,🌐 代理域名
   - RULE-SET,🌐 代理域名_Aethersailor,🌐 代理域名
   - RULE-SET,🛑 广告拦截_ACL4SSR,🛑 广告拦截
@@ -504,41 +508,58 @@ rules:
   - RULE-SET,🆎 AdBlock_EasyList,🆎 AdBlock
   - RULE-SET,🆎 AdBlock_EasyListChina,🆎 AdBlock
   - RULE-SET,🛡️ 隐私防护,🛡️ 隐私防护
+  # ----------------------------------------------------
+  # 🚀 优先级 2: 目标服务优先匹配（TikTok 和国外媒体）
+  # ----------------------------------------------------
+  - RULE-SET,📱 Tiktok,📱 Tiktok
+  # 将具体的国外媒体规则也提前，确保它们不会被后面广义的 GEOSITE 截胡
+  - GEOSITE,youtube,📹 YouTube
+  - GEOSITE,category-entertainment,🌎 国外媒体
+  # ----------------------------------------------------
+  # 🎯 优先级 3: 直连与特定服务（AI、机场、私有）
+  # ----------------------------------------------------
   - RULE-SET,🤖 AI服务_PlanetEditorX,🤖 AI服务
-  - RULE-SET,🎯 全球直连_DirectDomain,🎯 全球直连
-  - RULE-SET,🎯 全球直连_DirectIP,🎯 全球直连
+  - GEOSITE,bing,🤖 AI服务
+  - GEOSITE,openai,🤖 AI服务
+  - GEOSITE,category-ai-!cn,🤖 AI服务
   - RULE-SET,✈️ 机场连接_Sub,✈️ 机场连接
   - RULE-SET,✈️ 机场连接_Free,✈️ 机场连接
-  - RULE-SET,📱 Tiktok,📱 Tiktok
   - GEOSITE,private,🎯 全球直连
   - GEOIP,private,🎯 全球直连
   - RULE-SET,🎯 全球直连_CustomDirect,🎯 全球直连
+  - RULE-SET,🎯 全球直连_DirectDomain,🎯 全球直连
+  - RULE-SET,🎯 全球直连_DirectIP,🎯 全球直连
   - GEOSITE,google-cn,🎯 全球直连
   - GEOSITE,category-games@cn,🎯 全球直连
   - RULE-SET,🎯 全球直连_SteamCDN,🎯 全球直连
   - GEOSITE,category-game-platforms-download,🎯 全球直连
   - GEOSITE,category-public-tracker,🎯 全球直连
+  # ----------------------------------------------------
+  # 🌐 优先级 4: 通用服务和地理规则
+  # ----------------------------------------------------
+  # 剩下的国外通用服务（GEOSITE）
   - GEOSITE,category-communication,💬 Telegram
   - GEOSITE,category-social-media-!cn,🌐 社交媒体
-  - GEOSITE,bing,🤖 AI服务
-  - GEOSITE,openai,🤖 AI服务
-  - GEOSITE,category-ai-!cn,🤖 AI服务
   - GEOSITE,github,🚀 GitHub
   - GEOSITE,category-speedtest,🚀 测速工具
-  - GEOSITE,steam,🎮 Steam
-  - GEOSITE,youtube,📹 YouTube
+  - GEOSITE,steam,🎮 游戏平台 # 这里的 Steam 保持分类匹配
   - GEOSITE,apple,🍎 苹果服务
   - GEOSITE,microsoft,Ⓜ️ 微软服务
   - GEOSITE,googlefcm,📢 谷歌FCM
   - GEOSITE,google,🇬 谷歌服务
   - GEOSITE,category-games,🎮 游戏平台
-  - GEOSITE,category-entertainment,🌎 国外媒体
   - GEOSITE,category-ecommerce,🛒 国外电商
+  # GEOIP 规则（通常放在 GEOSITE 之后，因为域名匹配优先级更高）
   - GEOIP,telegram,💬 Telegram
   - GEOIP,twitter,🌐 社交媒体
   - GEOIP,facebook,🌐 社交媒体
   - GEOIP,google,🇬 谷歌服务
+  # CN 地区规则
   - GEOSITE,cn,🎯 全球直连
   - GEOIP,cn,🎯 全球直连
+  # GFW 规则
   - GEOSITE,gfw,🌐 代理域名
-  - MATCH,🐟 漏网之鱼
+  # ----------------------------------------------------
+  # 🐟 优先级 5: 兜底规则 (MATCH)
+  # ----------------------------------------------------
+  - MATCH,🐟 漏网之鱼 # 放在最后，处理所有未匹配的流量
