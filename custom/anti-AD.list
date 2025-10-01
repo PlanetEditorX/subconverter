@@ -1,6 +1,6 @@
 # 内容：Anti-AD Domains
-# 数量：94787条
-# 更新：2025-09-30 00:21:59
+# 数量：94788条
+# 更新：2025-10-02 00:27:28
 
 DOMAIN-SUFFIX,000dn.com
 DOMAIN-SUFFIX,0013.cc
@@ -6811,6 +6811,7 @@ DOMAIN-SUFFIX,marketing.alibaba.com
 DOMAIN-SUFFIX,abtest.alibaba.com
 DOMAIN-SUFFIX,p4psearch.china.alibaba.com
 DOMAIN-SUFFIX,fourier.alibaba.com
+DOMAIN-SUFFIX,mum.alibabachengdun.com
 DOMAIN-SUFFIX,images.info.alibabacloud.com
 DOMAIN-SUFFIX,umeng.com.gds.alibabadns.com
 DOMAIN-SUFFIX,alibabatraffic.com
