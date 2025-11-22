@@ -15,7 +15,6 @@ dns:
     - "*"
     - "+.lan"
     - "+.local"
-    - "rule-set:private_domain,cn_domain"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - "time.*.com"
@@ -27,12 +26,6 @@ dns:
     - 119.29.29.29
     - 8.8.8.8
     - 1.1.1.1
-  # 指定域名服务器
-  nameserver-policy:
-    '+.baidu.com': '114.114.114'
-    'rule-set:private_domain,cn_domain':
-      - 223.5.5.5
-      - 119.29.29.29
   nameserver:
     - 223.5.5.5
     - 119.29.29.29
