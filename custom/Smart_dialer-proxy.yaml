@@ -12,15 +12,15 @@ dns:
   fake-ip-filter-mode: blacklist
   # 以下列表不解析为fake-ip
   fake-ip-filter:
-    - "*"
     - "+.lan"
     - "+.local"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
     - "time.*.com"
+    - "xiaomi.com"
     - "+.xiaomi.com"
     - "+.pool.ntp.org"
-    - "geosite:cn"
+    - "geosite:cn" # 所有国内域名走直连解析
   # 使用Respect-rules时启动Proxy-server-nameserver
   proxy-server-nameserver:
     - 114.114.114.114
