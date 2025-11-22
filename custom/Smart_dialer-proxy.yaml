@@ -1,0 +1,543 @@
+# 规则集定义
+rule-providers:
+  🌐 代理域名_PlanetEditorX:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ProxyDomain.list
+    path: ./ruleset/ProxyDomain.list
+    interval: 86400
+    format: text
+  🌐 代理域名_Aethersailor:
+    type: http
+    behavior: classical
+    url: https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy.list
+    path: ./ruleset/Custom_Proxy.list
+    interval: 28800
+    format: text
+  🛑 广告拦截_ACL4SSR:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list
+    path: ./ruleset/BanAD.list
+    interval: 86400
+    format: text
+  🛑 广告拦截_PlanetEditorX:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/CustomProhibit.list
+    path: ./ruleset/CustomProhibit.list
+    interval: 86400
+    format: text
+  🍃 应用净化:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
+    path: ./ruleset/BanProgramAD.list
+    interval: 86400
+    format: text
+  🆎 AdBlock_EasyList:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyList.list
+    path: ./ruleset/BanEasyList.list
+    interval: 86400
+    format: text
+  🆎 AdBlock_EasyListChina:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyListChina.list
+    path: ./ruleset/BanEasyListChina.list
+    interval: 86400
+    format: text
+  🛡️ 隐私防护:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list
+    path: ./ruleset/BanEasyPrivacy.list
+    interval: 86400
+    format: text
+  🤖 AI服务_PlanetEditorX:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list
+    path: ./ruleset/ChatGPT.list
+    interval: 86400
+    format: text
+  📱 Tiktok:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.list
+    path: ./ruleset/TikTok.list
+    interval: 86400
+    format: text
+  🎯 全球直连_DirectDomain:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectDomain.list
+    path: ./ruleset/DirectDomain.list
+    interval: 86400
+    format: text
+  🎯 全球直连_DirectIP:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectIP.list
+    path: ./ruleset/DirectIP.list
+    interval: 86400
+    format: text
+  ✈️ 机场连接_Sub:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/AirportIP.list
+    path: ./ruleset/AirportIP.list
+    interval: 86400
+    format: text
+  ✈️ 机场连接_Free:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/FreeAirportIP.list
+    path: ./ruleset/FreeAirportIP.list
+    interval: 86400
+    format: text
+  🎯 全球直连_CustomDirect:
+    type: http
+    behavior: classical
+    url: https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Direct.list
+    path: ./ruleset/Custom_Direct.list
+    interval: 28800
+    format: text
+  🎯 全球直连_SteamCDN:
+    type: http
+    behavior: classical
+    url: https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Steam_CDN.list
+    path: ./ruleset/Steam_CDN.list
+    interval: 28800
+    format: text
+
+# 策略组定义
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 👒 霉霉机场
+      - 🐮 牛逼机场
+      - 🚀 手动选择
+      - 🎁 免费节点
+      - DIRECT
+  - name: 🚀 手动选择
+    type: select
+    include-all-proxies: true
+    exclude-filter: "(?i)FREE-.*"
+  - name: ☯︎ 智能选择
+    type: smart
+    include-all-proxies: true
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;FREE-*:0.1"
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🇭🇰 香港智能
+    type: smart
+    include-all-proxies: true
+    filter: (港|HK|hk|Hong Kong|HongKong|hongkong|深港)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🇸🇬 狮城智能
+    type: smart
+    include-all-proxies: true
+    filter: (新加坡|坡|狮城|SG|Singapore)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🇺🇲 美国智能
+    type: smart
+    include-all-proxies: true
+    filter: (美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|ChatGPT|chatgpt)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🔥 VPS节点
+    type: smart
+    include-all-proxies: true
+    filter: (VPS)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🔗 链式代理
+    type: fallback
+    proxies:
+      - 🇺🇸 美国-01 | VPS
+      - 🇺🇸 美国-02 | VPS
+      - 🇺🇸 美国-03 | VPS
+      - 🇺🇸 美国-04 | VPS
+      - 🇺🇸 美国-05 | VPS
+      - 🇺🇸 美国-06 | VPS
+      - 🇭🇰 香港智能
+      - 🇺🇲 美国智能
+  - name: 💬 Telegram
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 手动选择
+  - name: 🚀 GitHub
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 手动选择
+      - 🎁 免费节点
+      - 🎯 全球直连
+  - name: 🤖 AI服务
+    type: select
+    proxies:
+      - 🇺🇲 美国智能
+      - ☯︎ 智能选择
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🌐 其他地区
+      - 🎁 免费节点
+      - 🚀 手动选择
+  - name: 🌐 代理域名
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 👒 霉霉机场
+      - 🐮 牛逼机场
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🎁 免费节点
+      - 🚀 节点选择
+      - 🚀 手动选择
+  - name: 📹 YouTube
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🌐 其他地区
+      - 🎁 免费节点
+      - 🚀 手动选择
+  - name: 🇬 谷歌服务
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+  - name: 🌎 国外媒体
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🌐 其他地区
+      - 🎁 免费节点
+      - 🚀 手动选择
+      - 🎯 全球直连
+  - name: 🎁 免费节点
+    type: smart
+    include-all-proxies: true
+    filter: (FREE)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: false
+    strategy: sticky-sessions
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 节点选择
+      - 🚀 手动选择
+      - 🎁 免费节点
+      - 🎯 全球直连
+  - name: 🏆 优选节点
+    type: smart
+    proxies:
+      - 🇭🇰 香港智能
+      - 🇨🇳 台湾智能
+      - 🇸🇬 狮城智能
+      - 🇯🇵 日本智能
+  - name: 👒 霉霉机场
+    type: smart
+    include-all-proxies: true
+    filter: (MM)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 🐮 牛逼机场
+    type: smart
+    include-all-proxies: true
+    filter: (6B)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: 📱 Tiktok
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🇺🇲 美国智能
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 手动选择
+      - 🎁 免费节点
+  - name: 🛒 国外电商
+    type: select
+    proxies:
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🌐 其他地区
+      - 🚀 手动选择
+      - 🎯 全球直连
+  - name: 📢 谷歌FCM
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🌐 其他地区
+      - 🚀 手动选择
+      - 🎯 全球直连
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🚀 手动选择
+  - name: Ⓜ️ 微软服务
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - ☯︎ 智能选择
+      - 🇭🇰 香港智能
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 手动选择
+      - REJECT
+  - name: 🌐 社交媒体
+    type: select
+    proxies:
+      - 🇭🇰 香港智能
+      - ☯︎ 智能选择
+      - 🇸🇬 狮城智能
+      - 🇨🇳 台湾智能
+      - 🇯🇵 日本智能
+      - 🔗 链式代理
+      - 🔥 VPS节点
+      - 🚀 手动选择
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 手动选择
+  - name: 🎮 Steam
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 手动选择
+  - name: 🚀 测速工具
+    type: select
+    proxies:
+      - 🎯 全球直连
+      - 🚀 手动选择
+  - name: ✈️ 机场连接
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 节点选择
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+  - name: 🍃 应用净化
+    type: select
+    proxies:
+      - REJECT
+  - name: 🆎 AdBlock
+    type: select
+    proxies:
+      - REJECT
+  - name: 🛡️ 隐私防护
+    type: select
+    proxies:
+      - REJECT
+  - name: 🇯🇵 日本智能
+    type: smart
+    include-all-proxies: true
+    filter: (日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+  - name: 🇨🇳 台湾智能
+    type: smart
+    include-all-proxies: true
+    filter: (台|新北|彰化|TW|Taiwan)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+  - name: 🌐 其他地区
+    type: smart
+    include-all-proxies: true
+    filter: ^(?!.*(港|HK|hk|Hong Kong|HongKong|hongkong|深港|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|UnitedStates|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|(?<!尼|-)日|JP|Japan|🇯🇵|新加坡|坡|狮城|SG|Singapore|台|新北|彰化|TW|Taiwan|KR|Korea|KOR|首尔|韩|韓)).*
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 手动选择
+
+# 规则部分
+rules:
+  # ----------------------------------------------------
+  # 🥇 优先级 1: 基础排除和代理域名（广告、净化、高优先级代理）
+  # 这些规则通常位于最前，用于清理流量或确保核心代理服务
+  # ----------------------------------------------------
+  - RULE-SET,🌐 代理域名_PlanetEditorX,🌐 代理域名
+  - RULE-SET,🌐 代理域名_Aethersailor,🌐 代理域名
+  - RULE-SET,🛑 广告拦截_ACL4SSR,🛑 广告拦截
+  - RULE-SET,🛑 广告拦截_PlanetEditorX,🛑 广告拦截
+  - RULE-SET,🍃 应用净化,🍃 应用净化
+  - RULE-SET,🆎 AdBlock_EasyList,🆎 AdBlock
+  - RULE-SET,🆎 AdBlock_EasyListChina,🆎 AdBlock
+  - RULE-SET,🛡️ 隐私防护,🛡️ 隐私防护
+  # ----------------------------------------------------
+  # 🚀 优先级 2: 目标服务优先匹配（TikTok 和国外媒体）
+  # ----------------------------------------------------
+  - RULE-SET,📱 Tiktok,📱 Tiktok
+  # 将具体的国外媒体规则也提前，确保它们不会被后面广义的 GEOSITE 截胡
+  - GEOSITE,youtube,📹 YouTube
+  - GEOSITE,category-entertainment,🌎 国外媒体
+  # ----------------------------------------------------
+  # 🎯 优先级 3: 直连与特定服务（AI、机场、私有）
+  # ----------------------------------------------------
+  - RULE-SET,🤖 AI服务_PlanetEditorX,🤖 AI服务
+  - GEOSITE,bing,🤖 AI服务
+  - GEOSITE,openai,🤖 AI服务
+  - GEOSITE,category-ai-!cn,🤖 AI服务
+  - RULE-SET,✈️ 机场连接_Sub,✈️ 机场连接
+  - RULE-SET,✈️ 机场连接_Free,✈️ 机场连接
+  - GEOSITE,private,🎯 全球直连
+  - GEOIP,private,🎯 全球直连
+  - RULE-SET,🎯 全球直连_CustomDirect,🎯 全球直连
+  - RULE-SET,🎯 全球直连_DirectDomain,🎯 全球直连
+  - RULE-SET,🎯 全球直连_DirectIP,🎯 全球直连
+  - GEOSITE,google-cn,🎯 全球直连
+  - GEOSITE,category-games@cn,🎯 全球直连
+  - RULE-SET,🎯 全球直连_SteamCDN,🎯 全球直连
+  - GEOSITE,category-game-platforms-download,🎯 全球直连
+  - GEOSITE,category-public-tracker,🎯 全球直连
+  # ----------------------------------------------------
+  # 🌐 优先级 4: 通用服务和地理规则
+  # ----------------------------------------------------
+  # 剩下的国外通用服务（GEOSITE）
+  - GEOSITE,category-communication,💬 Telegram
+  - GEOSITE,category-social-media-!cn,🌐 社交媒体
+  - GEOSITE,github,🚀 GitHub
+  - GEOSITE,category-speedtest,🚀 测速工具
+  - GEOSITE,steam,🎮 游戏平台 # 这里的 Steam 保持分类匹配
+  - GEOSITE,apple,🍎 苹果服务
+  - GEOSITE,microsoft,Ⓜ️ 微软服务
+  - GEOSITE,googlefcm,📢 谷歌FCM
+  - GEOSITE,google,🇬 谷歌服务
+  - GEOSITE,category-games,🎮 游戏平台
+  - GEOSITE,category-ecommerce,🛒 国外电商
+  # GEOIP 规则（通常放在 GEOSITE 之后，因为域名匹配优先级更高）
+  - GEOIP,telegram,💬 Telegram
+  - GEOIP,twitter,🌐 社交媒体
+  - GEOIP,facebook,🌐 社交媒体
+  - GEOIP,google,🇬 谷歌服务
+  # CN 地区规则
+  - GEOSITE,cn,🎯 全球直连
+  - GEOIP,cn,🎯 全球直连
+  # GFW 规则
+  - GEOSITE,gfw,🌐 代理域名
+  # ----------------------------------------------------
+  # 🐟 优先级 5: 兜底规则 (MATCH)
+  # ----------------------------------------------------
+  - MATCH,🐟 漏网之鱼 # 放在最后，处理所有未匹配的流量
