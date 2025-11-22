@@ -1,3 +1,42 @@
+# DNS模块
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  # 遵循路由遵循
+  respect-rules: true
+  enhanced-mode: fake-ip
+  # fake-ip地址池
+  fake-ip-range: 28.0.0.1/8
+  # 黑名单模式
+  fake-ip-filter-mode: blacklist
+  # 以下列表不解析为fake-ip
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+    - "rule-set:private_domain,cn_domain"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "time.*.com"
+    - "+.xiaomi.com"
+    - "+.pool.ntp.org"
+  # 使用Respect-rules时启动Proxy-server-nameserver
+  proxy-server-nameserver:
+    - 114.114.114.114
+    - 119.29.29.29
+    - 8.8.8.8
+    - 1.1.1.1
+  # 指定域名服务器
+  nameserver-policy:
+    '+.baidu.com': '114.114.114'
+    'rule-set:private_domain,cn_domain':
+      - 223.5.5.5
+      - 119.29.29.29
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
 # 规则集定义
 rule-providers:
   🌐 代理域名_PlanetEditorX:
@@ -539,10 +578,3 @@ rules:
   # 🐟 优先级 5: 兜底规则 (MATCH)
   # ----------------------------------------------------
   - MATCH,🐟 漏网之鱼 # 放在最后，处理所有未匹配的流量
-
-# 使用Respect-rules时启动Proxy-server-nameserver
-proxy-server-nameserver:
-  - 114.114.114.114
-  - 119.29.29.29
-  - 8.8.8.8
-  - 1.1.1.1
