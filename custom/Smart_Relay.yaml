@@ -299,29 +299,17 @@ proxy-groups:
       - 🎁 免费节点
       - 🎯 全球直连
   - name: 🥇 优选链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
+    type: dialer-proxy
     proxies:
       - 🏆 优选节点
       - 🔥 VPS节点
   - name: 🥈 霉霉链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
+    type: dialer-proxy
     proxies:
       - 👒 霉霉机场
       - 🔥 VPS节点
   - name: 🥉 牛逼链式
-    type: relay
-    interval: 300
-    timeout: 5000
-    max-failed-times: 5
-    lazy: true
+    type: dialer-proxy
     proxies:
       - 🐮 牛逼机场
       - 🔥 VPS节点
