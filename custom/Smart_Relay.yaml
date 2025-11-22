@@ -139,7 +139,7 @@ proxy-groups:
     include-all-proxies: true
     url: https://www.gstatic.com/generate_204
     interval: 300
-    policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;FREE-*:0.1;"
+    policy-priority: "v5:2;G口:1.8;hk:1.5;香港:1.5;sg:1.4;新加坡:1.4;日本:1;jp:1;台湾:0.9;tw:0.9;v4:0.8;阿根廷:0.3;ipv6:0.3;FREE-*:0.1"
     uselightgbm: true
     collectdata: true
     strategy: sticky-sessions
