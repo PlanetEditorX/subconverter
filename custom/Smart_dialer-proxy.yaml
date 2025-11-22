@@ -20,6 +20,7 @@ dns:
     - "time.*.com"
     - "+.xiaomi.com"
     - "+.pool.ntp.org"
+    - "geosite:cn"
   # 使用Respect-rules时启动Proxy-server-nameserver
   proxy-server-nameserver:
     - 114.114.114.114
