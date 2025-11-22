@@ -187,12 +187,12 @@ proxy-groups:
   - name: 🔗 链式代理
     type: smart
     proxies:
-      - "\U0001F1FA\U0001F1F8US_1|VPS"
-      - "\U0001F1FA\U0001F1F8US_2|VPS"
-      - "\U0001F1FA\U0001F1F8US_3|VPS"
-      - "\U0001F1FA\U0001F1F8US_4|VPS"
-      - "\U0001F1FA\U0001F1F8US_5|VPS"
-      - "\U0001F1FA\U0001F1F8US_6|VPS"
+      - "🇺🇸US_1|VPS"
+      - "🇺🇸US_2|VPS"
+      - "🇺🇸US_3|VPS"
+      - "🇺🇸US_4|VPS"
+      - "🇺🇸US_5|VPS"
+      - "🇺🇸US_6|VPS"
   - name: 💬 Telegram
     type: select
     proxies:
