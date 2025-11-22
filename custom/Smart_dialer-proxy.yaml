@@ -185,7 +185,7 @@ proxy-groups:
     strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: 🔗 链式代理
-    type: fallback
+    type: smart
     proxies:
       - 🇺🇸 美国-01 | VPS
       - 🇺🇸 美国-02 | VPS
@@ -193,8 +193,6 @@ proxy-groups:
       - 🇺🇸 美国-04 | VPS
       - 🇺🇸 美国-05 | VPS
       - 🇺🇸 美国-06 | VPS
-      - 🇭🇰 香港智能
-      - 🇺🇲 美国智能
   - name: 💬 Telegram
     type: select
     proxies:
