@@ -8,7 +8,7 @@ const inArg = $arguments;
 function operator(proxies) {
   proxies.forEach(proxy => {
     // 给所有节点加上 dialer-proxy
-    proxy['dialer-proxy'] = '🥇 优选链式';
+    proxy['dialer-proxy'] = '🏆 优选节点';
 
     // 如果只想给特定节点加，可以用名字过滤
     // if (/VPS|落地/.test(proxy.name)) {
