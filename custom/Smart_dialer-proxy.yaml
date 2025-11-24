@@ -40,13 +40,6 @@ rule-providers:
     path: ./ruleset/ProxyDomain.list
     interval: 86400
     format: text
-  🌐 代理域名_Aethersailor:
-    type: http
-    behavior: classical
-    url: https://testingcf.jsdelivr.net/gh/Aethersailor/Custom_OpenClash_Rules@main/rule/Custom_Proxy.list
-    path: ./ruleset/Custom_Proxy.list
-    interval: 28800
-    format: text
   🛑 广告拦截_ACL4SSR:
     type: http
     behavior: classical
@@ -510,7 +503,6 @@ rules:
   # 这些规则通常位于最前，用于清理流量或确保核心代理服务
   # ----------------------------------------------------
   - RULE-SET,🌐 代理域名_PlanetEditorX,🌐 代理域名
-  - RULE-SET,🌐 代理域名_Aethersailor,🌐 代理域名
   - RULE-SET,🛑 广告拦截_ACL4SSR,🛑 广告拦截
   - RULE-SET,🛑 广告拦截_PlanetEditorX,🛑 广告拦截
   - RULE-SET,🍃 应用净化,🍃 应用净化
