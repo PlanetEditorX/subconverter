@@ -1,6 +1,6 @@
 # 内容：Anti-AD Domains
-# 数量：98910条
-# 更新：2026-01-07 00:33:57
+# 数量：98912条
+# 更新：2026-01-08 00:35:14
 
 DOMAIN-SUFFIX,000dn.com
 DOMAIN-SUFFIX,0013.cc
@@ -7043,7 +7043,8 @@ DOMAIN-SUFFIX,pbmp.ali213.net
 DOMAIN-SUFFIX,web.ali213.net
 DOMAIN-SUFFIX,alia-iso.com
 DOMAIN-SUFFIX,tr.info.aliae.com
-DOMAIN-SUFFIX,aliapp.org
+DOMAIN-SUFFIX,cdn.ynuf.aliapp.org
+DOMAIN-SUFFIX,umdc.aliapp.org
 DOMAIN-SUFFIX,aliasanvil.com
 DOMAIN-SUFFIX,aliasfoot.com
 DOMAIN-SUFFIX,crm-eve.b2b.alibaba-inc.com
@@ -94731,6 +94732,7 @@ DOMAIN-SUFFIX,ppurifier.game.xiaomi.com
 DOMAIN-SUFFIX,shenghuo.xiaomi.com
 DOMAIN-SUFFIX,stat.pandora.xiaomi.com
 DOMAIN-SUFFIX,sentry.d.xiaomi.net
+DOMAIN-SUFFIX,tracker.xiaomixiaoai.com
 DOMAIN-SUFFIX,ww.xiaopiaoyou.com
 DOMAIN-SUFFIX,xiaopinwo.com
 DOMAIN-SUFFIX,cat.xiaoshabi.nl
