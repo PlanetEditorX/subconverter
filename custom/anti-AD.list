@@ -1,6 +1,6 @@
 # 内容：Anti-AD Domains
-# 数量：102282条
-# 更新：2026-02-06 00:54:46
+# 数量：102281条
+# 更新：2026-02-07 00:51:53
 
 DOMAIN-SUFFIX,000dn.com
 DOMAIN-SUFFIX,0013.cc
@@ -99958,7 +99958,6 @@ DOMAIN-SUFFIX,s.p.youku.com
 DOMAIN-SUFFIX,sealine.youku.com
 DOMAIN-SUFFIX,store.tv.api.3g.youku.com
 DOMAIN-SUFFIX,store.xl.api.3g.youku.com
-DOMAIN-SUFFIX,un-acs.youku.com
 DOMAIN-SUFFIX,wan.youku.com
 DOMAIN-SUFFIX,yk-ssp.ad.youku.com
 DOMAIN-SUFFIX,ykad-data.youku.com
