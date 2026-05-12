@@ -58,6 +58,7 @@ proxy-groups:
   - {name: 即时通讯,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Telegram.png"}
   - {name: 社交媒体,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Twitter.png"}
   - {name: GitHub,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/GitHub.png"}
+  - {name: Copilot,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Microsoft_Copilot.png"}
   - {name: ChatGPT,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/ChatGPT.png"}
   - {name: Gemini,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/IconResource/App_icon/1024px/GoogleGemini.png"}
   - {name: AI服务,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AI_bot.png"}
@@ -103,6 +104,7 @@ rules:
   - RULE-SET,category-public-tracker,全球直连
   - RULE-SET,category-communication,即时通讯
   - RULE-SET,category-social-media,社交媒体
+  - RULE-SET,copilot,Copilot
   - RULE-SET,openai,ChatGPT
   - RULE-SET,openai_PlanetEditorX,ChatGPT
   - RULE-SET,google-gemini,Gemini
@@ -155,6 +157,7 @@ rule-providers:
   category-public-tracker:                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
   category-communication:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
   category-social-media:                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
+  Copilot:                                  {<<: *class,         url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
   openai:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   openai_PlanetEditorX:                     {<<: *class,          url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list"}
   google-gemini:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
