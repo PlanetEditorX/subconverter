@@ -157,7 +157,7 @@ rule-providers:
   category-public-tracker:                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
   category-communication:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
   category-social-media:                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
-  Copilot:                                  {<<: *class,         url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
+  copilot:                                  {<<: *class,         url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
   openai:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   openai_PlanetEditorX:                     {<<: *class,          url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list"}
   google-gemini:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
