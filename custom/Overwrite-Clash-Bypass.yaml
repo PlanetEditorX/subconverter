@@ -66,9 +66,7 @@ proxy-groups:
   - {name: TikTok,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/TikTok.png"}
   - {name: YouTube,         <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/YouTube.png"}
   - {name: 广告拦截,        <<: *SelectAD,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AdblockPlus_2.png"}
-  - {name: Emby,            <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Emby.png"}
-  - {name: Bahamut,         <<: *SelectTW,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Bahamut_i.png"}
-  - {name: 国外媒体,        <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Network.png"}
+  - {name: 国外媒体,        <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Stream.png"}
   - {name: PayPal,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/PayPal.png"}
   - {name: 谷歌服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Google.png"}
   - {name: 苹果服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Apple_black.png"}
@@ -125,8 +123,6 @@ rules:
   - RULE-SET,microsoft,微软服务
   - RULE-SET,google,谷歌服务
   - RULE-SET,tiktok,TikTok
-  - RULE-SET,category-emby,Emby
-  - RULE-SET,bahamut,Bahamut
   - RULE-SET,category-games,游戏平台
   - RULE-SET,category-entertainment,国外媒体
   - RULE-SET,gfw,手动选择
@@ -179,8 +175,6 @@ rule-providers:
   microsoft:                                {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   google:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   tiktok:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
-  category-emby:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
-  bahamut:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
   category-games:                           {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
   category-entertainment:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
   gfw:                                      {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
