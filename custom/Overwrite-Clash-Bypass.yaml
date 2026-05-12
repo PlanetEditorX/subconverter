@@ -71,6 +71,7 @@ proxy-groups:
   - {name: PayPal,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/PayPal.png"}
   - {name: 谷歌服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Google.png"}
   - {name: 苹果服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Apple_black.png"}
+  - {name: OneDrive,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/OneDrive.png"}
   - {name: 微软服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Microsoft.png"}
   - {name: 游戏平台,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Game.png"}
   - {name: Steam,           <<: *SelectHK,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Steam.png"}
@@ -119,6 +120,7 @@ rules:
   - RULE-SET,隐私防护,广告拦截
   - RULE-SET,PayPal,PayPal
   - RULE-SET,apple,苹果服务
+  - RULE-SET,onedrive,OneDrive
   - RULE-SET,microsoft,微软服务
   - RULE-SET,google,谷歌服务
   - RULE-SET,tiktok,TikTok
@@ -157,7 +159,7 @@ rule-providers:
   category-public-tracker:                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
   category-communication:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
   category-social-media:                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
-  copilot:                                  {<<: *class,         url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
+  copilot:                                  {<<: *class,          url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
   openai:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   openai_PlanetEditorX:                     {<<: *class,          url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list"}
   google-gemini:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
@@ -172,6 +174,7 @@ rule-providers:
   应用净化:                                 {<<: *class,          url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"}
   隐私防护:                                 {<<: *class,          url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"}
   apple:                                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  onedrive:                                 {<<: *class,          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OneDrive/OneDrive.list"}
   microsoft:                                {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   google:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   tiktok:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
