@@ -42,6 +42,7 @@ anchor:
   SelectJP: &SelectJP {type: select, proxies: [日本节点, 香港节点, 美国节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, 全球直连]}
   SelectTW: &SelectTW {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, 全球直连]}
   SelectDT: &SelectDT {type: select, proxies: [全球直连, 手动选择, 自动选择]}
+  SelectAD: &SelectAD {type: select, proxies: [REJECT, DIRECT]}
 
   # 规则提供者相关锚点
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
@@ -64,7 +65,7 @@ proxy-groups:
   - {name: AI服务,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AI_bot.png"}
   - {name: TikTok,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/TikTok.png"}
   - {name: YouTube,         <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/YouTube.png"}
-  - {name: 广告拦截,        <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AdblockPlus_2.png"}
+  - {name: 广告拦截,        <<: *SelectAD,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AdblockPlus_2.png"}
   - {name: Emby,            <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Emby.png"}
   - {name: Bahamut,         <<: *SelectTW,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Bahamut_i.png"}
   - {name: 国外媒体,        <<: *SelectSG,                                icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Network.png"}
