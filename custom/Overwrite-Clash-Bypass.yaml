@@ -104,10 +104,10 @@ rules:
   - RULE-SET,category-public-tracker,全球直连
   - RULE-SET,category-communication,即时通讯
   - RULE-SET,category-social-media,社交媒体
-  - RULE-SET,copilot,Copilot
   - RULE-SET,openai,ChatGPT
   - RULE-SET,openai_PlanetEditorX,ChatGPT
   - RULE-SET,google-gemini,Gemini
+  - RULE-SET,copilot,Copilot
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
@@ -138,7 +138,7 @@ rules:
 # =========================================
 #            规则提供者
 # =========================================
-rule-providers: 
+rule-providers:
   giveup_direct:                            {<<: *class,          url: "https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Direct.list"}
   giveup_proxy:                             {<<: *class,          url: "https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Proxy.list"}
   private:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
