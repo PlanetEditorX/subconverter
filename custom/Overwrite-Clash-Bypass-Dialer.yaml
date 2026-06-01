@@ -24,6 +24,7 @@ proxy-providers:
 anchor:
   # 策略组类型模板 - 定义不同的策略组基础配置
   BaseURL-test: &BaseURL-test {type: smart, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204, hidden: true}
+  BaseURL-control: &BaseURL-control {type: smart, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204}
   BaseDIRECT: &BaseDIRECT {type: select, hidden: true}
   # 节点筛选正则表达式 - 基于地理位置和关键词过滤
   FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG)).*$'
@@ -65,7 +66,7 @@ proxy-groups:
   - {name: GitHub,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/GitHub.png"}
   - {name: Copilot,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Microsoft_Copilot.png"}
   - {name: ChatGPT,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/ChatGPT.png"}
-  - {name: Gemini,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/IconResource/App_icon/1024px/GoogleGemini.png"}
+  - {name: Gemini,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Gemini.png"}
   - {name: AI服务,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AI_bot.png"}
   - {name: TikTok,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/TikTok.png"}
   - {name: YouTube,         <<: *SelectSG,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/YouTube.png"}
@@ -80,10 +81,10 @@ proxy-groups:
   - {name: Steam,           <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Steam.png"}
   - {name: 测速工具,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/SpeedTest.png"}
   - {name: 漏网之鱼,        <<: *SelectMH,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/match.png"}
-  - {name: 链式代理,        <<: *BaseURL-test,    filter: *FilterVPS,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Server.png"}
-  - {name: 优选节点,        <<: *BaseURL-test,    filter: *FilterBEST,        icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Trophy.png"}
-  - {name: MM节点,        <<: *BaseURL-test,    filter: *FilterMM,        icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-1.png"}
-  - {name: 6B节点,        <<: *BaseURL-test,    filter: *Filter6B,        icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-2.png"}
+  - {name: 链式代理,        <<: *BaseURL-control,    filter: *FilterVPS,  icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Server.png"}
+  - {name: 优选节点,        <<: *BaseURL-control,    filter: *FilterBEST, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Trophy.png"}
+  - {name: MM节点,        <<: *BaseURL-control,    filter: *FilterMM,     icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-1.png"}
+  - {name: 6B节点,        <<: *BaseURL-control,    filter: *Filter6B,     icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-2.png"}
   - {name: 香港节点,        <<: *BaseURL-test,    filter: *FilterHK,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Hong_Kong.png"}
   - {name: 美国节点,        <<: *BaseURL-test,    filter: *FilterUS,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
   - {name: 日本节点,        <<: *BaseURL-test,    filter: *FilterJP,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Japan.png"}
