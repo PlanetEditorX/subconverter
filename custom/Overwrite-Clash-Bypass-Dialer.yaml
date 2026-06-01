@@ -70,7 +70,7 @@ proxy-groups:
   - {name: AI服务,          <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AI_bot.png"}
   - {name: 谷歌服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Google.png"}
   - {name: YouTube,         <<: *SelectSG,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/YouTube.png"}
- - {name: VPS节点,        <<: *BaseURL-control,    filter: *FilterVPS,  icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Server.png"}
+  - {name: VPS节点,        <<: *BaseURL-control,    filter: *FilterVPS,  icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Server.png"}
   - {name: 优选节点,        <<: *BaseURL-control,    filter: *FilterBEST, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Trophy.png"}
   - {name: MM节点,        <<: *BaseURL-control,    filter: *FilterMM,     icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-1.png"}
   - {name: 6B节点,        <<: *BaseURL-control,    filter: *Filter6B,     icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-2.png"}
