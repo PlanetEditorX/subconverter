@@ -10,7 +10,7 @@ proxy-providers:
   Sub-store:
     type: http
     url: "url"
-    path: ./proxy_provider/provider.yaml
+    path: ./proxy_provider/provider_dialer.yaml
     proxy: DIRECT
     interval: 86400
     health-check:
