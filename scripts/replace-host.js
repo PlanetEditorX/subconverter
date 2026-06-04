@@ -1,8 +1,10 @@
 /**
- * 用法:
- * replace-host.js#host=aaa.bbb.ccc
+ * replace-host.js
  *
- * 将节点中的 localhost 替换为指定域名
+ * 用法:
+ * #host=aaa.bbb.ccc
+ *
+ * 将所有 localhost 替换为指定域名
  */
 
 let inArg = {};
@@ -10,36 +12,71 @@ let inArg = {};
 try {
     if ($arguments) {
         inArg = $arguments;
+        console.log("Arguments:", inArg);
     }
-} catch (e) {}
-
-const HOST = inArg.host || "";
-
-if (!HOST) {
-    console.log("未传入 host 参数");
-    return $proxies;
+} catch (e) {
+    console.log("$arguments not defined");
 }
 
-console.log(`替换 localhost -> ${HOST}`);
+function replaceLocalhost(obj, domain) {
+    if (!obj || typeof obj !== "object") {
+        return;
+    }
 
-function replaceValue(obj) {
-    if (!obj || typeof obj !== "object") return;
-
-    for (const key in obj) {
+    Object.keys(obj).forEach(key => {
         const value = obj[key];
 
+        // 字符串
         if (typeof value === "string") {
             if (value === "localhost") {
-                obj[key] = HOST;
+                obj[key] = domain;
             }
-        } else if (typeof value === "object") {
-            replaceValue(value);
         }
-    }
+
+        // 数组
+        else if (Array.isArray(value)) {
+            value.forEach(item => {
+                if (typeof item === "object") {
+                    replaceLocalhost(item, domain);
+                }
+            });
+        }
+
+        // 对象
+        else if (typeof value === "object") {
+            replaceLocalhost(value, domain);
+        }
+    });
 }
 
-$proxies.forEach(proxy => {
-    replaceValue(proxy);
-});
+function operator(proxies) {
 
-return $proxies;
+    const host = inArg.host;
+
+    if (!host) {
+        console.log("未提供 host 参数");
+        return proxies;
+    }
+
+    console.log(`开始替换 localhost -> ${host}`);
+
+    let count = 0;
+
+    proxies.forEach(proxy => {
+
+        const before = JSON.stringify(proxy);
+
+        replaceLocalhost(proxy, host);
+
+        const after = JSON.stringify(proxy);
+
+        if (before !== after) {
+            count++;
+            console.log(`已修改节点: ${proxy.name}`);
+        }
+    });
+
+    console.log(`完成，共修改 ${count} 个节点`);
+
+    return proxies;
+}
