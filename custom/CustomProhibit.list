@@ -27,7 +27,6 @@ DOMAIN-SUFFIX,edge.activity.windows.com
 DOMAIN-SUFFIX,edge.activity.windows.cn
 DOMAIN-SUFFIX,img-s-msn-com.akamaized.net
 DOMAIN-SUFFIX,deff.nelreports.net
-DOMAIN-SUFFIX,login.microsoftonline.com
 
 # 屏蔽IP
 IP-CIDR,111.63.96.127/32,no-resolve
