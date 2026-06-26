@@ -1,7 +1,12 @@
 dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
   nameserver:
     - https://doh.pub/dns-query
     - https://dns.alidns.com/dns-query
+    - https://1.1.1.1/dns-query
+    - https://dns.google/dns-query
   default-nameserver:
     - 223.5.5.5
     - 1.1.1.1
@@ -54,7 +59,6 @@ anchor:
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
-# 策略组
 # =========================================
 #             策略组配置
 # =========================================
@@ -105,6 +109,9 @@ rules:
   - RULE-SET,Custom_Proxy_Domain,手动选择
   - RULE-SET,Custom_Proxy_Domain_PlanetEditorX,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
+  - RULE-SET,google-gemini,Gemini
+  - RULE-SET,google,谷歌服务
+  - RULE-SET,google-ip,谷歌服务,no-resolve
   - RULE-SET,google-cn,全球直连
   - RULE-SET,category-games@cn,全球直连
   - RULE-SET,Steam_CDN_Domain,全球直连
@@ -115,7 +122,6 @@ rules:
   - RULE-SET,category-social-media,社交媒体
   - RULE-SET,openai,ChatGPT
   - RULE-SET,openai_PlanetEditorX,ChatGPT
-  - RULE-SET,google-gemini,Gemini
   - RULE-SET,copilot,Copilot
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
@@ -130,7 +136,6 @@ rules:
   - RULE-SET,apple,苹果服务
   - RULE-SET,onedrive,OneDrive
   - RULE-SET,microsoft,微软服务
-  - RULE-SET,google,谷歌服务
   - RULE-SET,tiktok,TikTok
   - RULE-SET,category-games,游戏平台
   - RULE-SET,category-entertainment,国外媒体
@@ -138,14 +143,13 @@ rules:
   - RULE-SET,telegram,即时通讯,no-resolve
   - RULE-SET,twitter,社交媒体,no-resolve
   - RULE-SET,facebook,社交媒体,no-resolve
-  - RULE-SET,google-ip,谷歌服务,no-resolve
   - RULE-SET,cn,全球直连
   - RULE-SET,cn_PlanetEditorX,全球直连
   - RULE-SET,cn-ip,全球直连,no-resolve
   - MATCH,漏网之鱼
 
 # =========================================
-#            规则提供者
+#              规则提供者
 # =========================================
 rule-providers:
   giveup_direct:                            {<<: *class,          url: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Rules/Giveup_Direct.list"}
