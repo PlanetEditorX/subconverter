@@ -48,7 +48,7 @@ anchor:
   SelectMS: &SelectMS {type: select, proxies: [香港节点, 美国节点, 日本节点, 新加坡节点, 台湾节点, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
   SelectMH: &SelectMH {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
   SelectHK: &SelectHK {type: select, proxies: [香港节点, 美国节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
-  SelectUS: &SelectUS {type: select, proxies: [美国节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectUS: &SelectUS {type: select, proxies: [AI节点, 美国节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectSG: &SelectSG {type: select, proxies: [新加坡节点, 香港节点, 美国节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectJP: &SelectJP {type: select, proxies: [日本节点, 香港节点, 美国节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectTW: &SelectTW {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
