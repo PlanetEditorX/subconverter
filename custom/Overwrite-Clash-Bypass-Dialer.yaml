@@ -36,6 +36,7 @@ anchor:
   FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
   FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)).*$'
   FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD)).*$'
+  FilterAI: &FilterAI '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|VPS|wasmer)).*$'
   FilterTW: &FilterTW '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH)).*$'
   Filter6B: &Filter6B '^(?=.*(?i)(6B)).*$'
   FilterMM: &FilterMM '^(?=.*(?i)(MM)).*$'
@@ -91,6 +92,7 @@ proxy-groups:
   - {name: 广告拦截,        <<: *SelectAD,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AdblockPlus_2.png"}
   - {name: 香港节点,        <<: *BaseURL-test,    filter: *FilterHK,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Hong_Kong.png"}
   - {name: 美国节点,        <<: *BaseURL-test,    filter: *FilterUS,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
+  - {name: AI节点,        <<: *BaseURL-test,     filter: *FilterAI,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
   - {name: 日本节点,        <<: *BaseURL-test,    filter: *FilterJP,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Japan.png"}
   - {name: 新加坡节点,      <<: *BaseURL-test,    filter: *FilterSG,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Singapore.png"}
   - {name: 台湾节点,        <<: *BaseURL-test,    filter: *FilterTW,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Taiwan_Province.png"}
