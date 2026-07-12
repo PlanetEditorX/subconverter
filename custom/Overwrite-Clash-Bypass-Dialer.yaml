@@ -48,7 +48,7 @@ anchor:
   SelectMS: &SelectMS {type: select, proxies: [香港节点, 美国节点, 日本节点, 新加坡节点, 台湾节点, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
   SelectMH: &SelectMH {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
   SelectHK: &SelectHK {type: select, proxies: [香港节点, 美国节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
-  SelectUS: &SelectUS {type: select, proxies: [AI节点, 美国节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectUS: &SelectUS {type: select, proxies: [美国节点, AI节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectSG: &SelectSG {type: select, proxies: [新加坡节点, 香港节点, 美国节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectJP: &SelectJP {type: select, proxies: [日本节点, 香港节点, 美国节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
   SelectTW: &SelectTW {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
@@ -92,7 +92,7 @@ proxy-groups:
   - {name: 广告拦截,        <<: *SelectAD,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AdblockPlus_2.png"}
   - {name: 香港节点,        <<: *BaseURL-test,    filter: *FilterHK,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Hong_Kong.png"}
   - {name: 美国节点,        <<: *BaseURL-test,    filter: *FilterUS,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
-  - {name: AI节点,        <<: *BaseURL-test,     filter: *FilterAI,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
+  - {name: AI节点,        <<: *BaseURL-test,     filter: *FilterAI,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/AI.png"}
   - {name: 日本节点,        <<: *BaseURL-test,    filter: *FilterJP,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Japan.png"}
   - {name: 新加坡节点,      <<: *BaseURL-test,    filter: *FilterSG,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Singapore.png"}
   - {name: 台湾节点,        <<: *BaseURL-test,    filter: *FilterTW,      icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Taiwan_Province.png"}
