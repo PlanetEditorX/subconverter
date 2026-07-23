@@ -69,6 +69,7 @@ proxy-groups:
   - {name: 即时通讯,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Telegram.png"}
   - {name: 社交媒体,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Twitter.png"}
   - {name: GitHub,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/GitHub.png"}
+  - {name: 开发服务,        <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Developer.png"}
   - {name: Copilot,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Microsoft_Copilot.png"}
   - {name: ChatGPT,         <<: *SelectUS,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/ChatGPT.png"}
   - {name: Gemini,          <<: *SelectHK,                                icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Gemini.png"}
@@ -111,6 +112,48 @@ rules:
   - RULE-SET,Custom_Proxy_Domain,手动选择
   - RULE-SET,Custom_Proxy_Domain_PlanetEditorX,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
+  # GitHub 补充：容器、开发环境和静态资源
+  - DOMAIN-SUFFIX,ghcr.io,GitHub
+  - DOMAIN-SUFFIX,pkg.github.com,GitHub
+  - DOMAIN-SUFFIX,github.dev,GitHub
+  - DOMAIN-SUFFIX,githubstatus.com,GitHub
+  - DOMAIN-SUFFIX,githubassets.com,GitHub
+  - DOMAIN-SUFFIX,githubusercontent.com,GitHub
+
+  # 开发生态：同类服务统一走“开发服务”，不再继续拆分策略组
+  - DOMAIN-SUFFIX,docker.io,开发服务
+  - DOMAIN-SUFFIX,docker.com,开发服务
+  - DOMAIN-SUFFIX,registry-1.docker.io,开发服务
+  - DOMAIN-SUFFIX,quay.io,开发服务
+  - DOMAIN-SUFFIX,npmjs.org,开发服务
+  - DOMAIN-SUFFIX,npmjs.com,开发服务
+  - DOMAIN-SUFFIX,yarnpkg.com,开发服务
+  - DOMAIN-SUFFIX,pypi.org,开发服务
+  - DOMAIN-SUFFIX,pythonhosted.org,开发服务
+  - DOMAIN-SUFFIX,golang.org,开发服务
+  - DOMAIN-SUFFIX,go.dev,开发服务
+  - DOMAIN-SUFFIX,proxy.golang.org,开发服务
+  - DOMAIN-SUFFIX,sum.golang.org,开发服务
+  - DOMAIN-SUFFIX,crates.io,开发服务
+  - DOMAIN-SUFFIX,rust-lang.org,开发服务
+  - DOMAIN-SUFFIX,rustup.rs,开发服务
+  - DOMAIN-SUFFIX,gitlab.com,开发服务
+  - DOMAIN-SUFFIX,bitbucket.org,开发服务
+  - DOMAIN-SUFFIX,jetbrains.com,开发服务
+  - DOMAIN-SUFFIX,open-vsx.org,开发服务
+  - DOMAIN-SUFFIX,vscode.dev,开发服务
+  - DOMAIN-SUFFIX,visualstudio.com,开发服务
+  - DOMAIN-SUFFIX,nuget.org,开发服务
+  - DOMAIN-SUFFIX,repo.maven.apache.org,开发服务
+  - DOMAIN-SUFFIX,gradle.org,开发服务
+
+  # Cloudflare 官方与开发平台
+  - DOMAIN-SUFFIX,cloudflare.com,开发服务
+  - DOMAIN-SUFFIX,cloudflare-dns.com,开发服务
+  - DOMAIN-SUFFIX,workers.dev,开发服务
+  - DOMAIN-SUFFIX,pages.dev,开发服务
+  - DOMAIN-SUFFIX,trycloudflare.com,开发服务
+  - DOMAIN-SUFFIX,cdnjs.com,开发服务
   - RULE-SET,google-gemini,Gemini
   - RULE-SET,google,谷歌服务
   - RULE-SET,google-ip,谷歌服务,no-resolve
