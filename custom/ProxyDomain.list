@@ -25,7 +25,7 @@ DOMAIN-SUFFIX,hoyolab.com
 # OneDrive 网页版
 DOMAIN-SUFFIX,onedrive.live.com
 # 其他
-DOMAIN-SUFFIX,sorryios.ai
+DOMAIN-KEYWORD,sorryios
 DOMAIN-SUFFIX,7pzzv.us
 DOMAIN-KEYWORD,apkpure
 DOMAIN-SUFFIX,asailor.org
