@@ -70,7 +70,7 @@ proxy-groups:
   - {name: 即时通讯, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Telegram.png"}
   - {name: 社交媒体, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Twitter.png"}
   - {name: GitHub, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/GitHub.png"}
-  - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Developer.png"}
+  - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Icon/Color/Developer.svg"}
   - {name: Copilot, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Microsoft_Copilot.png"}
   - {name: ChatGPT, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/ChatGPT.png"}
   - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Gemini.png"}
