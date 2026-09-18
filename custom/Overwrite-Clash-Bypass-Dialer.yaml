@@ -97,7 +97,7 @@ proxy-groups:
   - {name: 日本节点, <<: *BaseURL-test, filter: *FilterJP, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/jp.svg"}
   - {name: 新加坡节点, <<: *BaseURL-test, filter: *FilterSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/sg.svg"}
   - {name: 台湾节点, <<: *BaseURL-test, filter: *FilterTW, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/tw.svg"}
-  - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/direct.svg"}
+  - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/direct.svg"}
 
 # =========================================
 #                 规则配置
