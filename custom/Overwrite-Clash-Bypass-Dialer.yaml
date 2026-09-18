@@ -73,7 +73,7 @@ proxy-groups:
   - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/terminal.svg"}
   - {name: Copilot, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-copilot.svg"}
   - {name: ChatGPT, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/chatgpt-big.svg"}
-  - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/gemini.svg"}
+  - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/google-gemini.svg"}
   - {name: AI服务, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ai_bot.svg"}
   - {name: 谷歌服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/google.svg"}
   - {name: YouTube, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/youtube.svg"}
