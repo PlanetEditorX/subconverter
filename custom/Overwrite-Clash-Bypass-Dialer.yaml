@@ -65,40 +65,39 @@ anchor:
 #             策略组配置
 # =========================================
 proxy-groups:
-  - {name: 手动选择, <<: *SelectMS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/magic.png"}
-  - {name: 自动选择, <<: *SelectAU, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Flight.png"}
-  - {name: 即时通讯, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Telegram.png"}
-  - {name: 社交媒体, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Twitter.png"}
-  - {name: GitHub, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/GitHub.png"}
-  - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Icon/Color/Developer.svg"}
-  - {name: Copilot, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Microsoft_Copilot.png"}
-  - {name: ChatGPT, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/ChatGPT.png"}
-  - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Gemini.png"}
-  - {name: AI服务, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AI_bot.png"}
-  - {name: 谷歌服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Google.png"}
-  - {name: YouTube, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/YouTube.png"}
-  - {name: VPS节点, <<: *BaseURL-control, filter: *FilterVPS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Server.png"}
-  - {name: 优选节点, <<: *BaseURL-control, filter: *FilterBEST, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Trophy.png"}
-  - {name: MM节点, <<: *BaseURL-control, filter: *FilterMM, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-1.png"}
-  - {name: 6B节点, <<: *BaseURL-control, filter: *Filter6B, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Airport-2.png"}
-  - {name: 国外媒体, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Stream.png"}
-  - {name: TikTok, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/TikTok.png"}
-  - {name: PayPal, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/PayPal.png"}
-  - {name: 苹果服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Apple_black.png"}
-  - {name: OneDrive, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/OneDrive.png"}
-  - {name: 微软服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Microsoft.png"}
-  - {name: 游戏平台, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Game.png"}
-  - {name: Steam, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Steam.png"}
-  - {name: 测速工具, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/SpeedTest.png"}
-  - {name: 漏网之鱼, <<: *SelectMH, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/match.png"}
-  - {name: 广告拦截, <<: *SelectAD, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AdblockPlus_2.png"}
-  - {name: 香港节点, <<: *BaseURL-test, filter: *FilterHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Hong_Kong.png"}
-  - {name: 美国节点, <<: *BaseURL-test, filter: *FilterUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/USA.png"}
-  - {name: AI节点, <<: *BaseURL-test, filter: *FilterAI, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/AI.png"}
-  - {name: 日本节点, <<: *BaseURL-test, filter: *FilterJP, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Japan.png"}
-  - {name: 新加坡节点, <<: *BaseURL-test, filter: *FilterSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Singapore.png"}
-  - {name: 台湾节点, <<: *BaseURL-test, filter: *FilterTW, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/Taiwan_Province.png"}
-  - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/main/Icon/Color/Large/DIRECT.png"}
+  - {name: 手动选择, <<: *SelectMS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/tooljet.svg"}
+  - {name: 自动选择, <<: *SelectAU, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/xcp-ng.svg"}
+  - {name: 即时通讯, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/telegram-big.svg"}
+  - {name: 社交媒体, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/twitter.svg"}
+  - {name: GitHub, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/github.svg"}
+  - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/terminal.svg"}
+  - {name: Copilot, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-copilot.svg"}
+  - {name: ChatGPT, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/chatgpt-big.svg"}
+  - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/gemini.svg"}
+  - {name: AI服务, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ai_bot.svg"}
+  - {name: 谷歌服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/google.svg"}
+  - {name: YouTube, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/youtube.svg"}
+  - {name: VPS节点, <<: *BaseURL-control, filter: *FilterVPS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 优选节点, <<: *BaseURL-control, filter: *FilterBEST, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: MM节点, <<: *BaseURL-control, filter: *FilterMM, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/hermes-icon.svg"}
+  - {name: 6B节点, <<: *BaseURL-control, filter: *Filter6B, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/beef.svg"}
+  - {name: 国外媒体, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/netflix.svg"}
+  - {name: TikTok, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/tiktok.svg"}
+  - {name: PayPal, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/paypal.svg"}
+  - {name: 苹果服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/apple-big.svg"}
+  - {name: OneDrive, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-onedrive.svg"}
+  - {name: 微软服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-big.svg"}
+  - {name: 游戏平台, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/steam.svg"}
+  - {name: 测速工具, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ookla-speedtest.svg"}
+  - {name: 漏网之鱼, <<: *SelectMH, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/match.svg"}
+  - {name: 广告拦截, <<: *SelectAD, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/adguard-home.svg"}
+  - {name: 香港节点, <<: *BaseURL-test, filter: *FilterHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/hk.svg"}
+  - {name: 美国节点, <<: *BaseURL-test, filter: *FilterUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/us.svg"}
+  - {name: AI节点, <<: *BaseURL-test, filter: *FilterAI, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ai.svg"}
+  - {name: 日本节点, <<: *BaseURL-test, filter: *FilterJP, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/jp.svg"}
+  - {name: 新加坡节点, <<: *BaseURL-test, filter: *FilterSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/sg.svg"}
+  - {name: 台湾节点, <<: *BaseURL-test, filter: *FilterTW, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/tw.svg"}
+  - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flag/direct.svg"}
 
 # =========================================
 #                 规则配置
@@ -217,7 +216,6 @@ rules:
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
-  - RULE-SET,steam,Steam
   - RULE-SET,youtube,YouTube
   - RULE-SET,广告拦截_ACL4SSR,广告拦截
   - RULE-SET,广告拦截_PlanetEditorX,广告拦截
@@ -228,6 +226,7 @@ rules:
   - RULE-SET,onedrive,OneDrive
   - RULE-SET,microsoft,微软服务
   - RULE-SET,tiktok,TikTok
+  - RULE-SET,steam,游戏平台
   - RULE-SET,category-games,游戏平台
   - RULE-SET,category-entertainment,国外媒体
   - RULE-SET,gfw,手动选择
