@@ -1,20 +1,120 @@
 /**
  * rename-safe.js
  *
- * 用法：
+ * =========================
+ * 使用方法
+ * =========================
  *
- * xxx/scripts/rename-safe.js#name=FreeSocks
+ * 1. 普通重命名：
  *
- * 可选参数：
+ * xxx/scripts/rename-safe.js#name=VPS
  *
- * #name=FreeSocks
- * #name=FreeSocks&flag=false
- * #name=FreeSocks&out=en
- * #name=FreeSocks&showUnknown=true
- * #name=FreeSocks&one=true
- * #name=FreeSocks&blockquic=off
- * #name=FreeSocks&group=false
+ * 输出示例：
+ *
+ * 🇺🇸 美国-01 | VPS
+ * 🇺🇸 美国-02 | VPS
+ * 🇭🇰 香港-01 | VPS
+ * 🌐 其他-01 | VPS
+ *
+ *
+ * 2. 自定义未知地区名称：
+ *
+ * xxx/scripts/rename-safe.js#name=FreeSocks&other=免费
+ *
+ * 输出：
+ *
+ * 🎉 免费-01 | FreeSocks
+ * 🎉 免费-02 | FreeSocks
+ *
+ *
+ * 3. 自定义地区 Emoji：
+ *
+ * xxx/scripts/rename-safe.js#name=FreeSocks&other=低倍率&otherEmoji=🎯
+ *
+ * 输出：
+ *
+ * 🎯 低倍率-01 | FreeSocks
+ *
+ *
+ * 4. 使用英文地区名：
+ *
+ * xxx/scripts/rename-safe.js#name=VPS&out=en
+ *
+ * 输出：
+ *
+ * 🇺🇸 US-01 | VPS
+ * 🇭🇰 HK-01 | VPS
+ *
+ *
+ * 5. 不添加 Emoji：
+ *
+ * xxx/scripts/rename-safe.js#name=VPS&flag=false
+ *
+ * 输出：
+ *
+ * 美国-01 | VPS
+ * 香港-01 | VPS
+ *
+ *
+ * 6. 单节点隐藏 -01：
+ *
+ * xxx/scripts/rename-safe.js#name=VPS&one=true
+ *
+ *
+ * 7. 关闭 block-quic：
+ *
+ * xxx/scripts/rename-safe.js#name=VPS&blockquic=off
+ *
+ *
+ * =========================
+ * 参数说明
+ * =========================
+ *
+ * name：
+ *   竖线后面的自定义名称，例如 VPS、FreeSocks。
+ *
+ * other：
+ *   无法识别地区时显示的名称，默认是“其他”。
+ *
+ * otherEmoji：
+ *   无法识别地区时使用的 Emoji。
+ *
+ * out：
+ *   cn  = 中文地区名，默认
+ *   en  = 英文国家代码
+ *   flag = 只显示国旗
+ *
+ * flag：
+ *   是否显示国旗，默认 true。
+ *
+ * fgf：
+ *   名称之间的分隔符，默认空格。
+ *
+ * sn：
+ *   编号分隔符，默认 -。
+ *
+ * one：
+ *   只有一个节点时是否隐藏 -01，默认 false。
+ *
+ * group：
+ *   是否按照地区分别编号，默认 true。
+ *
+ * sort：
+ *   是否按照地区排序，默认 true。
+ *
+ * blockquic：
+ *   on    添加 block-quic
+ *   off   设置 block-quic 为 off
+ *   keep  保持原配置
+ *
+ * renameRemark：
+ *   是否同步修改 remark 字段，默认 false。
  */
+
+
+// =========================
+// 默认参数
+// =========================
 
 const DEFAULT_ARGS = {
   name: "",
@@ -25,11 +125,17 @@ const DEFAULT_ARGS = {
   one: false,
   group: true,
   sort: true,
-  showUnknown: false,
+  other: "其他",
+  otherEmoji: "",
   renameRemark: false,
   blockquic: "on",
   debug: false
 };
+
+
+// =========================
+// 读取 Sub-Store 参数
+// =========================
 
 let inputArgs = {};
 
@@ -37,7 +143,7 @@ try {
   if (typeof $arguments !== "undefined" && $arguments) {
     inputArgs = $arguments;
   }
-} catch (e) {
+} catch (error) {
   inputArgs = {};
 }
 
@@ -46,6 +152,11 @@ const args = {
   ...inputArgs
 };
 
+
+// =========================
+// 工具函数
+// =========================
+
 function decodeValue(value) {
   if (value === undefined || value === null) {
     return "";
@@ -53,7 +164,7 @@ function decodeValue(value) {
 
   try {
     return decodeURIComponent(String(value));
-  } catch (e) {
+  } catch (error) {
     return String(value);
   }
 }
@@ -67,32 +178,141 @@ function toBoolean(value, defaultValue = false) {
     return value;
   }
 
-  return ["true", "1", "yes", "on"].includes(
-    String(value).toLowerCase()
-  );
+  return [
+    "true",
+    "1",
+    "yes",
+    "on"
+  ].includes(String(value).toLowerCase());
 }
 
-const customName = decodeValue(args.name);
-const outputType = String(args.out || "cn").toLowerCase();
-const separator = decodeValue(args.fgf || " ");
-const numberSeparator = decodeValue(args.sn || "-");
+function hasOwn(object, key) {
+  return Object.prototype.hasOwnProperty.call(object, key);
+}
 
-const addFlag = toBoolean(args.flag, true);
-const removeSingleNumber = toBoolean(args.one, false);
-const groupByRegion = toBoolean(args.group, true);
-const sortGroups = toBoolean(args.sort, true);
-const showUnknownRegion = toBoolean(args.showUnknown, false);
-const renameRemark = toBoolean(args.renameRemark, false);
+function getFirstArgument(keys, defaultValue = "") {
+  for (const key of keys) {
+    if (hasOwn(inputArgs, key)) {
+      return inputArgs[key];
+    }
+  }
 
-const blockQuic = String(
-  args.blockquic === undefined ? "on" : args.blockquic
+  return defaultValue;
+}
+
+
+// =========================
+// 参数处理
+// =========================
+
+const customName = decodeValue(
+  getFirstArgument(["name"], "")
+);
+
+const outputType = String(
+  getFirstArgument(["out"], "cn")
 ).toLowerCase();
 
-const debug = toBoolean(args.debug, false);
+const separator = decodeValue(
+  getFirstArgument(["fgf"], " ")
+);
+
+const numberSeparator = decodeValue(
+  getFirstArgument(["sn"], "-")
+);
+
+const customOtherName = decodeValue(
+  getFirstArgument(
+    ["other", "unknown", "customRegion"],
+    "其他"
+  )
+);
+
+const customOtherEmoji = decodeValue(
+  getFirstArgument(
+    ["otherEmoji", "unknownEmoji", "customEmoji"],
+    ""
+  )
+);
+
+const addFlag = toBoolean(
+  getFirstArgument(["flag"], true),
+  true
+);
+
+const removeSingleNumber = toBoolean(
+  getFirstArgument(["one"], false),
+  false
+);
+
+const groupByRegion = toBoolean(
+  getFirstArgument(["group"], true),
+  true
+);
+
+const sortGroups = toBoolean(
+  getFirstArgument(["sort"], true),
+  true
+);
+
+const renameRemark = toBoolean(
+  getFirstArgument(["renameRemark"], false),
+  false
+);
+
+const blockQuic = String(
+  getFirstArgument(["blockquic"], "on")
+).toLowerCase();
+
+const debug = toBoolean(
+  getFirstArgument(["debug"], false),
+  false
+);
 
 
-// 常见地区识别规则
-// 不使用 g 标记，避免 RegExp.lastIndex 导致匹配异常
+// =========================
+// 自定义地区 Emoji
+// =========================
+
+const OTHER_EMOJI_MAP = {
+  "其他": "🌐",
+  "其它": "🌐",
+  "免费": "🎉",
+  "优选": "🚀",
+  "高速": "⚡",
+  "低倍率": "🎯",
+  "高倍率": "🔥",
+  "备用": "🔁",
+  "自定义": "🛠️",
+  "测试": "🧪",
+  "临时": "⏱️",
+  "移动": "📱",
+  "联通": "🔗",
+  "电信": "📡",
+  "香港": "🇭🇰",
+  "日本": "🇯🇵",
+  "美国": "🇺🇸",
+  "新加坡": "🇸🇬",
+  "韩国": "🇰🇷"
+};
+
+function getOtherEmoji() {
+  if (customOtherEmoji) {
+    return customOtherEmoji;
+  }
+
+  if (OTHER_EMOJI_MAP[customOtherName]) {
+    return OTHER_EMOJI_MAP[customOtherName];
+  }
+
+  return "📍";
+}
+
+
+// =========================
+// 地区识别规则
+// =========================
+
 const REGION_RULES = [
   {
     key: "HK",
@@ -240,27 +460,41 @@ function detectRegion(name) {
 
   return {
     key: "OTHER",
-    zh: "其他",
+    zh: customOtherName,
     en: "OTHER",
-    flag: "",
+    flag: getOtherEmoji(),
     regex: null
   };
 }
 
 function getRegionText(region) {
-  if (region.key === "OTHER" && !showUnknownRegion) {
-    return "";
+  if (region.key === "OTHER") {
+    return customOtherName;
   }
 
-  if (outputType === "en" || outputType === "us") {
+  if (
+    outputType === "en" ||
+    outputType === "us"
+  ) {
     return region.en;
   }
 
-  if (outputType === "gq" || outputType === "flag") {
+  if (
+    outputType === "flag" ||
+    outputType === "gq"
+  ) {
     return region.flag;
   }
 
   return region.zh;
+}
+
+function getRegionEmoji(region) {
+  if (region.key === "OTHER") {
+    return getOtherEmoji();
+  }
+
+  return region.flag;
 }
 
 function getNodeOriginalName(node, index) {
@@ -272,76 +506,105 @@ function getNodeOriginalName(node, index) {
   );
 }
 
-function addBlockQuic(node) {
-  if (blockQuic === "on") {
-    node["block-quic"] = "on";
-  } else if (blockQuic === "off") {
-    node["block-quic"] = "off";
-  }
 
-  return node;
-}
+// =========================
+// 名称生成
+// =========================
 
 function buildNodeName(item, sequence, total) {
-  const originalName = item.originalName;
   const region = item.region;
-  const regionText = getRegionText(region);
 
-  const noNumber =
+  const hideNumber =
     removeSingleNumber && total === 1;
 
-  const numberText = noNumber
+  const numberText = hideNumber
     ? ""
-    : String(sequence).padStart(2, "0");
+    : `${numberSeparator}${String(sequence).padStart(2, "0")}`;
 
-  const suffix = regionText
-    ? `${regionText}${numberSeparator}${numberText}`
-    : numberText;
+  const regionText = getRegionText(region);
+  const emoji = getRegionEmoji(region);
 
-  let baseName = customName || originalName;
+  let emojiText = "";
 
-  // 有自定义名称时，可为已识别地区添加国旗
+  // out=flag 时，地区名称本身就是 Emoji
   if (
-    customName &&
     addFlag &&
-    region.flag &&
+    emoji &&
     outputType !== "flag" &&
     outputType !== "gq"
   ) {
-    baseName = `${region.flag}${separator}${baseName}`;
+    emojiText = `${emoji}${separator}`;
   }
 
-  if (!suffix) {
-    return baseName;
+  let result =
+    `${emojiText}${regionText}${numberText}`;
+
+  // 保持格式：地区-01 | 自定义名称
+  if (customName) {
+    result += ` | ${customName}`;
   }
 
-  if (!customName && !regionText) {
-    return `${baseName}${numberSeparator}${numberText}`;
-  }
-
-  if (!regionText && customName) {
-    return `${baseName}${numberSeparator}${numberText}`;
-  }
-
-  return `${baseName}${separator}${suffix}`;
+  return result;
 }
+
+
+// =========================
+// block-quic 处理
+// =========================
+
+function applyBlockQuic(node) {
+  if (blockQuic === "on") {
+    node["block-quic"] = "on";
+  }
+
+  if (blockQuic === "off") {
+    node["block-quic"] = "off";
+  }
+
+  // keep：保持原节点配置不变
+  return node;
+}
+
+
+// =========================
+// 排序辅助
+// =========================
+
+function getRegionRank(regionKey) {
+  if (regionKey === "OTHER") {
+    return 999;
+  }
+
+  const index = REGION_RULES.findIndex(
+    item => item.key === regionKey
+  );
+
+  return index === -1 ? 998 : index;
+}
+
+
+// =========================
+// Sub-Store 主函数
+// =========================
 
 function operator(proxies = []) {
   const items = [];
   const groups = new Map();
 
-  // 第一遍：识别地区并建立分组
+  // 第一阶段：识别地区和分组
   proxies.forEach((node, index) => {
     if (!node || typeof node !== "object") {
       return;
     }
 
-    const originalName = getNodeOriginalName(node, index);
-    const region = detectRegion(originalName);
+    const originalName =
+      getNodeOriginalName(node, index);
 
-    const groupKey = groupByRegion
-      ? region.key
-      : "ALL";
+    const region =
+      detectRegion(originalName);
+
+    const groupKey =
+      groupByRegion ? region.key : "ALL";
 
     const item = {
       node,
@@ -363,7 +626,24 @@ function operator(proxies = []) {
   let orderedItems = [];
 
   if (sortGroups) {
-    for (const groupItems of groups.values()) {
+    const groupArray =
+      Array.from(groups.entries());
+
+    groupArray.sort((a, b) => {
+      const regionA = a[1][0].region;
+      const regionB = b[1][0].region;
+
+      const rankA = getRegionRank(regionA.key);
+      const rankB = getRegionRank(regionB.key);
+
+      if (rankA !== rankB) {
+        return rankA - rankB;
+      }
+
+      return a[1][0].index - b[1][0].index;
+    });
+
+    for (const [, groupItems] of groupArray) {
       orderedItems.push(...groupItems);
     }
   } else {
@@ -372,36 +652,40 @@ function operator(proxies = []) {
     );
   }
 
-  // 统计每组节点数量
+  // 统计每组数量
   const groupTotals = new Map();
 
   for (const item of orderedItems) {
+    const current =
+      groupTotals.get(item.groupKey) || 0;
+
     groupTotals.set(
       item.groupKey,
-      (groupTotals.get(item.groupKey) || 0) + 1
+      current + 1
     );
   }
 
+  // 各组编号
   const groupCounters = new Map();
 
-  // 第二遍：重命名
   for (const item of orderedItems) {
-    const currentNumber =
+    const current =
       (groupCounters.get(item.groupKey) || 0) + 1;
 
     groupCounters.set(
       item.groupKey,
-      currentNumber
+      current
     );
 
     const total =
       groupTotals.get(item.groupKey) || 1;
 
-    item.node.name = buildNodeName(
-      item,
-      currentNumber,
-      total
-    );
+    item.node.name =
+      buildNodeName(
+        item,
+        current,
+        total
+      );
 
     if (
       renameRemark &&
@@ -410,7 +694,7 @@ function operator(proxies = []) {
       item.node.remark = item.node.name;
     }
 
-    addBlockQuic(item.node);
+    applyBlockQuic(item.node);
 
     if (debug) {
       console.log(
@@ -419,5 +703,7 @@ function operator(proxies = []) {
     }
   }
 
-  return orderedItems.map(item => item.node);
+  return orderedItems.map(
+    item => item.node
+  );
 }
