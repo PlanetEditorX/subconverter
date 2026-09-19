@@ -203,7 +203,6 @@ anchor:
     type: select
     proxies:
       - 美国节点
-      - AI节点
       - 香港节点
       - 新加坡节点
       - 日本节点
