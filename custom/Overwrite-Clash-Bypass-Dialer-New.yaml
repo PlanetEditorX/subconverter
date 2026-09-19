@@ -27,430 +27,133 @@ proxy-providers:
       udp: true
 
 anchor:
-  # 原有自动测速组
-  BaseURL-test: &BaseURL-test
-    type: smart
-    include-all: true
-    tolerance: 20
-    interval: 120
-    url: https://cp.cloudflare.com/generate_204
-    hidden: true
+  # 策略组类型模板 - 定义不同的策略组基础配置
+  BaseURL-test: &BaseURL-test {type: smart, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204, hidden: true}
+  BaseURL-control: &BaseURL-control {type: smart, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204}
+  BaseDIRECT: &BaseDIRECT {type: select, hidden: true}
 
-  BaseURL-control: &BaseURL-control
-    type: smart
-    include-all: true
-    tolerance: 20
-    interval: 120
-    url: https://cp.cloudflare.com/generate_204
+  # 地区内部测速组
+  BaseRegion-test: &BaseRegion-test {type: url-test, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204}
+  BaseRegion-fallback: &BaseRegion-fallback {type: fallback, interval: 120, url: https://cp.cloudflare.com/generate_204}
 
-  BaseDIRECT: &BaseDIRECT
-    type: select
-    hidden: true
+  # 节点筛选正则表达式
+  FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG)).*$'
+  FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
+  FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)).*$'
+  FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD)).*$'
+  FilterAI: &FilterAI '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|VPS|AI)).*$'
+  FilterTW: &FilterTW '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH)).*$'
+  Filter6B: &Filter6B '^(?=.*(?i)(6B)).*$'
+  FilterMM: &FilterMM '^(?=.*(?i)(MM)).*$'
+  FilterVPS: &FilterVPS '^(?=.*(?i)(VPS)).*$'
+  FilterBEST: &FilterBEST '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG|台|🇹🇼|TW|tai|TPE|TSA|KHH|日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
 
-  # 地区内部自动测速组
-  BaseRegionURLTest: &BaseRegionURLTest
-    type: url-test
-    include-all: true
-    tolerance: 20
-    interval: 120
-    url: https://cp.cloudflare.com/generate_204
+  # 免费节点关键词：EdgeTunnel、FreeSocks、免费、free
+  FilterFreeName: &FilterFreeName 'EdgeTunnel|FreeSocks|免费|free'
 
-  # 地区优先级组：机场优先，免费备用
-  BaseRegionFallback: &BaseRegionFallback
-    type: fallback
-    interval: 120
-    url: https://cp.cloudflare.com/generate_204
+  # 机场节点关键词：MM、霉霉、6B、牛逼
+  FilterAirportName: &FilterAirportName 'MM|霉霉|6B|牛逼'
 
-  # 免费节点关键词：
-  # EdgeTunnel、FreeSocks、免费、free
-  FilterFreeName: &FilterFreeName
-    'EdgeTunnel|FreeSocks|免费|free'
+  # 香港机场、免费节点
+  FilterHKAirport: &FilterHKAirport '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  FilterHKFree: &FilterHKFree '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  # 机场节点关键词：
-  # MM、霉霉、6B、牛逼
-  FilterAirportName: &FilterAirportName
-    'MM|霉霉|6B|牛逼'
+  # 美国机场、免费节点
+  FilterUSAirport: &FilterUSAirport '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  FilterUSFree: &FilterUSFree '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  # 地区筛选
-  FilterHK: &FilterHK
-    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG)).*$'
+  # 日本机场、免费节点
+  FilterJPAirport: &FilterJPAirport '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  FilterJPFree: &FilterJPFree '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  FilterSG: &FilterSG
-    '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
+  # 新加坡机场、免费节点
+  FilterSGAirport: &FilterSGAirport '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  FilterSGFree: &FilterSGFree '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  FilterJP: &FilterJP
-    '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)).*$'
+  # 台湾机场、免费节点
+  FilterTWAirport: &FilterTWAirport '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  FilterTWFree: &FilterTWFree '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  FilterUS: &FilterUS
-    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD)).*$'
+  # 策略组代理列表模板
+  SelectAU: &SelectAU {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连)).)*$"}
+  SelectMS: &SelectMS {type: select, proxies: [香港节点, 美国节点, 日本节点, 新加坡节点, 台湾节点, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
+  SelectMH: &SelectMH {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连], use: [Sub-store]}
+  SelectHK: &SelectHK {type: select, proxies: [香港节点, 美国节点, 日本节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectUS: &SelectUS {type: select, proxies: [美国节点, AI节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectSG: &SelectSG {type: select, proxies: [新加坡节点, 香港节点, 美国节点, 日本节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectJP: &SelectJP {type: select, proxies: [日本节点, 香港节点, 美国节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectTW: &SelectTW {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, VPS节点, MM节点, 6B节点, 全球直连]}
+  SelectDT: &SelectDT {type: select, proxies: [全球直连, 手动选择, 自动选择]}
+  SelectAD: &SelectAD {type: select, proxies: [REJECT, DIRECT]}
 
-  FilterAI: &FilterAI
-    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|VPS|AI)).*$'
+  # 规则提供者相关锚点
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
-  FilterTW: &FilterTW
-    '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH)).*$'
-
-  Filter6B: &Filter6B
-    '^(?=.*(?i)(6B)).*$'
-
-  FilterMM: &FilterMM
-    '^(?=.*(?i)(MM)).*$'
-
-  FilterVPS: &FilterVPS
-    '^(?=.*(?i)(VPS)).*$'
-
-  FilterBEST: &FilterBEST
-    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG|台|🇹🇼|TW|tai|TPE|TSA|KHH|日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
-
-  # 香港：机场
-  FilterHKAirport: &FilterHKAirport
-    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
-
-  # 香港：免费
-  FilterHKFree: &FilterHKFree
-    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
-
-  # 美国：机场
-  FilterUSAirport: &FilterUSAirport
-    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
-
-  # 美国：免费
-  FilterUSFree: &FilterUSFree
-    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
-
-  # 日本：机场
-  FilterJPAirport: &FilterJPAirport
-    '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
-
-  # 日本：免费
-  FilterJPFree: &FilterJPFree
-    '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
-
-  # 新加坡：机场
-  FilterSGAirport: &FilterSGAirport
-    '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
-
-  # 新加坡：免费
-  FilterSGFree: &FilterSGFree
-    '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
-
-  # 台湾：机场
-  FilterTWAirport: &FilterTWAirport
-    '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
-
-  # 台湾：免费
-  FilterTWFree: &FilterTWFree
-    '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
-
-  # 普通策略组
-  SelectAU: &SelectAU
-    type: url-test
-    include-all: true
-    tolerance: 20
-    interval: 120
-    url: https://cp.cloudflare.com/generate_204
-    filter: "^((?!(直连|DIRECT)).)*$"
-
-  SelectMS: &SelectMS
-    type: select
-    proxies:
-      - 香港节点
-      - 美国节点
-      - 日本节点
-      - 新加坡节点
-      - 台湾节点
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-    use:
-      - Sub-store
-
-  SelectMH: &SelectMH
-    type: select
-    proxies:
-      - 台湾节点
-      - 香港节点
-      - 美国节点
-      - 新加坡节点
-      - 日本节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-    use:
-      - Sub-store
-
-  SelectHK: &SelectHK
-    type: select
-    proxies:
-      - 香港节点
-      - 美国节点
-      - 日本节点
-      - 新加坡节点
-      - 台湾节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-
-  SelectUS: &SelectUS
-    type: select
-    proxies:
-      - 美国节点
-      - 香港节点
-      - 新加坡节点
-      - 日本节点
-      - 台湾节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-
-  SelectSG: &SelectSG
-    type: select
-    proxies:
-      - 新加坡节点
-      - 香港节点
-      - 美国节点
-      - 日本节点
-      - 台湾节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-
-  SelectJP: &SelectJP
-    type: select
-    proxies:
-      - 日本节点
-      - 香港节点
-      - 美国节点
-      - 新加坡节点
-      - 台湾节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-
-  SelectTW: &SelectTW
-    type: select
-    proxies:
-      - 台湾节点
-      - 香港节点
-      - 美国节点
-      - 新加坡节点
-      - 日本节点
-      - 手动选择
-      - 自动选择
-      - VPS节点
-      - MM节点
-      - 6B节点
-      - 全球直连
-
-  SelectAD: &SelectAD
-    type: select
-    proxies:
-      - REJECT
-      - DIRECT
-
-  ip: &ip
-    type: http
-    interval: 86400
-    behavior: ipcidr
-    format: mrs
-
-  domain: &domain
-    type: http
-    interval: 86400
-    behavior: domain
-    format: mrs
-
-  class: &class
-    type: http
-    interval: 86400
-    behavior: classical
-    format: text
-
-
+# =========================================
+#             策略组配置
+# =========================================
 proxy-groups:
-  - name: 手动选择
-    <<: *SelectMS
+  - {name: 手动选择, <<: *SelectMS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/tooljet.svg"}
+  - {name: 自动选择, <<: *SelectAU, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/xcp-ng.svg"}
+  - {name: 即时通讯, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/telegram-big.svg"}
+  - {name: 社交媒体, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/twitter.svg"}
+  - {name: GitHub, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/github.svg"}
+  - {name: 开发服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/terminal.svg"}
+  - {name: Copilot, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-copilot.svg"}
+  - {name: ChatGPT, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/chatgpt-big.svg"}
+  - {name: Gemini, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/google-gemini.svg"}
+  - {name: AI服务, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ai_bot.svg"}
+  - {name: 谷歌服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/google.svg"}
+  - {name: YouTube, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/youtube.svg"}
+  - {name: VPS节点, <<: *BaseURL-control, filter: *FilterVPS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 优选节点, <<: *BaseURL-control, filter: *FilterBEST, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: MM节点, <<: *BaseURL-control, filter: *FilterMM, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/hermes-icon.svg"}
+  - {name: 6B节点, <<: *BaseURL-control, filter: *Filter6B, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/beef.svg"}
+  - {name: 国外媒体, <<: *SelectSG, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/netflix.svg"}
+  - {name: TikTok, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/tiktok.svg"}
+  - {name: PayPal, <<: *SelectUS, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/paypal.svg"}
+  - {name: 苹果服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/apple-big.svg"}
+  - {name: OneDrive, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-onedrive.svg"}
+  - {name: 微软服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-big.svg"}
+  - {name: 游戏平台, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/steam.svg"}
+  - {name: 测速工具, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ookla-speedtest.svg"}
+  - {name: 漏网之鱼, <<: *SelectMH, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/match.svg"}
+  - {name: 广告拦截, <<: *SelectAD, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/adguard-home.svg"}
 
-  - name: 自动选择
-    <<: *SelectAU
+  # 香港：香港机场优先，香港免费备用
+  - {name: 香港机场, <<: *BaseRegion-test, filter: *FilterHKAirport, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 香港免费, <<: *BaseRegion-test, filter: *FilterHKFree, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: 香港节点, <<: *BaseRegion-fallback, proxies: [香港机场, 香港免费], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/hk.svg"}
 
-  # 香港：机场优先，免费备用
-  - name: 香港机场
-    <<: *BaseRegionURLTest
-    filter: *FilterHKAirport
+  # 美国：美国机场优先，美国免费备用
+  - {name: 美国机场, <<: *BaseRegion-test, filter: *FilterUSAirport, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 美国免费, <<: *BaseRegion-test, filter: *FilterUSFree, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: 美国节点, <<: *BaseRegion-fallback, proxies: [美国机场, 美国免费], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/us.svg"}
 
-  - name: 香港免费
-    <<: *BaseRegionURLTest
-    filter: *FilterHKFree
+  - {name: AI节点, <<: *BaseURL-test, filter: *FilterAI, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ai.svg"}
 
-  - name: 香港节点
-    <<: *BaseRegionFallback
-    proxies:
-      - 香港机场
-      - 香港免费
+  # 日本：日本机场优先，日本免费备用
+  - {name: 日本机场, <<: *BaseRegion-test, filter: *FilterJPAirport, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 日本免费, <<: *BaseRegion-test, filter: *FilterJPFree, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: 日本节点, <<: *BaseRegion-fallback, proxies: [日本机场, 日本免费], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/jp.svg"}
 
-  # 美国：机场优先，免费备用
-  - name: 美国机场
-    <<: *BaseRegionURLTest
-    filter: *FilterUSAirport
+  # 新加坡：新加坡机场优先，新加坡免费备用
+  - {name: 新加坡机场, <<: *BaseRegion-test, filter: *FilterSGAirport, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 新加坡免费, <<: *BaseRegion-test, filter: *FilterSGFree, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: 新加坡节点, <<: *BaseRegion-fallback, proxies: [新加坡机场, 新加坡免费], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/sg.svg"}
 
-  - name: 美国免费
-    <<: *BaseRegionURLTest
-    filter: *FilterUSFree
+  # 台湾：台湾机场优先，台湾免费备用
+  - {name: 台湾机场, <<: *BaseRegion-test, filter: *FilterTWAirport, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/plane-finder.svg"}
+  - {name: 台湾免费, <<: *BaseRegion-test, filter: *FilterTWFree, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/cloudflare-pages.svg"}
+  - {name: 台湾节点, <<: *BaseRegion-fallback, proxies: [台湾机场, 台湾免费], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/flags/tw.svg"}
 
-  - name: 美国节点
-    <<: *BaseRegionFallback
-    proxies:
-      - 美国机场
-      - 美国免费
+  - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/direct.svg"}
 
-  # 日本：机场优先，免费备用
-  - name: 日本机场
-    <<: *BaseRegionURLTest
-    filter: *FilterJPAirport
-
-  - name: 日本免费
-    <<: *BaseRegionURLTest
-    filter: *FilterJPFree
-
-  - name: 日本节点
-    <<: *BaseRegionFallback
-    proxies:
-      - 日本机场
-      - 日本免费
-
-  # 新加坡：机场优先，免费备用
-  - name: 新加坡机场
-    <<: *BaseRegionURLTest
-    filter: *FilterSGAirport
-
-  - name: 新加坡免费
-    <<: *BaseRegionURLTest
-    filter: *FilterSGFree
-
-  - name: 新加坡节点
-    <<: *BaseRegionFallback
-    proxies:
-      - 新加坡机场
-      - 新加坡免费
-
-  # 台湾：机场优先，免费备用
-  - name: 台湾机场
-    <<: *BaseRegionURLTest
-    filter: *FilterTWAirport
-
-  - name: 台湾免费
-    <<: *BaseRegionURLTest
-    filter: *FilterTWFree
-
-  - name: 台湾节点
-    <<: *BaseRegionFallback
-    proxies:
-      - 台湾机场
-      - 台湾免费
-
-  # 其他服务分组
-  - name: 即时通讯
-    <<: *SelectHK
-
-  - name: 社交媒体
-    <<: *SelectHK
-
-  - name: GitHub
-    <<: *SelectHK
-
-  - name: 开发服务
-    <<: *SelectHK
-
-  - name: Copilot
-    <<: *SelectUS
-
-  - name: ChatGPT
-    <<: *SelectUS
-
-  - name: Gemini
-    <<: *SelectHK
-
-  - name: AI服务
-    <<: *SelectUS
-
-  - name: 谷歌服务
-    <<: *SelectHK
-
-  - name: YouTube
-    <<: *SelectSG
-
-  - name: 国外媒体
-    <<: *SelectSG
-
-  - name: TikTok
-    <<: *SelectUS
-
-  - name: PayPal
-    <<: *SelectUS
-
-  - name: 苹果服务
-    <<: *SelectHK
-
-  - name: OneDrive
-    <<: *SelectHK
-
-  - name: 微软服务
-    <<: *SelectHK
-
-  - name: 游戏平台
-    <<: *SelectHK
-
-  - name: 测速工具
-    <<: *SelectHK
-
-  # VPS：独立测速
-  - name: VPS节点
-    <<: *BaseURL-control
-    filter: *FilterVPS
-
-  # 机场分类
-  - name: MM节点
-    <<: *BaseURL-control
-    filter: *FilterMM
-
-  - name: 6B节点
-    <<: *BaseURL-control
-    filter: *Filter6B
-
-  - name: 优选节点
-    <<: *BaseURL-control
-    filter: *FilterBEST
-
-  - name: 漏网之鱼
-    <<: *SelectMH
-
-  - name: 广告拦截
-    <<: *SelectAD
-
-  - name: 全球直连
-    type: select
-    proxies:
-      - DIRECT
-
-
+# =========================================
+#                 规则配置
+# =========================================
 rules:
   - RULE-SET,private,全球直连
   - RULE-SET,private_IP,全球直连,no-resolve
@@ -462,6 +165,7 @@ rules:
   - RULE-SET,Custom_Proxy_Domain_PlanetEditorX,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
 
+  # GitHub
   - DOMAIN-SUFFIX,ghcr.io,GitHub
   - DOMAIN-SUFFIX,pkg.github.com,GitHub
   - DOMAIN-SUFFIX,github.dev,GitHub
@@ -469,6 +173,7 @@ rules:
   - DOMAIN-SUFFIX,githubassets.com,GitHub
   - DOMAIN-SUFFIX,githubusercontent.com,GitHub
 
+  # 开发生态
   - DOMAIN-SUFFIX,docker.io,开发服务
   - DOMAIN-SUFFIX,docker.com,开发服务
   - DOMAIN-SUFFIX,registry-1.docker.io,开发服务
@@ -495,6 +200,7 @@ rules:
   - DOMAIN-SUFFIX,repo.maven.apache.org,开发服务
   - DOMAIN-SUFFIX,gradle.org,开发服务
 
+  # Cloudflare
   - DOMAIN-SUFFIX,cloudflare.com,开发服务
   - DOMAIN-SUFFIX,cloudflare-dns.com,开发服务
   - DOMAIN-SUFFIX,workers.dev,开发服务
@@ -502,6 +208,7 @@ rules:
   - DOMAIN-SUFFIX,trycloudflare.com,开发服务
   - DOMAIN-SUFFIX,cdnjs.com,开发服务
 
+  # AI 服务补充
   - DOMAIN-SUFFIX,opencode.ai,AI服务
   - DOMAIN-SUFFIX,models.dev,AI服务
   - DOMAIN-SUFFIX,claude.ai,AI服务
@@ -583,188 +290,53 @@ rules:
   - RULE-SET,cn-ip,全球直连,no-resolve
   - MATCH,漏网之鱼
 
-
+# =========================================
+#              规则提供者
+# =========================================
 rule-providers:
-  giveup_direct:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Rules/Giveup_Direct.list"
-
-  giveup_proxy:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Rules/Giveup_Proxy.list"
-
-  private:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
-
-  private_IP:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
-
-  Custom_Direct_Domain:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Domain.mrs"
-
-  Custom_Direct_IP:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_IP.mrs"
-
-  Custom_Proxy_Domain:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs"
-
-  Custom_Proxy_Domain_PlanetEditorX:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ProxyDomain.list"
-
-  Custom_Proxy_IP:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs"
-
-  google-cn:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs"
-
-  category-games@cn:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"
-
-  Steam_CDN_Domain:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_Domain.mrs"
-
-  Steam_CDN_IP:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_IP.mrs"
-
-  category-game-platforms-download:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-game-platforms-download.mrs"
-
-  category-public-tracker:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"
-
-  category-communication:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"
-
-  category-social-media:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"
-
-  copilot:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"
-
-  openai:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"
-
-  openai_PlanetEditorX:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list"
-
-  google-gemini:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"
-
-  category-ai:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"
-
-  github:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"
-
-  category-speedtest:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"
-
-  steam:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"
-
-  youtube:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"
-
-  广告拦截_ACL4SSR:
-    <<: *class
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"
-
-  广告拦截_PlanetEditorX:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/CustomProhibit.list"
-
-  应用净化:
-    <<: *class
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"
-
-  隐私防护:
-    <<: *class
-    url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"
-
-  apple:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"
-
-  onedrive:
-    <<: *class
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OneDrive/OneDrive.list"
-
-  microsoft:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"
-
-  google:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
-
-  tiktok:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"
-
-  category-games:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"
-
-  category-entertainment:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"
-
-  gfw:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"
-
-  telegram:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
-
-  twitter:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"
-
-  facebook:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"
-
-  google-ip:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
-
-  cn:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
-
-  cn_PlanetEditorX:
-    <<: *class
-    url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectDomain.list"
-
-  cn-ip:
-    <<: *ip
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
-
-  PayPal:
-    <<: *domain
-    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"
+  giveup_direct: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Rules/Giveup_Direct.list"}
+  giveup_proxy: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/Rules/Giveup_Proxy.list"}
+  private: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  private_IP: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  Custom_Direct_Domain: {<<: *domain, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Domain.mrs"}
+  Custom_Direct_IP: {<<: *ip, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_IP.mrs"}
+  Custom_Proxy_Domain: {<<: *domain, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs"}
+  Custom_Proxy_Domain_PlanetEditorX: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ProxyDomain.list"}
+  Custom_Proxy_IP: {<<: *ip, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs"}
+  google-cn: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs"}
+  category-games@cn: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"}
+  Steam_CDN_Domain: {<<: *domain, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_Domain.mrs"}
+  Steam_CDN_IP: {<<: *ip, url: "https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_IP.mrs"}
+  category-game-platforms-download: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-game-platforms-download.mrs"}
+  category-public-tracker: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
+  category-communication: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
+  category-social-media: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
+  copilot: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/Copilot.list"}
+  openai: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
+  openai_PlanetEditorX: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list"}
+  google-gemini: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
+  category-ai: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
+  github: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  category-speedtest: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
+  steam: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
+  youtube: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  广告拦截_ACL4SSR: {<<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list"}
+  广告拦截_PlanetEditorX: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/CustomProhibit.list"}
+  应用净化: {<<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list"}
+  隐私防护: {<<: *class, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanEasyPrivacy.list"}
+  apple: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  onedrive: {<<: *class, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OneDrive/OneDrive.list"}
+  microsoft: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  google: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  tiktok: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  category-games: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
+  category-entertainment: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
+  gfw: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
+  telegram: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  twitter: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"}
+  facebook: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"}
+  google-ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  cn: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  cn_PlanetEditorX: {<<: *class, url: "https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/DirectDomain.list"}
+  cn-ip: {<<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  PayPal: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
