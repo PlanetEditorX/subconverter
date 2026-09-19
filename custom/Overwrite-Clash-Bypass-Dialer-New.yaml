@@ -27,7 +27,7 @@ proxy-providers:
       udp: true
 
 anchor:
-  # 原有策略组
+  # 原有自动测速组
   BaseURL-test: &BaseURL-test
     type: smart
     include-all: true
@@ -47,19 +47,29 @@ anchor:
     type: select
     hidden: true
 
-  # 机场内部自动测速
-  BaseAirportURLTest: &BaseAirportURLTest
+  # 地区内部自动测速组
+  BaseRegionURLTest: &BaseRegionURLTest
     type: url-test
     include-all: true
     tolerance: 20
     interval: 120
     url: https://cp.cloudflare.com/generate_204
 
-  # 机场优先、免费备用
-  BaseAirportFallback: &BaseAirportFallback
+  # 地区优先级组：机场优先，免费备用
+  BaseRegionFallback: &BaseRegionFallback
     type: fallback
     interval: 120
     url: https://cp.cloudflare.com/generate_204
+
+  # 免费节点关键词：
+  # EdgeTunnel、FreeSocks、免费、free
+  FilterFreeName: &FilterFreeName
+    'EdgeTunnel|FreeSocks|免费|free'
+
+  # 机场节点关键词：
+  # MM、霉霉、6B、牛逼
+  FilterAirportName: &FilterAirportName
+    'MM|霉霉|6B|牛逼'
 
   # 地区筛选
   FilterHK: &FilterHK
@@ -92,15 +102,47 @@ anchor:
   FilterBEST: &FilterBEST
     '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG|台|🇹🇼|TW|tai|TPE|TSA|KHH|日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK|坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
 
-  # 免费节点筛选
-  FilterFree: &FilterFree
-    '^(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
+  # 香港：机场
+  FilterHKAirport: &FilterHKAirport
+    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
 
-  # 机场节点筛选
-  FilterAirport: &FilterAirport
-    '^(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+  # 香港：免费
+  FilterHKFree: &FilterHKFree
+    '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
 
-  # 策略组代理列表模板
+  # 美国：机场
+  FilterUSAirport: &FilterUSAirport
+    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+
+  # 美国：免费
+  FilterUSFree: &FilterUSFree
+    '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
+
+  # 日本：机场
+  FilterJPAirport: &FilterJPAirport
+    '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+
+  # 日本：免费
+  FilterJPFree: &FilterJPFree
+    '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
+
+  # 新加坡：机场
+  FilterSGAirport: &FilterSGAirport
+    '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+
+  # 新加坡：免费
+  FilterSGFree: &FilterSGFree
+    '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
+
+  # 台湾：机场
+  FilterTWAirport: &FilterTWAirport
+    '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(MM|霉霉|6B|牛逼)).*$'
+
+  # 台湾：免费
+  FilterTWFree: &FilterTWFree
+    '^(?=.*(?i)(台|🇹🇼|TW|tai|TPE|TSA|KHH))(?=.*(?i)(EdgeTunnel|FreeSocks|免费|free)).*$'
+
+  # 普通策略组
   SelectAU: &SelectAU
     type: url-test
     include-all: true
@@ -112,7 +154,6 @@ anchor:
   SelectMS: &SelectMS
     type: select
     proxies:
-      - 🚀 机场优先
       - 香港节点
       - 美国节点
       - 日本节点
@@ -129,7 +170,6 @@ anchor:
   SelectMH: &SelectMH
     type: select
     proxies:
-      - 🚀 机场优先
       - 台湾节点
       - 香港节点
       - 美国节点
@@ -220,20 +260,12 @@ anchor:
       - 6B节点
       - 全球直连
 
-  SelectDT: &SelectDT
-    type: select
-    proxies:
-      - 全球直连
-      - 手动选择
-      - 自动选择
-
   SelectAD: &SelectAD
     type: select
     proxies:
       - REJECT
       - DIRECT
 
-  # 规则提供者模板
   ip: &ip
     type: http
     interval: 86400
@@ -254,29 +286,88 @@ anchor:
 
 
 proxy-groups:
-  # 基础选择
   - name: 手动选择
     <<: *SelectMS
 
   - name: 自动选择
     <<: *SelectAU
 
-  # 机场、免费节点优先级组
-  - name: ✈️ 机场自动
-    <<: *BaseAirportURLTest
-    filter: *FilterAirport
+  # 香港：机场优先，免费备用
+  - name: 香港机场
+    <<: *BaseRegionURLTest
+    filter: *FilterHKAirport
 
-  - name: 🆓 免费自动
-    <<: *BaseAirportURLTest
-    filter: *FilterFree
+  - name: 香港免费
+    <<: *BaseRegionURLTest
+    filter: *FilterHKFree
 
-  - name: 🚀 机场优先
-    <<: *BaseAirportFallback
+  - name: 香港节点
+    <<: *BaseRegionFallback
     proxies:
-      - ✈️ 机场自动
-      - 🆓 免费自动
+      - 香港机场
+      - 香港免费
 
-  # 分类服务
+  # 美国：机场优先，免费备用
+  - name: 美国机场
+    <<: *BaseRegionURLTest
+    filter: *FilterUSAirport
+
+  - name: 美国免费
+    <<: *BaseRegionURLTest
+    filter: *FilterUSFree
+
+  - name: 美国节点
+    <<: *BaseRegionFallback
+    proxies:
+      - 美国机场
+      - 美国免费
+
+  # 日本：机场优先，免费备用
+  - name: 日本机场
+    <<: *BaseRegionURLTest
+    filter: *FilterJPAirport
+
+  - name: 日本免费
+    <<: *BaseRegionURLTest
+    filter: *FilterJPFree
+
+  - name: 日本节点
+    <<: *BaseRegionFallback
+    proxies:
+      - 日本机场
+      - 日本免费
+
+  # 新加坡：机场优先，免费备用
+  - name: 新加坡机场
+    <<: *BaseRegionURLTest
+    filter: *FilterSGAirport
+
+  - name: 新加坡免费
+    <<: *BaseRegionURLTest
+    filter: *FilterSGFree
+
+  - name: 新加坡节点
+    <<: *BaseRegionFallback
+    proxies:
+      - 新加坡机场
+      - 新加坡免费
+
+  # 台湾：机场优先，免费备用
+  - name: 台湾机场
+    <<: *BaseRegionURLTest
+    filter: *FilterTWAirport
+
+  - name: 台湾免费
+    <<: *BaseRegionURLTest
+    filter: *FilterTWFree
+
+  - name: 台湾节点
+    <<: *BaseRegionFallback
+    proxies:
+      - 台湾机场
+      - 台湾免费
+
+  # 其他服务分组
   - name: 即时通讯
     <<: *SelectHK
 
@@ -331,11 +422,12 @@ proxy-groups:
   - name: 测速工具
     <<: *SelectHK
 
-  # VPS、机场原分类
+  # VPS：独立测速
   - name: VPS节点
     <<: *BaseURL-control
     filter: *FilterVPS
 
+  # 机场分类
   - name: MM节点
     <<: *BaseURL-control
     filter: *FilterMM
@@ -348,43 +440,14 @@ proxy-groups:
     <<: *BaseURL-control
     filter: *FilterBEST
 
-  # 未匹配流量默认使用机场优先
   - name: 漏网之鱼
-    <<: *BaseAirportFallback
-    proxies:
-      - ✈️ 机场自动
-      - 🆓 免费自动
+    <<: *SelectMH
 
   - name: 广告拦截
     <<: *SelectAD
 
-  # 地区节点
-  - name: 香港节点
-    <<: *BaseURL-test
-    filter: *FilterHK
-
-  - name: 美国节点
-    <<: *BaseURL-test
-    filter: *FilterUS
-
-  - name: AI节点
-    <<: *BaseURL-test
-    filter: *FilterAI
-
-  - name: 日本节点
-    <<: *BaseURL-test
-    filter: *FilterJP
-
-  - name: 新加坡节点
-    <<: *BaseURL-test
-    filter: *FilterSG
-
-  - name: 台湾节点
-    <<: *BaseURL-test
-    filter: *FilterTW
-
   - name: 全球直连
-    <<: *BaseDIRECT
+    type: select
     proxies:
       - DIRECT
 
@@ -400,7 +463,6 @@ rules:
   - RULE-SET,Custom_Proxy_Domain_PlanetEditorX,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
 
-  # GitHub
   - DOMAIN-SUFFIX,ghcr.io,GitHub
   - DOMAIN-SUFFIX,pkg.github.com,GitHub
   - DOMAIN-SUFFIX,github.dev,GitHub
@@ -408,7 +470,6 @@ rules:
   - DOMAIN-SUFFIX,githubassets.com,GitHub
   - DOMAIN-SUFFIX,githubusercontent.com,GitHub
 
-  # 开发生态
   - DOMAIN-SUFFIX,docker.io,开发服务
   - DOMAIN-SUFFIX,docker.com,开发服务
   - DOMAIN-SUFFIX,registry-1.docker.io,开发服务
@@ -435,7 +496,6 @@ rules:
   - DOMAIN-SUFFIX,repo.maven.apache.org,开发服务
   - DOMAIN-SUFFIX,gradle.org,开发服务
 
-  # Cloudflare
   - DOMAIN-SUFFIX,cloudflare.com,开发服务
   - DOMAIN-SUFFIX,cloudflare-dns.com,开发服务
   - DOMAIN-SUFFIX,workers.dev,开发服务
@@ -443,7 +503,6 @@ rules:
   - DOMAIN-SUFFIX,trycloudflare.com,开发服务
   - DOMAIN-SUFFIX,cdnjs.com,开发服务
 
-  # AI 服务
   - DOMAIN-SUFFIX,opencode.ai,AI服务
   - DOMAIN-SUFFIX,models.dev,AI服务
   - DOMAIN-SUFFIX,claude.ai,AI服务
@@ -523,9 +582,7 @@ rules:
   - RULE-SET,cn,全球直连
   - RULE-SET,cn_PlanetEditorX,全球直连
   - RULE-SET,cn-ip,全球直连,no-resolve
-
-  # 默认出口：机场优先，免费备用
-  - MATCH,🚀 机场优先
+  - MATCH,漏网之鱼
 
 
 rule-providers:
