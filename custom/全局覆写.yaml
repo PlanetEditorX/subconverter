@@ -10,6 +10,50 @@
 profile:
   store-selected: true
 
+# DNS：使用加密上游，避免订阅自带的明文 DNS 覆盖本配置。
+# AdGuard 为首选，Cloudflare/Google 仅作为网络不可用时的备用。
+# 关闭 IPv6 DNS 返回，避免客户端从 IPv6 路径绕过规则。
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "+.localhost"
+    - "+.home.arpa"
+    - "time.*.com"
+    - "time.*.gov"
+    - "pool.ntp.org"
+    - "+.push.apple.com"
+    - "mesu.apple.com"
+    - "swscan.apple.com"
+    - "captive.apple.com"
+    - "connectivitycheck.gstatic.com"
+    - "connectivitycheck.android.com"
+    - "www.msftconnecttest.com"
+    - "www.msftncsi.com"
+  respect-rules: true
+  nameserver:
+    - https://dns.adguard-dns.com/dns-query
+  fallback:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+  proxy-server-nameserver:
+    - https://dns.adguard-dns.com/dns-query
+  direct-nameserver:
+    - https://dns.adguard-dns.com/dns-query
+  default-nameserver:
+    - 94.140.14.14
+    - 1.1.1.1
+
 proxy-groups:
   - name: 🚀 节点选择
     type: select
@@ -33,6 +77,7 @@ proxy-groups:
   - name: ♻️ 自动选择
     type: url-test
     include-all: true
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 📲 电报消息
@@ -130,44 +175,32 @@ proxy-groups:
       - 🔥 VPS节点
       - 🚀 手动切换
   - name: 🔥 VPS节点
-    type: select
-    include-all-proxies: true
+    type: url-test
+    include-all: true
     filter: (VPS)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: ✈️ 6B节点
-    type: select
-    include-all-proxies: true
+    type: url-test
+    include-all: true
     filter: (6B)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: ✈️ MM节点
-    type: select
-    include-all-proxies: true
+    type: url-test
+    include-all: true
     filter: (MM)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: ✈️ CF节点
-    type: select
-    include-all-proxies: true
+    type: url-test
+    include-all: true
     filter: (EdgeTunnel)
     url: https://www.gstatic.com/generate_204
     interval: 300
-    uselightgbm: true
-    collectdata: true
-    strategy: sticky-sessions
     exclude-filter: "(?i)FREE-.*"
   - name: Ⓜ️ 微软云盘
     type: select
@@ -244,36 +277,42 @@ proxy-groups:
     include-all: true
     filter: (?i)港|HK|hk|Hong Kong|HongKong|hongkong
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇯🇵 日本节点
     include-all: true
     filter: (?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇺🇲 美国节点
     include-all: true
     filter: (?i)美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇨🇳 台湾节点
     include-all: true
     filter: (?i)台|新北|彰化|TW|Taiwan
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇸🇬 狮城节点
     include-all: true
     filter: (?i)新加坡|坡|狮城|SG|Singapore
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: 🇰🇷 韩国节点
     include-all: true
     filter: (?i)KR|Korea|KOR|首尔|韩|韓
     type: url-test
+    url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
   - name: ✈️ 机场连接
@@ -568,6 +607,9 @@ rule-providers:
     type: http
 
 rules:
+  # 阻止客户端绕过 Clash 使用 DoT / DoQ，避免 DNS 泄漏
+  - "DST-PORT,853,REJECT"
+  - "DST-PORT,784,REJECT"
   - "RULE-SET,LocalAreaNetwork,🎯 全球直连"
   - "RULE-SET,UnBan,🎯 全球直连"
   - "RULE-SET,BanAD,🛑 广告拦截"
