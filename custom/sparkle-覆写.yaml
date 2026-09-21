@@ -7,6 +7,9 @@
 # 增强中国IP段：支持
 # 增强国外GFW：支持
 
+profile:
+  store-selected: true
+
 proxy-groups:
   - name: 🚀 节点选择
     type: select
@@ -17,6 +20,10 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
+      - 🔥 VPS节点
+      - ✈️ 6B节点
+      - ✈️ MM节点
+      - ✈️ CF节点
       - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
@@ -38,6 +45,7 @@ proxy-groups:
       - 🇨🇳 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
+      - 🔥 VPS节点
       - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
@@ -51,40 +59,40 @@ proxy-groups:
       - 🇨🇳 台湾节点
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
+      - 🔥 VPS节点
       - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
-  - name: 🎥 奈飞视频
+  - name: "\U0001F916 AI服务"
     type: select
     proxies:
       - 🚀 节点选择
       - ♻️ 自动选择
-      - 🎥 奈飞节点
-      - 🇸🇬 狮城节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇯🇵 日本节点
       - 🇺🇲 美国节点
-      - 🇰🇷 韩国节点
+      - 🔥 VPS节点
+      - ✈️ CF节点
       - 🚀 手动切换
       - DIRECT
   - name: 🎥 Tiktok
     type: select
     proxies:
       - 🇺🇲 美国节点
-  - name: 📺 巴哈姆特
+      - 🔥 VPS节点
+      - DIRECT
+  - name: 🌐 社交媒体
     type: select
     proxies:
-      - 🇨🇳 台湾节点
+      - 🇺🇲 美国节点
+      - 🔥 VPS节点
       - 🚀 节点选择
+      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🇨🇳 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇯🇵 日本节点
+      - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
-  - name: 📺 哔哩哔哩
-    type: select
-    proxies:
-      - 🎯 全球直连
-      - 🇨🇳 台湾节点
-      - 🇭🇰 香港节点
   - name: 🌍 国外媒体
     type: select
     proxies:
@@ -95,6 +103,7 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
+      - 🔥 VPS节点
       - 🇰🇷 韩国节点
       - 🚀 手动切换
       - DIRECT
@@ -118,19 +127,48 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - 🇰🇷 韩国节点
+      - 🔥 VPS节点
       - 🚀 手动切换
-  - name: Ⓜ️ 微软Bing
+  - name: 🔥 VPS节点
     type: select
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - 🇺🇲 美国节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - 🇯🇵 日本节点
-      - 🇰🇷 韩国节点
-      - 🚀 手动切换
+    include-all-proxies: true
+    filter: (VPS)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: ✈️ 6B节点
+    type: select
+    include-all-proxies: true
+    filter: (6B)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: ✈️ MM节点
+    type: select
+    include-all-proxies: true
+    filter: (MM)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
+  - name: ✈️ CF节点
+    type: select
+    include-all-proxies: true
+    filter: (EdgeTunnel)
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    uselightgbm: true
+    collectdata: true
+    strategy: sticky-sessions
+    exclude-filter: "(?i)FREE-.*"
   - name: Ⓜ️ 微软云盘
     type: select
     proxies:
@@ -142,18 +180,7 @@ proxy-groups:
       - 🇸🇬 狮城节点
       - 🇯🇵 日本节点
       - 🇰🇷 韩国节点
-      - 🚀 手动切换
-  - name: Ⓜ️ 微软服务
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - DIRECT
-      - 🇺🇲 美国节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇸🇬 狮城节点
-      - 🇯🇵 日本节点
-      - 🇰🇷 韩国节点
+      - 🔥 VPS节点
       - 🚀 手动切换
   - name: 🍎 苹果服务
     type: select
@@ -179,32 +206,12 @@ proxy-groups:
       - 🇯🇵 日本节点
       - 🇰🇷 韩国节点
       - 🚀 手动切换
-  - name: 🎶 网易音乐
-    type: select
-    include-all: true
-    filter: (?i)网易|音乐|NetEase|Music
-    proxies:
-      - DIRECT
-      - 🚀 节点选择
-      - ♻️ 自动选择
-  - name: 💬 OpenAi
-    type: select
-    proxies:
-      - 🚀 节点选择
-      - ♻️ 自动选择
-      - 🇸🇬 狮城节点
-      - 🇭🇰 香港节点
-      - 🇨🇳 台湾节点
-      - 🇯🇵 日本节点
-      - 🇺🇲 美国节点
-      - 🇰🇷 韩国节点
-      - 🚀 手动切换
-      - DIRECT
   - name: 🎯 全球直连
     type: select
     proxies:
       - DIRECT
       - 🚀 节点选择
+      - 🔥 VPS节点
       - ♻️ 自动选择
   - name: 🛑 广告拦截
     type: select
@@ -228,6 +235,10 @@ proxy-groups:
       - 🇯🇵 日本节点
       - 🇺🇲 美国节点
       - 🇰🇷 韩国节点
+      - 🔥 VPS节点
+      - ✈️ 6B节点
+      - ✈️ CF节点
+      - ✈️ MM节点
       - 🚀 手动切换
   - name: 🇭🇰 香港节点
     include-all: true
@@ -265,10 +276,6 @@ proxy-groups:
     type: url-test
     interval: 300
     tolerance: 50
-  - name: 🎥 奈飞节点
-    include-all: true
-    filter: (?i)NF|奈飞|解锁|Netflix|NETFLIX|Media
-    type: select
   - name: ✈️ 机场连接
     type: select
     proxies:
@@ -370,20 +377,34 @@ rule-providers:
     interval: 86400
     format: text
     type: http
-  OpenAi:
-    url: https://ghfast.top/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list
-    path: ./ruleset/OpenAi.list
+  Facebook:
+    url: https://ghfast.top/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.list
+    path: ./ruleset/Facebook.list
     behavior: classical
     interval: 86400
     format: text
     type: http
-  NetEaseMusic:
-    url: https://ghfast.top/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/NetEaseMusic.list
-    path: ./ruleset/NetEaseMusic.list
+  Twitter:
+    url: https://ghfast.top/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.list
+    path: ./ruleset/Twitter.list
     behavior: classical
     interval: 86400
     format: text
     type: http
+  Instagram:
+    url: https://ghfast.top/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.list
+    path: ./ruleset/Instagram.list
+    behavior: classical
+    interval: 86400
+    format: text
+    type: http
+  "\U0001F916 AI服务_PlanetEditorX":
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/PlanetEditorX/subconverter/refs/heads/main/custom/ChatGPT.list
+    path: "./rule_provider/ChatGPT.list"
+    interval: 86400
+    format: text
   Epic:
     url: https://ghfast.top/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list
     path: ./ruleset/Epic.list
@@ -433,7 +454,6 @@ rule-providers:
     interval: 86400
     format: text
     type: http
-
   Tiktok:
     url: https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs
     path: ./ruleset/tiktok.mrs
@@ -441,7 +461,6 @@ rule-providers:
     interval: 86400
     format: mrs
     type: http
-
   Bahamut:
     url: https://ghfast.top/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bahamut.list
     path: ./ruleset/Bahamut.list
@@ -558,24 +577,22 @@ rules:
   - "RULE-SET,GoogleFCM,📢 谷歌FCM"
   - "RULE-SET,GoogleCN,🎯 全球直连"
   - "RULE-SET,SteamCN,🎯 全球直连"
-  - "RULE-SET,Bing,Ⓜ️ 微软Bing"
   - "RULE-SET,OneDrive,Ⓜ️ 微软云盘"
-  - "RULE-SET,Microsoft,Ⓜ️ 微软服务"
   - "RULE-SET,Apple,🍎 苹果服务"
   - "RULE-SET,Telegram,📲 电报消息"
-  - "RULE-SET,OpenAi,💬 OpenAi"
-  - "RULE-SET,NetEaseMusic,🎶 网易音乐"
+  - "RULE-SET,Bing,\U0001F916 AI服务"
+  - "RULE-SET,Microsoft,\U0001F916 AI服务"
+  - "RULE-SET,\U0001F916 AI服务_PlanetEditorX,\U0001F916 AI服务"
   - "RULE-SET,Epic,🎮 游戏平台"
   - "RULE-SET,Origin,🎮 游戏平台"
   - "RULE-SET,Sony,🎮 游戏平台"
   - "RULE-SET,Steam,🎮 游戏平台"
   - "RULE-SET,Nintendo,🎮 游戏平台"
   - "RULE-SET,YouTube,📹 油管视频"
-  - "RULE-SET,Netflix,🎥 奈飞视频"
   - "RULE-SET,Tiktok,🎥 Tiktok"
-  - "RULE-SET,Bahamut,📺 巴哈姆特"
-  - "RULE-SET,BilibiliHMT,📺 哔哩哔哩"
-  - "RULE-SET,Bilibili,📺 哔哩哔哩"
+  - "RULE-SET,Facebook,🌐 社交媒体"
+  - "RULE-SET,Twitter,🌐 社交媒体"
+  - "RULE-SET,Instagram,🌐 社交媒体"
   - "RULE-SET,ChinaMedia,🌏 国内媒体"
   - "RULE-SET,ProxyMedia,🌍 国外媒体"
   - "RULE-SET,ProxyGFWlist,🚀 节点选择"
