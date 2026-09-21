@@ -206,6 +206,10 @@ proxy-groups:
 #                 规则配置
 # =========================================
 rules:
+  # 阻止客户端绕过 OpenClash 使用 DoT / DoQ，避免 DNS 泄漏
+  - DST-PORT,853,REJECT
+  - DST-PORT,784,REJECT
+
   - RULE-SET,private,全球直连
   - RULE-SET,private_IP,全球直连,no-resolve
   - RULE-SET,giveup_direct,全球直连
