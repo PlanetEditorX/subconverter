@@ -365,6 +365,11 @@ function main(config) {
   var iconBaseURL =
     "https://cdn.jsdelivr.net/gh/n0de-sudo/Perfect-Rules@main/Clash/icons/";
 
+  var resourceBaseURL =
+    "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/";
+
+  var resourceIconBaseURL = resourceBaseURL + "icon/";
+
 
   var groupIcons = {
 
@@ -398,7 +403,10 @@ function main(config) {
 
     "ChatGPT": "AI.png",
 
-    "Instagram": "Other.png",
+    "Instagram": {
+      "baseURL": resourceIconBaseURL,
+      "icon": "instagram.svg"
+    },
 
     "香港": "Hong_Kong.png",
 
@@ -414,7 +422,10 @@ function main(config) {
 
     "加拿大": "Other.png",
 
-    "英国": "Other.png",
+    "英国": {
+      "baseURL": resourceBaseURL,
+      "icon": "flags/gb.svg"
+    },
 
     "其他地区": "Other.png"
 
@@ -426,6 +437,12 @@ function main(config) {
     if (!groupIcons[name]) {
 
       return undefined;
+
+    }
+
+    if (typeof groupIcons[name] === "object") {
+
+      return groupIcons[name].baseURL + groupIcons[name].icon;
 
     }
 
@@ -1788,7 +1805,7 @@ function main(config) {
 
   var auxiliaryGroups = [];
   var auxiliaryIconBaseURL =
-    "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/";
+    resourceIconBaseURL;
 
   auxiliaryGroupDefinitions.forEach(function(definition) {
 
@@ -1929,7 +1946,7 @@ function main(config) {
 
     createRestrictedNodeGroup(
       "Instagram",
-      auxiliaryIconBaseURL + "instagram.svg"
+      getGroupIcon("Instagram")
     )
 
   ];
