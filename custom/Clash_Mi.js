@@ -396,6 +396,10 @@ function main(config) {
 
     "Microsoft": "Microsoft.png",
 
+    "ChatGPT": "AI.png",
+
+    "Instagram": "Other.png",
+
     "香港": "Hong_Kong.png",
 
     "台湾": "Taiwan.png",
@@ -442,6 +446,10 @@ function main(config) {
 
     "AI": true,
 
+    "ChatGPT": true,
+
+    "Instagram": true,
+
     "YouTube": true,
 
     "Google": true,
@@ -463,6 +471,18 @@ function main(config) {
     "Apple": true,
 
     "Microsoft": true,
+
+    "VPS节点": true,
+
+    "优选节点": true,
+
+    "MM节点": true,
+
+    "6B节点": true,
+
+    "AI节点": true,
+
+    "美国节点": true,
 
     "香港": true,
 
@@ -1730,6 +1750,190 @@ function main(config) {
 
     });
 
+
+  // ================================================================
+  // 26. Filtered node groups from the reference YAML
+  // ================================================================
+
+  var auxiliaryGroupDefinitions = [
+
+    {
+      name: "VPS节点",
+      pattern: /VPS/i,
+      icon: "plane-finder.svg"
+    },
+
+    {
+      name: "优选节点",
+      matches: function(name) {
+        var region = detectRegion(name);
+        return ["香港", "台湾", "日本", "新加坡"].indexOf(region) !== -1;
+      },
+      icon: "cloudflare-pages.svg"
+    },
+
+    {
+      name: "MM节点",
+      pattern: /MM/i,
+      icon: "hermes-icon.svg"
+    },
+
+    {
+      name: "6B节点",
+      pattern: /6B/i,
+      icon: "beef.svg"
+    }
+
+  ];
+
+  var auxiliaryGroups = [];
+  var auxiliaryIconBaseURL =
+    "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/";
+
+  auxiliaryGroupDefinitions.forEach(function(definition) {
+
+    var nodes = proxyNames.filter(function(name) {
+
+      return definition.matches
+        ? definition.matches(String(name))
+        : definition.pattern.test(String(name));
+
+    });
+
+    // Avoid emitting empty groups that some clients cannot select.
+    if (nodes.length === 0) {
+
+      return;
+
+    }
+
+    auxiliaryGroups.push({
+
+      "name": definition.name,
+
+      "type": "url-test",
+
+      "proxies": nodes,
+
+      "url": "https://cp.cloudflare.com/generate_204",
+
+      "interval": 120,
+
+      "timeout": 5000,
+
+      "tolerance": 20,
+
+      "lazy": true,
+
+      "icon": auxiliaryIconBaseURL + definition.icon
+
+    });
+
+  });
+
+  var usNodeGroup = null;
+
+  if (availableRegions.indexOf("美国") !== -1) {
+
+    usNodeGroup = {
+
+      "name": "美国节点",
+
+      "type": "select",
+
+      "proxies": ["美国"],
+
+      "default-selected": "美国",
+
+      "icon": getGroupIcon("美国")
+
+    };
+
+  }
+
+  var aiUSOnlyGroup = {
+
+    "name": "AI",
+
+    "type": "select",
+
+    "proxies": usNodeGroup ? ["美国节点"] : ["REJECT"],
+
+    "default-selected": usNodeGroup ? "美国节点" : "REJECT",
+
+    "icon": getGroupIcon("AI")
+
+  };
+
+  var restrictedNodeOptions = [];
+
+  if (auxiliaryGroups.some(function(group) {
+    return group.name === "VPS节点";
+  })) {
+
+    restrictedNodeOptions.push("VPS节点");
+
+  }
+
+  if (usNodeGroup) {
+
+    restrictedNodeOptions.push("美国节点");
+
+  }
+
+  if (restrictedNodeOptions.length === 0) {
+
+    restrictedNodeOptions.push("REJECT");
+
+  }
+
+  var restrictedDefault =
+    restrictedNodeOptions.indexOf("VPS节点") !== -1
+      ? "VPS节点"
+      : restrictedNodeOptions[0];
+
+  function createRestrictedNodeGroup(name, icon) {
+
+    return {
+
+      "name": name,
+
+      "type": "select",
+
+      "proxies": restrictedNodeOptions.slice(),
+
+      "default-selected": restrictedDefault,
+
+      "icon": icon
+
+    };
+
+  }
+
+  var restrictedNodeGroups = [
+
+    createRestrictedNodeGroup(
+      "ChatGPT",
+      auxiliaryIconBaseURL + "chatgpt-big.svg"
+    ),
+
+    createRestrictedNodeGroup(
+      "AI节点",
+      auxiliaryIconBaseURL + "ai.svg"
+    ),
+
+    createRestrictedNodeGroup(
+      "TikTok",
+      auxiliaryIconBaseURL + "tiktok.svg"
+    ),
+
+    createRestrictedNodeGroup(
+      "Instagram",
+      auxiliaryIconBaseURL + "instagram.svg"
+    )
+
+  ];
+
   // ================================================================
   // 26. Domestic Direct
   // ================================================================
@@ -1799,8 +2003,6 @@ function main(config) {
 
   var businessRegionPreferences = {
 
-    "AI": ["美国"],
-
     "YouTube": ["新加坡", "香港", "美国", "日本", "台湾"],
 
     "Google": ["香港", "美国", "新加坡", "日本", "台湾"],
@@ -1814,8 +2016,6 @@ function main(config) {
     "Steam": ["香港", "日本", "新加坡", "美国", "台湾"],
 
     "Telegram": ["香港", "新加坡", "日本", "美国", "台湾"],
-
-    "TikTok": ["美国", "新加坡", "香港", "日本", "台湾"],
 
     "Apple": ["香港", "美国", "新加坡", "日本", "台湾"],
 
@@ -1832,30 +2032,17 @@ function main(config) {
 
     });
 
-    if (name === "AI") {
+    availableRegions.forEach(function(region) {
 
-      // AI follows the US-only policy. Fail closed if the subscription has no US nodes.
-      if (proxies.length === 0) {
+      if (proxies.indexOf(region) === -1) {
 
-        proxies = ["REJECT"];
+        proxies.push(region);
 
       }
 
-    } else {
+    });
 
-      availableRegions.forEach(function(region) {
-
-        if (proxies.indexOf(region) === -1) {
-
-          proxies.push(region);
-
-        }
-
-      });
-
-      proxies.push("国内直连");
-
-    }
+    proxies.push("国内直连");
 
     var group = {
 
@@ -1886,8 +2073,6 @@ function main(config) {
 
   var businessGroups = [
 
-    createBusinessGroup("AI"),
-
     createBusinessGroup("YouTube"),
 
     createBusinessGroup("Google"),
@@ -1901,8 +2086,6 @@ function main(config) {
     createBusinessGroup("Steam"),
 
     createBusinessGroup("Telegram"),
-
-    createBusinessGroup("TikTok"),
 
     createBusinessGroup("Apple"),
 
@@ -2014,6 +2197,14 @@ function main(config) {
 
       ])
 
+      .concat(auxiliaryGroups)
+
+      .concat(usNodeGroup ? [usNodeGroup] : [])
+
+      .concat([aiUSOnlyGroup])
+
+      .concat(restrictedNodeGroups)
+
       .concat(regionTierGroups)
 
       .concat(regionGroups)
@@ -2089,6 +2280,22 @@ function main(config) {
     // --------------------------------------------------------------
     // AI
     // --------------------------------------------------------------
+
+    // ChatGPT / OpenAI are separated from the remaining AI services.
+    "DOMAIN-SUFFIX,openai.com,ChatGPT",
+
+    "DOMAIN-SUFFIX,chatgpt.com,ChatGPT",
+
+    "DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
+
+    "DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT",
+
+    // Instagram service and media delivery domains.
+    "DOMAIN-SUFFIX,instagram.com,Instagram",
+
+    "DOMAIN-SUFFIX,cdninstagram.com,Instagram",
+
+    "DOMAIN-SUFFIX,instagram.net,Instagram",
 
     "DOMAIN-SUFFIX,opencode.ai,AI",
 
