@@ -1954,15 +1954,39 @@ function main(config) {
 
   }
 
+  var aiProxyOptions = [];
+
+  if (auxiliaryGroups.some(function(group) {
+    return group.name === "VPS节点";
+  })) {
+
+    aiProxyOptions.push("VPS节点");
+
+  }
+
+  if (usNodeGroup) {
+
+    aiProxyOptions.push("美国节点");
+
+  }
+
+  if (aiProxyOptions.length === 0) {
+
+    aiProxyOptions.push("REJECT");
+
+  }
+
   var aiUSOnlyGroup = {
 
     "name": "AI",
 
     "type": "select",
 
-    "proxies": usNodeGroup ? ["美国节点"] : ["REJECT"],
+    "proxies": aiProxyOptions,
 
-    "default-selected": usNodeGroup ? "美国节点" : "REJECT",
+    "default-selected": aiProxyOptions.indexOf("VPS节点") !== -1
+      ? "VPS节点"
+      : aiProxyOptions[0],
 
     "icon": getGroupIcon("AI")
 
@@ -2139,7 +2163,9 @@ function main(config) {
 
     "type": "select",
 
-    "proxies": []
+    "proxies": autoSelectGroup ? [autoSelectGroup.name] : [],
+
+    "default-selected": autoSelectGroup ? autoSelectGroup.name : undefined
 
   };
 
@@ -2243,6 +2269,8 @@ function main(config) {
 
     proxies.push("国内直连");
 
+    proxies.unshift("一键代理");
+
     var group = {
 
       "name": name,
@@ -2253,6 +2281,12 @@ function main(config) {
 
     };
 
+
+    if (["YouTube", "Google", "GitHub", "Telegram", "Microsoft"].indexOf(name) !== -1) {
+
+      group["default-selected"] = "一键代理";
+
+    }
 
     if (name === "Apple") {
 
