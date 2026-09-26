@@ -2163,12 +2163,15 @@ function main(config) {
 
     "type": "select",
 
-    "proxies": autoSelectGroup ? [autoSelectGroup.name] : [],
-
-    "default-selected": autoSelectGroup ? autoSelectGroup.name : undefined
+    "proxies": autoSelectGroup ? [autoSelectGroup.name] : []
 
   };
 
+  if (autoSelectGroup) {
+
+    mainSelector["default-selected"] = autoSelectGroup.name;
+
+  }
 
   availableRegions.forEach(function(name) {
 
