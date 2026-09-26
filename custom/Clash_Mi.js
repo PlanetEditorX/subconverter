@@ -2521,9 +2521,21 @@ function main(config) {
 
   });
 
+  for (var i = 0; i < allProxyGroups.length; i++) {
+
+    if (allProxyGroups[i].name === "一键代理") {
+
+      allProxyGroups.splice(i, 1);
+
+      break;
+
+    }
+
+  }
+
   config["proxy-groups"] =
 
-    priorityGroups.concat(allProxyGroups).concat(hiddenTailGroups);
+    [mainSelector].concat(priorityGroups).concat(allProxyGroups).concat(hiddenTailGroups);
 
 
 
