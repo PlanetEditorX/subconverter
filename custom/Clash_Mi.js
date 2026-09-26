@@ -1848,6 +1848,42 @@ function main(config) {
 
   });
 
+  var aiNodeCandidates = proxyNames.filter(function(name) {
+
+    return /(?:美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|VPS|AI)/i.test(String(name));
+
+  });
+
+  var aiNodeGroup = null;
+
+  if (aiNodeCandidates.length > 0) {
+
+    aiNodeGroup = {
+
+      "name": "AI节点",
+
+      "type": "url-test",
+
+      "proxies": aiNodeCandidates,
+
+      "url": "https://cp.cloudflare.com/generate_204",
+
+      "interval": 120,
+
+      "timeout": 5000,
+
+      "tolerance": 20,
+
+      "lazy": true,
+
+      "hidden": true,
+
+      "icon": auxiliaryIconBaseURL + "ai.svg"
+
+    };
+
+  }
+
   var usNodeGroup = null;
 
   if (availableRegions.indexOf("美国") !== -1) {
@@ -1932,11 +1968,6 @@ function main(config) {
     createRestrictedNodeGroup(
       "ChatGPT",
       auxiliaryIconBaseURL + "chatgpt-big.svg"
-    ),
-
-    createRestrictedNodeGroup(
-      "AI节点",
-      auxiliaryIconBaseURL + "ai.svg"
     ),
 
     createRestrictedNodeGroup(
@@ -2072,6 +2103,18 @@ function main(config) {
     };
 
 
+    if (name === "Apple") {
+
+      group["default-selected"] = "国内直连";
+
+    }
+
+    if (["Spotify", "Steam", "Netflix"].indexOf(name) !== -1) {
+
+      group["hidden"] = true;
+
+    }
+
     var icon =
       getGroupIcon(name);
 
@@ -2202,19 +2245,17 @@ function main(config) {
   //
   // ================================================================
 
-  config["proxy-groups"] =
+  var allProxyGroups =
 
     preservedGroups
 
       .concat(businessGroups)
 
-      .concat([
-
-        networkTestGroup
-
-      ])
+      .concat([networkTestGroup])
 
       .concat(auxiliaryGroups)
+
+      .concat(aiNodeGroup ? [aiNodeGroup] : [])
 
       .concat(usNodeGroup ? [usNodeGroup] : [])
 
@@ -2226,13 +2267,46 @@ function main(config) {
 
       .concat(regionGroups)
 
-      .concat([
+      .concat([domesticDirectGroup, mainSelector]);
 
-        domesticDirectGroup,
+  var priorityGroupNames = [
 
-        mainSelector
+    "YouTube",
 
-      ]);
+    "Google",
+
+    "ChatGPT",
+
+    "AI",
+
+    "TikTok",
+
+    "Instagram"
+
+  ];
+
+  var priorityGroups = [];
+
+  priorityGroupNames.forEach(function(name) {
+
+    for (var i = 0; i < allProxyGroups.length; i++) {
+
+      if (allProxyGroups[i].name === name) {
+
+        priorityGroups.push(allProxyGroups.splice(i, 1)[0]);
+
+        break;
+
+      }
+
+    }
+
+  });
+
+  config["proxy-groups"] =
+
+    priorityGroups.concat(allProxyGroups);
+
 
 
   // ================================================================
