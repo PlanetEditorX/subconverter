@@ -375,7 +375,15 @@ function main(config) {
 
     "一键代理": "Proxy.png",
 
-    "国内直连": "China.png",
+    "国内直连": {
+      "baseURL": resourceIconBaseURL,
+      "icon": "direct.svg"
+    },
+
+    "漏网之鱼": {
+      "baseURL": resourceIconBaseURL,
+      "icon": "match.svg"
+    },
 
     "AI": "AI.png",
 
@@ -460,6 +468,8 @@ function main(config) {
     "一键代理": true,
 
     "国内直连": true,
+
+    "漏网之鱼": true,
 
     "AI": true,
 
@@ -1000,6 +1010,46 @@ function main(config) {
 
   });
 
+
+  var autoSelectGroup = null;
+
+  preservedGroups.forEach(function(group) {
+
+    if (!autoSelectGroup && isAutoSelectGroup(group.name)) {
+
+      autoSelectGroup = group;
+
+    }
+
+  });
+
+  var generatedSelectorGroups = [];
+
+  if (!autoSelectGroup) {
+
+    autoSelectGroup = {
+
+      "name": "自动选择",
+
+      "type": "url-test",
+
+      "proxies": proxyNames.slice(),
+
+      "url": "https://www.gstatic.com/generate_204",
+
+      "interval": 300,
+
+      "timeout": 5000,
+
+      "tolerance": 50,
+
+      "lazy": true
+
+    };
+
+    generatedSelectorGroups.push(autoSelectGroup);
+
+  }
 
   // ================================================================
   // 18. Find airport default manual selector
@@ -1986,6 +2036,72 @@ function main(config) {
   // 26. Domestic Direct
   // ================================================================
 
+  var leakGroup = {
+
+    "name": "漏网之鱼",
+
+    "type": "select",
+
+    "proxies": []
+
+  };
+
+  var leakProxyOptions = [];
+
+  availableRegions.forEach(function(name) {
+
+    if (leakProxyOptions.indexOf(name) === -1) {
+
+      leakProxyOptions.push(name);
+
+    }
+
+  });
+
+  if (defaultAirportGroup && leakProxyOptions.indexOf(defaultAirportGroup) === -1) {
+
+    leakProxyOptions.push(defaultAirportGroup);
+
+  }
+
+  if (autoSelectGroup && leakProxyOptions.indexOf(autoSelectGroup.name) === -1) {
+
+    leakProxyOptions.push(autoSelectGroup.name);
+
+  }
+
+  auxiliaryGroups.forEach(function(group) {
+
+    if (leakProxyOptions.indexOf(group.name) === -1) {
+
+      leakProxyOptions.push(group.name);
+
+    }
+
+  });
+
+  if (usNodeGroup && leakProxyOptions.indexOf(usNodeGroup.name) === -1) {
+
+    leakProxyOptions.push(usNodeGroup.name);
+
+  }
+
+  leakProxyOptions.push("国内直连");
+
+  leakProxyOptions.unshift("一键代理");
+
+  leakGroup["proxies"] = leakProxyOptions;
+
+  leakGroup["default-selected"] = "一键代理";
+
+  var leakIcon = getGroupIcon("漏网之鱼");
+
+  if (leakIcon) {
+
+    leakGroup["icon"] = leakIcon;
+
+  }
+
   var domesticDirectGroup = {
 
     "name": "国内直连",
@@ -2023,15 +2139,50 @@ function main(config) {
 
     "type": "select",
 
-    "proxies":
-      availableRegions.concat([
-
-        "国内直连"
-
-      ])
+    "proxies": []
 
   };
 
+
+  availableRegions.forEach(function(name) {
+
+    if (mainSelector.proxies.indexOf(name) === -1) {
+
+      mainSelector.proxies.push(name);
+
+    }
+
+  });
+
+  if (defaultAirportGroup && mainSelector.proxies.indexOf(defaultAirportGroup) === -1) {
+
+    mainSelector.proxies.push(defaultAirportGroup);
+
+  }
+
+  if (autoSelectGroup && mainSelector.proxies.indexOf(autoSelectGroup.name) === -1) {
+
+    mainSelector.proxies.push(autoSelectGroup.name);
+
+  }
+
+  auxiliaryGroups.forEach(function(group) {
+
+    if (mainSelector.proxies.indexOf(group.name) === -1) {
+
+      mainSelector.proxies.push(group.name);
+
+    }
+
+  });
+
+  if (usNodeGroup && mainSelector.proxies.indexOf(usNodeGroup.name) === -1) {
+
+    mainSelector.proxies.push(usNodeGroup.name);
+
+  }
+
+  mainSelector.proxies.push("国内直连");
 
   var mainIcon =
     getGroupIcon("一键代理");
@@ -2249,6 +2400,8 @@ function main(config) {
 
     preservedGroups
 
+      .concat(generatedSelectorGroups)
+
       .concat(businessGroups)
 
       .concat([networkTestGroup])
@@ -2267,7 +2420,7 @@ function main(config) {
 
       .concat(regionGroups)
 
-      .concat([domesticDirectGroup, mainSelector]);
+      .concat([domesticDirectGroup, leakGroup, mainSelector]);
 
   var priorityGroupNames = [
 
@@ -2281,7 +2434,11 @@ function main(config) {
 
     "TikTok",
 
-    "Instagram"
+    "Instagram",
+
+    "国内直连",
+
+    "漏网之鱼"
 
   ];
 
@@ -2303,9 +2460,33 @@ function main(config) {
 
   });
 
+  var hiddenTailNames = ["Netflix", "Spotify", "Steam"];
+
+  var hiddenTailGroups = [];
+
+  hiddenTailNames.forEach(function(name) {
+
+    for (var i = 0; i < allProxyGroups.length; i++) {
+
+      if (allProxyGroups[i].name === name) {
+
+        var hiddenGroup = allProxyGroups.splice(i, 1)[0];
+
+        hiddenGroup["hidden"] = true;
+
+        hiddenTailGroups.push(hiddenGroup);
+
+        break;
+
+      }
+
+    }
+
+  });
+
   config["proxy-groups"] =
 
-    priorityGroups.concat(allProxyGroups);
+    priorityGroups.concat(allProxyGroups).concat(hiddenTailGroups);
 
 
 
@@ -2563,7 +2744,7 @@ function main(config) {
     // Final
     // --------------------------------------------------------------
 
-    "MATCH,一键代理"
+    "MATCH,漏网之鱼"
 
   ];
 
