@@ -435,7 +435,7 @@ function main(config) {
       "icon": "flags/gb.svg"
     },
 
-    "其他地区": "Other.png"
+    "其它地区": "Other.png"
 
   };
 
@@ -527,7 +527,7 @@ function main(config) {
 
     "英国": true,
 
-    "其他地区": true
+    "其它地区": true
 
   };
 
@@ -1508,7 +1508,7 @@ function main(config) {
     }
 
 
-    return "其他地区";
+    return "其它地区";
 
   }
 
@@ -1535,7 +1535,7 @@ function main(config) {
 
     "英国": [],
 
-    "其他地区": []
+    "其它地区": []
 
   };
 
@@ -1619,7 +1619,7 @@ function main(config) {
 
     "英国",
 
-    "其他地区"
+    "其它地区"
 
   ];
 
