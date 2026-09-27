@@ -169,7 +169,7 @@ proxy-groups:
   - {name: OneDrive, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-onedrive.svg"}
   - {name: 微软服务, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/microsoft-big.svg"}
   - {name: 游戏平台, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/steam.svg"}
-  - {name: 测速工具, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ookla-speedtest.svg"}
+  - {name: 测速检测, <<: *SelectHK, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/ookla-speedtest.svg"}
   - {name: 漏网之鱼, <<: *SelectMH, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/match.svg"}
   - {name: 广告拦截, <<: *SelectAD, icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/adguard-home.svg"}
 
@@ -203,7 +203,7 @@ proxy-groups:
   - {name: 全球直连, <<: *BaseDIRECT, proxies: [DIRECT], icon: "https://raw.githubusercontent.com/PlanetEditorX/Resource/refs/heads/main/icon/direct.svg"}
 
 # =========================================
-#                 规则配置
+#                  规则配置
 # =========================================
 rules:
   # 阻止客户端绕过 OpenClash 使用 DoT / DoQ，避免 DNS 泄漏
@@ -320,7 +320,8 @@ rules:
   - RULE-SET,copilot,Copilot
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
-  - RULE-SET,category-speedtest,测速工具
+  - RULE-SET,Check,测速检测
+  - RULE-SET,category-speedtest,测速检测
   - RULE-SET,youtube,YouTube
   - RULE-SET,广告拦截_ACL4SSR,广告拦截
   - RULE-SET,广告拦截_PlanetEditorX,广告拦截
@@ -344,7 +345,7 @@ rules:
   - MATCH,漏网之鱼
 
 # =========================================
-#              规则提供者
+#               规则提供者
 # =========================================
 rule-providers:
   private: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
@@ -368,6 +369,7 @@ rule-providers:
   google-gemini: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
   category-ai: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
   github: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  Check: {<<: *class, url: "https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   category-speedtest: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
   steam: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
   youtube: {<<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
