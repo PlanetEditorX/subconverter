@@ -21,27 +21,28 @@ dns:
     - "www.msftconnecttest.com"
     - "www.msftncsi.com"
   respect-rules: true
-  nameserver:
-    - https://doh.pub/dns-query
+  
+  # 用于解析 nameserver/proxy-server 域名的引导 DNS
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+
+  # 代理节点本身域名解析（必须走国内直连无污染服务器）
+  proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
-  fallback:
-    - https://cloudflare-dns.com/dns-query
-    - https://dns.google/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    geosite:
-      - gfw
-    domain:
-      - "+.google.com"
-      - "+.googleapis.com"
-      - "+.googlevideo.com"
-      - "+.youtube.com"
-      - "+.github.com"
-      - "+.openai.com"
-      - "+.chatgpt.com"
-      - "+.anthropic.com"
-      - "+.claude.ai"
+    - https://doh.pub/dns-query
+
+  # 直连域名解析服务器
+  direct-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+  # 兜底查询（走代理加密查询，杜绝运营商泄露）
+  nameserver:
+    - https://cloudflare-dns.com/dns-query#手动选择
+    - https://dns.google/dns-query#手动选择
+
+  # 分流策略：仅大陆与私网域名走国内 DoH，其余走代理查询
   nameserver-policy:
     "geosite:private":
       - https://dns.alidns.com/dns-query
@@ -49,18 +50,9 @@ dns:
     "geosite:cn":
       - https://dns.alidns.com/dns-query
       - https://doh.pub/dns-query
-    "geolocation-!cn":
-      - https://cloudflare-dns.com/dns-query
-      - https://dns.google/dns-query
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  direct-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  default-nameserver:
-    - 223.5.5.5
-    - 1.1.1.1
+    "geosite:geolocation-!cn":
+      - https://cloudflare-dns.com/dns-query#手动选择
+      - https://dns.google/dns-query#手动选择
 
 proxy-providers:
   Sub-store:
@@ -320,8 +312,11 @@ rules:
   - RULE-SET,copilot,Copilot
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
+  
+  # 测速与测漏分流（前置于通用媒体与国家规则）
   - RULE-SET,Check,测速检测
   - RULE-SET,category-speedtest,测速检测
+  
   - RULE-SET,youtube,YouTube
   - RULE-SET,广告拦截_ACL4SSR,广告拦截
   - RULE-SET,广告拦截_PlanetEditorX,广告拦截
