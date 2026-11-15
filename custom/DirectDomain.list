@@ -13,6 +13,7 @@ DOMAIN-SUFFIX,gongkaowo.com
 DOMAIN-SUFFIX,ntp.ubuntu.com
 DOMAIN-SUFFIX,ubuntu.pool.ntp.org
 DOMAIN-SUFFIX,w.7rs.net
+DOMAIN-SUFFIX,immersivetranslate.com
 
 # 匹配关键字
 DOMAIN-KEYWORD,tailscale
